@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -18,9 +18,15 @@ const staggerContainer = {
 };
 
 export default function Home() {
+  const { scrollYProgress } = useScroll();
+
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black overflow-hidden font-sans">
       <Navbar />
+      <motion.div
+        className="fixed top-0 left-0 right-0 z-[60] h-px origin-left bg-white"
+        style={{ scaleX: scrollYProgress }}
+      />
 
       <main>
         {/* HERO SECTION */}
@@ -58,7 +64,13 @@ export default function Home() {
             className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30 text-xs tracking-widest uppercase"
           >
             <span>Scroll</span>
-            <div className="w-[1px] h-12 bg-gradient-to-b from-white/30 to-transparent" />
+            <div className="h-12 w-[1px] overflow-hidden bg-white/10">
+              <motion.div
+                className="h-full w-full origin-top bg-white/50"
+                animate={{ scaleY: [0, 1, 0], y: ["-100%", "0%", "100%"] }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
           </motion.div>
         </section>
 
