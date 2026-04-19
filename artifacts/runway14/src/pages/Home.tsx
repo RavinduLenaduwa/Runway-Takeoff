@@ -1,3 +1,4 @@
+import { useState, type FormEvent } from "react";
 import { motion, useScroll } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -19,6 +20,33 @@ const staggerContainer = {
 
 export default function Home() {
   const { scrollYProgress } = useScroll();
+  const [hasExistingProduct, setHasExistingProduct] = useState("no");
+  const [submitted, setSubmitted] = useState(false);
+
+  function handleWorkWithUsSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const details = [
+      `Name: ${formData.get("name")}`,
+      `Email: ${formData.get("email")}`,
+      `Company / Project: ${formData.get("company") || "Not provided"}`,
+      "",
+      `What are you building?`,
+      `${formData.get("project")}`,
+      "",
+      `Goal:`,
+      `${formData.get("goal")}`,
+      "",
+      `Existing website or product: ${formData.get("existingProduct")}`,
+      formData.get("existingProduct") === "yes" ? `URL: ${formData.get("url")}` : "",
+      "",
+      `Budget: ${formData.get("budget")}`
+    ].filter(Boolean).join("\n");
+
+    window.location.href = `mailto:hello@runway14.com?subject=${encodeURIComponent("New RWY14 project inquiry")}&body=${encodeURIComponent(details)}`;
+    setSubmitted(true);
+  }
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black overflow-hidden font-sans">
@@ -259,25 +287,111 @@ export default function Home() {
         </section>
 
         {/* CTA */}
-        <section id="contact" className="py-32 md:py-48 px-6 md:px-12 lg:px-24 border-t border-white/10 text-center">
+        <section id="contact" className="py-32 md:py-48 px-6 md:px-12 lg:px-24 border-t border-white/10">
           <motion.div 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="max-w-4xl mx-auto"
+            className="max-w-7xl mx-auto"
           >
-            <motion.h2 variants={fadeUp} className="text-5xl md:text-8xl font-bold tracking-tighter mb-8">
-              READY FOR<br />TAKEOFF?
-            </motion.h2>
-            <motion.p variants={fadeUp} className="text-lg md:text-xl text-white/50 font-light mb-12">
-              Your runway is finite. Let's accelerate your timeline.
-            </motion.p>
-            <motion.div variants={fadeUp}>
-              <a href="mailto:hello@runway14.com" className="inline-block border border-white px-12 py-6 text-sm font-bold tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-all duration-300">
-                Work With Us
-              </a>
-            </motion.div>
+            <div className="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-16 lg:gap-24 items-start">
+              <motion.div variants={fadeUp}>
+                <h2 className="text-5xl md:text-8xl font-bold tracking-tighter mb-8">
+                  READY FOR<br />TAKEOFF?
+                </h2>
+                <p className="text-lg md:text-xl text-white/50 font-light max-w-xl">
+                  Tell us what you’re building. We’ll map the shortest path from idea to launch.
+                </p>
+              </motion.div>
+
+              <motion.form variants={fadeUp} onSubmit={handleWorkWithUsSubmit} className="space-y-12">
+                <div className="space-y-6">
+                  <div className="text-xs tracking-[0.25em] uppercase text-white/40">01 / Basics</div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <label className="block">
+                      <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Name *</span>
+                      <input required name="name" type="text" className="w-full bg-transparent border border-white/15 px-4 py-4 text-white outline-none transition-colors focus:border-white" />
+                    </label>
+                    <label className="block">
+                      <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Email *</span>
+                      <input required name="email" type="email" className="w-full bg-transparent border border-white/15 px-4 py-4 text-white outline-none transition-colors focus:border-white" />
+                    </label>
+                  </div>
+                  <label className="block">
+                    <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Company / Project Name</span>
+                    <input name="company" type="text" className="w-full bg-transparent border border-white/15 px-4 py-4 text-white outline-none transition-colors focus:border-white" />
+                  </label>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="text-xs tracking-[0.25em] uppercase text-white/40">02 / Project</div>
+                  <label className="block">
+                    <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">What are you building? *</span>
+                    <textarea required name="project" rows={4} className="w-full resize-none bg-transparent border border-white/15 px-4 py-4 text-white outline-none transition-colors focus:border-white" />
+                  </label>
+                  <label className="block">
+                    <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Goal *</span>
+                    <textarea required name="goal" rows={3} className="w-full resize-none bg-transparent border border-white/15 px-4 py-4 text-white outline-none transition-colors focus:border-white" placeholder="What are you trying to achieve?" />
+                  </label>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="text-xs tracking-[0.25em] uppercase text-white/40">03 / Product Context</div>
+                  <fieldset className="space-y-4">
+                    <legend className="text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Do you have an existing website or product?</legend>
+                    <div className="grid grid-cols-2 gap-4">
+                      {["yes", "no"].map((option) => (
+                        <label key={option} className="cursor-pointer border border-white/15 px-4 py-4 text-sm tracking-[0.18em] uppercase text-white/60 transition-colors has-[:checked]:border-white has-[:checked]:text-white">
+                          <input
+                            required
+                            type="radio"
+                            name="existingProduct"
+                            value={option}
+                            checked={hasExistingProduct === option}
+                            onChange={() => setHasExistingProduct(option)}
+                            className="sr-only"
+                          />
+                          {option}
+                        </label>
+                      ))}
+                    </div>
+                  </fieldset>
+                  {hasExistingProduct === "yes" && (
+                    <motion.label initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="block">
+                      <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">URL *</span>
+                      <input required name="url" type="url" className="w-full bg-transparent border border-white/15 px-4 py-4 text-white outline-none transition-colors focus:border-white" placeholder="https://" />
+                    </motion.label>
+                  )}
+                </div>
+
+                <div className="space-y-6">
+                  <div className="text-xs tracking-[0.25em] uppercase text-white/40">04 / Budget</div>
+                  <fieldset>
+                    <legend className="text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Budget Range *</legend>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {["<$2k", "$2k–$5k", "$5k–$10k", "$10k+"].map((budget) => (
+                        <label key={budget} className="cursor-pointer border border-white/15 px-4 py-4 text-sm tracking-[0.18em] uppercase text-white/60 transition-colors has-[:checked]:border-white has-[:checked]:text-white">
+                          <input required type="radio" name="budget" value={budget} className="sr-only" />
+                          {budget}
+                        </label>
+                      ))}
+                    </div>
+                  </fieldset>
+                </div>
+
+                <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+                  <button type="submit" className="border border-white bg-white px-10 py-5 text-sm font-bold tracking-[0.2em] uppercase text-black transition-all duration-300 hover:bg-black hover:text-white">
+                    Send Inquiry
+                  </button>
+                  {submitted && (
+                    <div className="text-sm text-white/50">
+                      Draft created. Send it from your email client.
+                    </div>
+                  )}
+                </div>
+              </motion.form>
+            </div>
           </motion.div>
         </section>
       </main>
