@@ -45,7 +45,7 @@ export default function Home() {
             </motion.p>
             <motion.div variants={fadeUp}>
               <a href="#contact" className="group relative inline-flex items-center justify-center px-8 py-4 font-medium tracking-widest text-sm uppercase bg-white text-black overflow-hidden">
-                <span className="relative z-10 group-hover:text-white transition-colors duration-500">Start Your Project</span>
+                <span className="relative z-10 group-hover:text-white transition-colors duration-500">Work With Us</span>
                 <div className="absolute inset-0 bg-black translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out" />
               </a>
             </motion.div>
