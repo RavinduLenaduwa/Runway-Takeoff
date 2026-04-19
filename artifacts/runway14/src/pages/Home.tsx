@@ -124,15 +124,19 @@ export default function Home() {
               className="mb-24"
             >
               <h2 className="text-xs tracking-[0.2em] text-black/50 uppercase mb-8">[ 02 — Capabilities ]</h2>
-              <div className="text-4xl md:text-6xl font-bold tracking-tight">System Architecture</div>
+              <div className="text-4xl md:text-6xl font-bold tracking-tight">Services</div>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
               {[
-                { title: "AI Development", desc: "Production-grade AI systems shaped around real use cases, clean data flows, and fast iteration cycles." },
-                { title: "Product Engineering", desc: "Focused product builds with the architecture, interfaces, and reliability needed to reach market quickly." },
-                { title: "Automation Systems", desc: "Operational workflows that remove drag, connect tools, and turn repeatable work into scalable systems." },
-                { title: "Startup Launch Support", desc: "Launch planning, technical execution, and post-launch refinement for teams moving from idea to traction." }
+                { title: "Scoping", statement: "Define the mission.", support: "Map the fastest path to launch." },
+                { title: "Product Design", statement: "Design that moves.", support: "Clear flows. Sharp interfaces. Built for action." },
+                { title: "MVPs", statement: "Validate fast.", support: "Test the idea before scaling the build." },
+                { title: "Development", statement: "Built to scale.", support: "Fast, secure systems ready for production." },
+                { title: "Operations", statement: "Always live.", support: "Deploy, monitor, and keep performance steady." },
+                { title: "Automation", statement: "Work less.", support: "Systems that remove drag and compound speed." },
+                { title: "Team Design", statement: "Structure for speed.", support: "Roles, workflows, and rituals that scale execution." },
+                { title: "AI Strategy", statement: "Apply AI clearly.", support: "Automate, optimize, and unlock product leverage." }
               ].map((service, i) => (
                 <motion.div 
                   key={service.title}
@@ -144,7 +148,10 @@ export default function Home() {
                 >
                   <div className="text-sm font-bold tracking-widest mb-6">0{i + 1}</div>
                   <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
-                  <p className="text-black/60 leading-relaxed">{service.desc}</p>
+                  <div className="space-y-2 leading-relaxed">
+                    <div className="text-black font-medium">{service.statement}</div>
+                    <div className="text-black/60">{service.support}</div>
+                  </div>
                 </motion.div>
               ))}
             </div>
