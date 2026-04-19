@@ -15,15 +15,15 @@ export function Navbar() {
       </Link>
       
       <div className="hidden md:flex items-center justify-center gap-8 text-sm tracking-widest font-medium uppercase">
-        <a href="#about" className="hover:opacity-50 transition-opacity">About</a>
-        <a href="#services" className="hover:opacity-50 transition-opacity">Services</a>
-        <a href="#work" className="hover:opacity-50 transition-opacity">Work</a>
-        <a href="#process" className="hover:opacity-50 transition-opacity">Process</a>
+        <a href="/#about" className="hover:opacity-50 transition-opacity">About</a>
+        <a href="/#services" className="hover:opacity-50 transition-opacity">Services</a>
+        <a href="/#work" className="hover:opacity-50 transition-opacity">Work</a>
+        <a href="/#process" className="hover:opacity-50 transition-opacity">Process</a>
       </div>
 
-      <a href="#contact" className="justify-self-end text-sm font-medium tracking-widest uppercase border border-white/20 px-4 py-2 hover:bg-white hover:text-black transition-colors duration-300">
+      <Link href="/work-with-us" className="justify-self-end text-sm font-medium tracking-widest uppercase border border-white/20 px-4 py-2 hover:bg-white hover:text-black transition-colors duration-300">
         Work With Us
-      </a>
+      </Link>
     </motion.nav>
   );
 }
