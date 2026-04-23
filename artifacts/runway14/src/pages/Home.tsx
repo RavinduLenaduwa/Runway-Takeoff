@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { motion, useScroll, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { animate, motion, useInView, useScroll, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -8,6 +8,29 @@ const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
 };
+
+function Counter({ to, suffix = "", duration = 2 }: { to: number; suffix?: string; duration?: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+  const [val, setVal] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    const controls = animate(0, to, {
+      duration,
+      ease: [0.16, 1, 0.3, 1],
+      onUpdate: (v) => setVal(v),
+    });
+    return () => controls.stop();
+  }, [inView, to, duration]);
+
+  return (
+    <span ref={ref}>
+      {Math.round(val)}
+      {suffix}
+    </span>
+  );
+}
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -203,6 +226,35 @@ export default function Home() {
                   </div>
                 ))
               )}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* STATS */}
+        <section className="py-24 md:py-32 px-6 md:px-12 lg:px-24 border-b border-white/5">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={staggerContainer}
+              className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8"
+            >
+              {[
+                { value: 12, suffix: "", label: "Launches Shipped" },
+                { value: 4, suffix: "", label: "Industries Served" },
+                { value: 2, suffix: " wks", label: "Avg Ramp Time" },
+                { value: 100, suffix: "%", label: "Founder Focus" },
+              ].map((stat) => (
+                <motion.div key={stat.label} variants={fadeUp} className="text-center md:text-left">
+                  <div className="text-5xl md:text-7xl font-bold tracking-tighter mb-3">
+                    <Counter to={stat.value} suffix={stat.suffix} />
+                  </div>
+                  <div className="text-xs tracking-[0.25em] uppercase text-white/40">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
           </div>
         </section>
