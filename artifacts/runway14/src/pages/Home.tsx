@@ -34,60 +34,63 @@ export default function Home() {
         <section className="relative h-screen flex items-center justify-center px-6 md:px-12 lg:px-24 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
             <motion.div
-              className="absolute -top-1/3 left-1/2 -translate-x-1/2 h-[120vmin] w-[120vmin] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.06)_0%,transparent_60%)]"
-              animate={{ scale: [1, 1.08, 1], opacity: [0.6, 1, 0.6] }}
-              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-1/3 left-1/2 -translate-x-1/2 h-[120vmin] w-[120vmin] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.16)_0%,transparent_60%)]"
+              animate={{ scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div
-              className="absolute -bottom-1/3 -left-1/4 h-[80vmin] w-[80vmin] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_0%,transparent_70%)]"
-              animate={{ x: [0, 40, 0], y: [0, -20, 0] }}
-              transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -bottom-1/3 -left-1/4 h-[90vmin] w-[90vmin] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.12)_0%,transparent_70%)]"
+              animate={{ x: [0, 90, 0], y: [0, -60, 0] }}
+              transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div
-              className="absolute -top-1/4 -right-1/4 h-[70vmin] w-[70vmin] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.035)_0%,transparent_70%)]"
-              animate={{ x: [0, -30, 0], y: [0, 30, 0] }}
-              transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-1/4 -right-1/4 h-[80vmin] w-[80vmin] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)]"
+              animate={{ x: [0, -80, 0], y: [0, 70, 0] }}
+              transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div
-              className="absolute inset-0 opacity-[0.07] mix-blend-overlay"
+              className="absolute inset-0 opacity-[0.18] mix-blend-overlay"
               style={{
                 backgroundImage:
-                  "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
-                backgroundSize: "80px 80px",
+                  "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
+                backgroundSize: "70px 70px",
                 maskImage:
-                  "radial-gradient(circle at center, black 0%, transparent 70%)",
+                  "radial-gradient(circle at center, black 10%, transparent 80%)",
                 WebkitMaskImage:
-                  "radial-gradient(circle at center, black 0%, transparent 70%)",
+                  "radial-gradient(circle at center, black 10%, transparent 80%)",
               }}
-              animate={{ backgroundPosition: ["0px 0px", "80px 80px"] }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              animate={{ backgroundPosition: ["0px 0px", "70px 70px"] }}
+              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
             />
             <motion.div
-              className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"
+              className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent"
               initial={{ top: "10%", opacity: 0 }}
-              animate={{ top: ["10%", "90%"], opacity: [0, 0.6, 0] }}
-              transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+              animate={{ top: ["5%", "95%"], opacity: [0, 1, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div
-              className="absolute top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/30 to-transparent"
-              initial={{ left: "20%", opacity: 0 }}
-              animate={{ left: ["20%", "80%"], opacity: [0, 0.4, 0] }}
-              transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+              className="absolute top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/60 to-transparent"
+              initial={{ left: "15%", opacity: 0 }}
+              animate={{ left: ["15%", "85%"], opacity: [0, 0.8, 0] }}
+              transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 2 }}
             />
             {[
-              { top: "18%", left: "12%", d: 6 },
-              { top: "32%", left: "82%", d: 8 },
-              { top: "68%", left: "22%", d: 10 },
-              { top: "78%", left: "70%", d: 7 },
-              { top: "46%", left: "92%", d: 9 },
-              { top: "22%", left: "55%", d: 11 },
+              { top: "18%", left: "12%", d: 4 },
+              { top: "32%", left: "82%", d: 5 },
+              { top: "68%", left: "22%", d: 6 },
+              { top: "78%", left: "70%", d: 4.5 },
+              { top: "46%", left: "92%", d: 5.5 },
+              { top: "22%", left: "55%", d: 7 },
+              { top: "58%", left: "8%", d: 5 },
+              { top: "85%", left: "45%", d: 6 },
+              { top: "12%", left: "38%", d: 5 },
             ].map((p, i) => (
               <motion.span
                 key={i}
-                className="absolute h-1 w-1 rounded-full bg-white/40"
+                className="absolute h-1.5 w-1.5 rounded-full bg-white/80 shadow-[0_0_8px_rgba(255,255,255,0.6)]"
                 style={{ top: p.top, left: p.left }}
-                animate={{ opacity: [0.1, 0.7, 0.1], y: [0, -12, 0] }}
-                transition={{ duration: p.d, repeat: Infinity, ease: "easeInOut", delay: i * 0.6 }}
+                animate={{ opacity: [0.2, 1, 0.2], y: [0, -24, 0] }}
+                transition={{ duration: p.d, repeat: Infinity, ease: "easeInOut", delay: i * 0.4 }}
               />
             ))}
           </div>
