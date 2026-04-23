@@ -104,20 +104,30 @@ export default function Home() {
         </section>
 
         {/* LOGOS / SOCIAL PROOF */}
-        <section className="py-24 border-y border-white/5 bg-white/[0.02]">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={staggerContainer}
-              className="flex flex-wrap justify-center md:justify-between items-center gap-12 opacity-50 grayscale"
+        <section className="py-20 border-y border-white/5 bg-white/[0.02] overflow-hidden">
+          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 mb-10">
+            <div className="text-xs tracking-[0.3em] uppercase text-white/40 text-center">
+              Trusted by builders shipping at speed
+            </div>
+          </div>
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-10" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10" />
+            <motion.div
+              className="flex gap-20 whitespace-nowrap will-change-transform"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
             >
-              {["VERTEX", "NEURAL", "QUANTUM", "SYNAPSE", "AETHER"].map((logo) => (
-                <motion.div key={logo} variants={fadeUp} className="text-xl md:text-2xl font-bold tracking-widest">
-                  {logo}
-                </motion.div>
-              ))}
+              {Array.from({ length: 2 }).flatMap((_, i) =>
+                ["VERTEX", "NEURAL", "QUANTUM", "SYNAPSE", "AETHER", "HELIX", "ORBIT", "PARALLAX"].map((logo) => (
+                  <div
+                    key={`${logo}-${i}`}
+                    className="text-2xl md:text-3xl font-bold tracking-[0.2em] text-white/40 shrink-0"
+                  >
+                    {logo}
+                  </div>
+                ))
+              )}
             </motion.div>
           </div>
         </section>
