@@ -31,8 +31,36 @@ export default function Home() {
 
       <main>
         {/* HERO SECTION */}
-        <section className="relative h-screen flex items-center justify-center px-6 md:px-12 lg:px-24">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0%,transparent_100%)] pointer-events-none" />
+        <section className="relative h-screen flex items-center justify-center px-6 md:px-12 lg:px-24 overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none">
+            <motion.div
+              className="absolute -top-1/3 left-1/2 -translate-x-1/2 h-[120vmin] w-[120vmin] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.06)_0%,transparent_60%)]"
+              animate={{ scale: [1, 1.08, 1], opacity: [0.6, 1, 0.6] }}
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute -bottom-1/3 -left-1/4 h-[80vmin] w-[80vmin] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_0%,transparent_70%)]"
+              animate={{ x: [0, 40, 0], y: [0, -20, 0] }}
+              transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute -top-1/4 -right-1/4 h-[70vmin] w-[70vmin] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.035)_0%,transparent_70%)]"
+              animate={{ x: [0, -30, 0], y: [0, 30, 0] }}
+              transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <div
+              className="absolute inset-0 opacity-[0.06] mix-blend-overlay"
+              style={{
+                backgroundImage:
+                  "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+                backgroundSize: "80px 80px",
+                maskImage:
+                  "radial-gradient(circle at center, black 0%, transparent 70%)",
+                WebkitMaskImage:
+                  "radial-gradient(circle at center, black 0%, transparent 70%)",
+              }}
+            />
+          </div>
           
           <motion.div 
             initial="hidden"
