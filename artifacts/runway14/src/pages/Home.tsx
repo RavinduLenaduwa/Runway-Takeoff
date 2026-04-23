@@ -48,8 +48,8 @@ export default function Home() {
               animate={{ x: [0, -30, 0], y: [0, 30, 0] }}
               transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
             />
-            <div
-              className="absolute inset-0 opacity-[0.06] mix-blend-overlay"
+            <motion.div
+              className="absolute inset-0 opacity-[0.07] mix-blend-overlay"
               style={{
                 backgroundImage:
                   "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
@@ -59,7 +59,37 @@ export default function Home() {
                 WebkitMaskImage:
                   "radial-gradient(circle at center, black 0%, transparent 70%)",
               }}
+              animate={{ backgroundPosition: ["0px 0px", "80px 80px"] }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
             />
+            <motion.div
+              className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"
+              initial={{ top: "10%", opacity: 0 }}
+              animate={{ top: ["10%", "90%"], opacity: [0, 0.6, 0] }}
+              transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/30 to-transparent"
+              initial={{ left: "20%", opacity: 0 }}
+              animate={{ left: ["20%", "80%"], opacity: [0, 0.4, 0] }}
+              transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+            />
+            {[
+              { top: "18%", left: "12%", d: 6 },
+              { top: "32%", left: "82%", d: 8 },
+              { top: "68%", left: "22%", d: 10 },
+              { top: "78%", left: "70%", d: 7 },
+              { top: "46%", left: "92%", d: 9 },
+              { top: "22%", left: "55%", d: 11 },
+            ].map((p, i) => (
+              <motion.span
+                key={i}
+                className="absolute h-1 w-1 rounded-full bg-white/40"
+                style={{ top: p.top, left: p.left }}
+                animate={{ opacity: [0.1, 0.7, 0.1], y: [0, -12, 0] }}
+                transition={{ duration: p.d, repeat: Infinity, ease: "easeInOut", delay: i * 0.6 }}
+              />
+            ))}
           </div>
           
           <motion.div 
