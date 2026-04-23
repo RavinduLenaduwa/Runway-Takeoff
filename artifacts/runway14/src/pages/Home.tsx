@@ -1,4 +1,5 @@
-import { motion, useScroll } from "framer-motion";
+import { useEffect } from "react";
+import { motion, useScroll, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -21,6 +22,30 @@ const staggerContainer = {
 export default function Home() {
   const { scrollYProgress } = useScroll();
 
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothX = useSpring(mouseX, { stiffness: 50, damping: 20, mass: 0.6 });
+  const smoothY = useSpring(mouseY, { stiffness: 50, damping: 20, mass: 0.6 });
+  const glow1X = useTransform(smoothX, (v) => v * 40);
+  const glow1Y = useTransform(smoothY, (v) => v * 40);
+  const glow2X = useTransform(smoothX, (v) => v * -60);
+  const glow2Y = useTransform(smoothY, (v) => v * -30);
+  const glow3X = useTransform(smoothX, (v) => v * -30);
+  const glow3Y = useTransform(smoothY, (v) => v * 50);
+  const gridX = useTransform(smoothX, (v) => v * -20);
+  const gridY = useTransform(smoothY, (v) => v * -20);
+
+  useEffect(() => {
+    function onMove(e: MouseEvent) {
+      const x = (e.clientX / window.innerWidth) * 2 - 1;
+      const y = (e.clientY / window.innerHeight) * 2 - 1;
+      mouseX.set(x);
+      mouseY.set(y);
+    }
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [mouseX, mouseY]);
+
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black overflow-hidden font-sans">
       <Navbar />
@@ -34,20 +59,35 @@ export default function Home() {
         <section className="relative h-screen flex items-center justify-center px-6 md:px-12 lg:px-24 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
             <motion.div
-              className="absolute -top-1/3 left-1/2 -translate-x-1/2 h-[120vmin] w-[120vmin] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.16)_0%,transparent_60%)]"
-              animate={{ scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            />
+              className="absolute -top-1/3 left-1/2 -translate-x-1/2 h-[120vmin] w-[120vmin]"
+              style={{ x: glow1X, y: glow1Y }}
+            >
+              <motion.div
+                className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.16)_0%,transparent_60%)]"
+                animate={{ scale: [1, 1.15, 1], opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </motion.div>
             <motion.div
-              className="absolute -bottom-1/3 -left-1/4 h-[90vmin] w-[90vmin] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.12)_0%,transparent_70%)]"
-              animate={{ x: [0, 90, 0], y: [0, -60, 0] }}
-              transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-            />
+              className="absolute -bottom-1/3 -left-1/4 h-[90vmin] w-[90vmin]"
+              style={{ x: glow2X, y: glow2Y }}
+            >
+              <motion.div
+                className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.12)_0%,transparent_70%)]"
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </motion.div>
             <motion.div
-              className="absolute -top-1/4 -right-1/4 h-[80vmin] w-[80vmin] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)]"
-              animate={{ x: [0, -80, 0], y: [0, 70, 0] }}
-              transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
-            />
+              className="absolute -top-1/4 -right-1/4 h-[80vmin] w-[80vmin]"
+              style={{ x: glow3X, y: glow3Y }}
+            >
+              <motion.div
+                className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)]"
+                animate={{ scale: [1, 1.12, 1] }}
+                transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </motion.div>
             <motion.div
               className="absolute inset-0 opacity-[0.18] mix-blend-overlay"
               style={{
@@ -58,6 +98,8 @@ export default function Home() {
                   "radial-gradient(circle at center, black 10%, transparent 80%)",
                 WebkitMaskImage:
                   "radial-gradient(circle at center, black 10%, transparent 80%)",
+                x: gridX,
+                y: gridY,
               }}
               animate={{ backgroundPosition: ["0px 0px", "70px 70px"] }}
               transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
