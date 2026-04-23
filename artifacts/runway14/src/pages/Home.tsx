@@ -373,13 +373,51 @@ export default function Home() {
         </section>
 
         {/* CTA */}
-        <section id="contact" className="py-32 md:py-48 px-6 md:px-12 lg:px-24 border-t border-white/10 text-center">
+        <section id="contact" className="relative py-32 md:py-48 px-6 md:px-12 lg:px-24 border-t border-white/10 text-center overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none">
+            <motion.div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[100vmin] w-[100vmin]"
+              style={{ x: glow1X, y: glow1Y }}
+            >
+              <motion.div
+                className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.14)_0%,transparent_60%)]"
+                animate={{ scale: [1, 1.12, 1], opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </motion.div>
+            <motion.div
+              className="absolute -bottom-1/4 -right-1/4 h-[70vmin] w-[70vmin]"
+              style={{ x: glow2X, y: glow2Y }}
+            >
+              <motion.div
+                className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)]"
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </motion.div>
+            <motion.div
+              className="absolute inset-0 opacity-[0.12] mix-blend-overlay"
+              style={{
+                backgroundImage:
+                  "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
+                backgroundSize: "70px 70px",
+                maskImage:
+                  "radial-gradient(circle at center, black 10%, transparent 80%)",
+                WebkitMaskImage:
+                  "radial-gradient(circle at center, black 10%, transparent 80%)",
+                x: gridX,
+                y: gridY,
+              }}
+              animate={{ backgroundPosition: ["0px 0px", "70px 70px"] }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            />
+          </div>
           <motion.div 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
-            className="max-w-4xl mx-auto"
+            className="relative max-w-4xl mx-auto"
           >
             <motion.h2 variants={fadeUp} className="text-5xl md:text-8xl font-bold tracking-tighter mb-8">
               READY FOR<br />TAKEOFF?
