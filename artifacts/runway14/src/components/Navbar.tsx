@@ -1,19 +1,19 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import logoPath from "@assets/Runway_14_1776607219168.png";
 
 export function Navbar() {
   return (
-    <motion.nav 
+    <motion.nav
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className="fixed top-0 left-0 right-0 z-50 grid grid-cols-[1fr_auto_1fr] items-center px-6 py-6 mix-blend-difference text-white"
     >
-      <Link href="/" className="flex items-center gap-2">
-        <img src={logoPath} alt="RWY14" className="h-6 w-auto object-contain invert" />
+      <Link href="/" className="flex items-center gap-2 font-bold tracking-tight text-base md:text-lg leading-none">
+        <span>Runway</span>
+        <span className="inline-flex items-center justify-center border border-current px-1.5 py-1 text-xs leading-none">14</span>
       </Link>
-      
+
       <div className="hidden md:flex items-center justify-center gap-8 text-sm tracking-widest font-medium uppercase">
         <a href="/#about" className="hover:opacity-50 transition-opacity">About</a>
         <a href="/#services" className="hover:opacity-50 transition-opacity">Services</a>
