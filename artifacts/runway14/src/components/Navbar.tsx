@@ -17,7 +17,6 @@ export function Navbar() {
       <div className="hidden md:flex items-center justify-center gap-8 text-sm tracking-widest font-medium uppercase">
         <a href="/#about" className="hover:opacity-50 transition-opacity">About</a>
         <a href="/#services" className="hover:opacity-50 transition-opacity">Services</a>
-        <a href="/#work" className="hover:opacity-50 transition-opacity">Work</a>
         <a href="/#process" className="hover:opacity-50 transition-opacity">Process</a>
       </div>
 

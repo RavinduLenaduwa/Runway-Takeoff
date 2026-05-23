@@ -375,56 +375,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* WORK / CASE STUDIES */}
-        <section id="work" className="py-32 md:py-48 px-6 md:px-12 lg:px-24">
-          <div className="max-w-7xl mx-auto">
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={fadeUp}
-              className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8"
-            >
-              <div>
-                <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">[ 04 — Portfolio ]</h2>
-                <div className="text-4xl md:text-6xl font-bold tracking-tight">Digital products crafted for modern businesses.</div>
-              </div>
-            </motion.div>
-
-            <div className="space-y-32">
-              {[
-                { name: "Aura AI", role: "AI Workflow Platform", metric: "10x Faster Processing" },
-                { name: "Nexus", role: "Fintech Infrastructure", metric: "$50M Processed Monthly" },
-                { name: "Vanguard", role: "Enterprise Analytics", metric: "Zero Downtime" }
-              ].map((project, i) => (
-                <motion.div 
-                  key={project.name}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-100px" }}
-                  variants={fadeUp}
-                  className="group cursor-pointer"
-                >
-                  <div className="w-full h-[40vh] md:h-[60vh] bg-white/5 mb-8 relative overflow-hidden flex items-center justify-center border border-white/10 group-hover:border-white/30 transition-colors duration-500">
-                    <div className="w-1/2 h-1/2 bg-white/10 rotate-45 group-hover:scale-110 transition-transform duration-700 ease-out" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  </div>
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                      <h3 className="text-3xl font-bold mb-2">{project.name}</h3>
-                      <p className="text-white/50">{project.role}</p>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm tracking-widest uppercase text-white/30 mb-1">Impact</div>
-                      <div className="font-mono">{project.metric}</div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* CTA */}
         <section id="contact" className="relative py-32 md:py-48 px-6 md:px-12 lg:px-24 border-t border-white/10 text-center overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
