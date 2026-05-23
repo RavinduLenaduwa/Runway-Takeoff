@@ -167,20 +167,23 @@ export default function Home() {
             className="w-full max-w-7xl mx-auto flex flex-col items-center text-center mt-20"
           >
             <motion.div variants={fadeUp} className="text-xs md:text-sm tracking-[0.3em] text-white/50 uppercase mb-8">
-              System 14 Online
+              Global Digital Product Studio
             </motion.div>
             <motion.h1 variants={fadeUp} className="text-5xl md:text-7xl lg:text-9xl font-bold tracking-tighter leading-none mb-8">
               LAUNCH FASTER.<br />
               <span className="text-white/20">SCALE SMARTER.</span>
             </motion.h1>
             <motion.p variants={fadeUp} className="text-lg md:text-xl text-white/50 max-w-2xl font-light mb-12">
-              We build AI-powered products and systems that take your idea from runway to reality.
+              We design and build high-performance websites, business systems, and digital products that help ambitious businesses move faster and scale smarter.
             </motion.p>
-            <motion.div variants={fadeUp}>
+            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 items-center justify-center">
               <Link href="/work-with-us" className="group relative inline-flex items-center justify-center px-8 py-4 font-medium tracking-widest text-sm uppercase bg-white text-black overflow-hidden">
-                <span className="relative z-10 group-hover:text-white transition-colors duration-500">Work With Us</span>
+                <span className="relative z-10 group-hover:text-white transition-colors duration-500">Start Your Project</span>
                 <div className="absolute inset-0 bg-black translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out" />
               </Link>
+              <a href="/#work" className="inline-flex items-center justify-center px-8 py-4 font-medium tracking-widest text-sm uppercase border border-white/20 text-white/70 hover:text-white hover:border-white transition-colors duration-300">
+                Explore Our Work
+              </a>
             </motion.div>
           </motion.div>
 
@@ -205,7 +208,7 @@ export default function Home() {
         <section className="py-20 border-y border-white/5 bg-white/[0.02] overflow-hidden">
           <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 mb-10">
             <div className="text-xs tracking-[0.3em] uppercase text-white/40 text-center">
-              Trusted by builders shipping at speed
+              Trusted by ambitious businesses worldwide
             </div>
           </div>
           <div className="relative">
@@ -268,10 +271,10 @@ export default function Home() {
               viewport={{ once: true, margin: "-100px" }}
               variants={fadeUp}
             >
-              <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">[ 01 — Mission ]</h2>
+              <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">[ 01 — Studio ]</h2>
               <div className="text-3xl md:text-5xl font-light leading-tight">
-                Less noise.<br />
-                <span className="font-bold">More signal.</span>
+                Ideas into<br />
+                <span className="font-bold">powerful products.</span>
               </div>
             </motion.div>
             <motion.div 
@@ -282,10 +285,10 @@ export default function Home() {
               className="text-lg md:text-xl text-white/50 space-y-8 font-light"
             >
               <p>
-                In an era of endless possibilities, constraint is your greatest asset. We engineer digital products stripped of the non-essential, leaving only what drives growth.
+                Runway 14 is a digital product studio helping businesses transform ideas into powerful digital experiences.
               </p>
               <p>
-                Runway 14 was founded on a singular premise: bold ideas require disciplined execution. We don't just build software; we build the infrastructure for acceleration.
+                By combining strategic thinking, rapid development workflows, and modern product execution, we deliver software solutions built for speed, scalability, and impact.
               </p>
             </motion.div>
           </div>
@@ -302,19 +305,16 @@ export default function Home() {
               className="mb-24"
             >
               <h2 className="text-xs tracking-[0.2em] text-black/50 uppercase mb-8">[ 02 — Capabilities ]</h2>
-              <div className="text-4xl md:text-6xl font-bold tracking-tight">Services</div>
+              <div className="text-4xl md:text-6xl font-bold tracking-tight">What We Build</div>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
               {[
-                { title: "Scoping", statement: "Define the mission.", support: "Map the fastest path to launch." },
-                { title: "Product Design", statement: "Design that moves.", support: "Clear flows. Sharp interfaces. Built for action." },
-                { title: "MVPs", statement: "Validate fast.", support: "Test the idea before scaling the build." },
-                { title: "Development", statement: "Built to scale.", support: "Fast, secure systems ready for production." },
-                { title: "Operations", statement: "Always live.", support: "Deploy, monitor, and keep performance steady." },
-                { title: "Automation", statement: "Work less.", support: "Systems that remove drag and compound speed." },
-                { title: "Team Design", statement: "Structure for speed.", support: "Roles, workflows, and rituals that scale execution." },
-                { title: "AI Strategy", statement: "Apply AI clearly.", support: "Automate, optimize, and unlock product leverage." }
+                { title: "Product Development", statement: "End-to-end.", support: "Full digital product design and development from concept to launch." },
+                { title: "Website Engineering", statement: "Performance first.", support: "Conversion-focused websites built for growth and speed." },
+                { title: "Business Systems", statement: "Streamline everything.", support: "Custom internal platforms that automate workflows and operations." },
+                { title: "MVP Launch", statement: "Validate fast.", support: "Rapid validation and launch for startup ideas." },
+                { title: "Digital Transformation", statement: "Modernise at scale.", support: "Solutions that optimise business processes for the long run." },
               ].map((service, i) => (
                 <motion.div 
                   key={service.title}
@@ -347,15 +347,16 @@ export default function Home() {
               className="mb-24"
             >
               <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">[ 03 — Execution ]</h2>
-              <div className="text-4xl md:text-6xl font-bold tracking-tight">Discover → Build → Launch → Scale</div>
+              <div className="text-4xl md:text-6xl font-bold tracking-tight">Discover → Define → Build → Launch → Scale</div>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12">
               {[
-                { step: "01", title: "Discover", desc: "Define the opportunity, the user, and the smallest path to meaningful traction." },
-                { step: "02", title: "Build", desc: "Engineer the core product and systems with speed, clarity, and scalable foundations." },
-                { step: "03", title: "Launch", desc: "Ship the experience, validate in market, and remove friction from the first mile." },
-                { step: "04", title: "Scale", desc: "Refine the system, automate operations, and prepare the product for accelerated growth." }
+                { step: "01", title: "Discover", desc: "Understand business goals, identify opportunities, and map the clearest path forward." },
+                { step: "02", title: "Define", desc: "Shape the product strategy, scope, and architecture before a single line of code is written." },
+                { step: "03", title: "Build", desc: "Rapid development and iteration — shipping working software at every milestone." },
+                { step: "04", title: "Launch", desc: "Deploy with precision. Go live with confidence and remove friction from day one." },
+                { step: "05", title: "Scale", desc: "Optimise, automate, and evolve the product for long-term growth and impact." }
               ].map((phase, i) => (
                 <motion.div 
                   key={phase.step}
@@ -385,8 +386,8 @@ export default function Home() {
               className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8"
             >
               <div>
-                <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">[ 04 — Deployment ]</h2>
-                <div className="text-4xl md:text-6xl font-bold tracking-tight">Recent Launches</div>
+                <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">[ 04 — Portfolio ]</h2>
+                <div className="text-4xl md:text-6xl font-bold tracking-tight">Digital products crafted for modern businesses.</div>
               </div>
             </motion.div>
 
@@ -472,14 +473,14 @@ export default function Home() {
             className="relative max-w-4xl mx-auto"
           >
             <motion.h2 variants={fadeUp} className="text-5xl md:text-8xl font-bold tracking-tighter mb-8">
-              READY FOR<br />TAKEOFF?
+              BUILD WHAT’S<br />NEXT.
             </motion.h2>
             <motion.p variants={fadeUp} className="text-lg md:text-xl text-white/50 font-light mb-12">
-              Tell us what you’re building. We’ll map the shortest path from idea to launch.
+              Let’s create digital products that move your business forward.
             </motion.p>
             <motion.div variants={fadeUp}>
               <Link href="/work-with-us" className="inline-block border border-white px-12 py-6 text-sm font-bold tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-all duration-300">
-                Work With Us
+                Book a Discovery Call
               </Link>
             </motion.div>
           </motion.div>
