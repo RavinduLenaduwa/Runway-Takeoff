@@ -167,22 +167,22 @@ export default function Home() {
             className="w-full max-w-7xl mx-auto flex flex-col items-center text-center mt-20"
           >
             <motion.div variants={fadeUp} className="text-xs md:text-sm tracking-[0.3em] text-white/50 uppercase mb-8">
-              Global Digital Product Studio
+              Custom Software &amp; Web App Development
             </motion.div>
             <motion.h1 variants={fadeUp} className="text-5xl md:text-7xl lg:text-9xl font-bold tracking-tighter leading-none mb-8">
-              LAUNCH FASTER.<br />
-              <span className="text-white/20">SCALE SMARTER.</span>
+              WE WRITE<br />
+              <span className="text-white/20">THE CODE.</span>
             </motion.h1>
             <motion.p variants={fadeUp} className="text-lg md:text-xl text-white/50 max-w-2xl font-light mb-12">
-              We design and build high-performance websites, business systems, and digital products that help ambitious businesses move faster and scale smarter.
+              We build custom software and web applications that solve real business problems — fast, scalable, and engineered to last.
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 items-center justify-center">
               <Link href="/work-with-us" className="group relative inline-flex items-center justify-center px-8 py-4 font-medium tracking-widest text-sm uppercase bg-white text-black overflow-hidden">
-                <span className="relative z-10 group-hover:text-white transition-colors duration-500">Start Your Project</span>
+                <span className="relative z-10 group-hover:text-white transition-colors duration-500">Start Building</span>
                 <div className="absolute inset-0 bg-black translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out" />
               </Link>
-              <a href="/#work" className="inline-flex items-center justify-center px-8 py-4 font-medium tracking-widest text-sm uppercase border border-white/20 text-white/70 hover:text-white hover:border-white transition-colors duration-300">
-                Explore Our Work
+              <a href="/#services" className="inline-flex items-center justify-center px-8 py-4 font-medium tracking-widest text-sm uppercase border border-white/20 text-white/70 hover:text-white hover:border-white transition-colors duration-300">
+                See What We Do
               </a>
             </motion.div>
           </motion.div>
@@ -244,10 +244,10 @@ export default function Home() {
               className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8"
             >
               {[
-                { value: 12, suffix: "", label: "Launches Shipped" },
-                { value: 4, suffix: "", label: "Industries Served" },
-                { value: 2, suffix: " wks", label: "Avg Ramp Time" },
-                { value: 100, suffix: "%", label: "Founder Focus" },
+                { value: 30, suffix: "+", label: "Apps Delivered" },
+                { value: 8, suffix: "+", label: "Industries Served" },
+                { value: 3, suffix: " wks", label: "Avg Time to MVP" },
+                { value: 100, suffix: "%", label: "Code Ownership" },
               ].map((stat) => (
                 <motion.div key={stat.label} variants={fadeUp} className="text-center md:text-left">
                   <div className="text-5xl md:text-7xl font-bold tracking-tighter mb-3">
@@ -273,8 +273,8 @@ export default function Home() {
             >
               <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">[ 01 — Studio ]</h2>
               <div className="text-3xl md:text-5xl font-light leading-tight">
-                Ideas into<br />
-                <span className="font-bold">powerful products.</span>
+                Code that<br />
+                <span className="font-bold">actually ships.</span>
               </div>
             </motion.div>
             <motion.div 
@@ -285,10 +285,10 @@ export default function Home() {
               className="text-lg md:text-xl text-white/50 space-y-8 font-light"
             >
               <p>
-                Runway 14 is a digital product studio helping businesses transform ideas into powerful digital experiences.
+                Runway 14 is a software development startup that turns complex problems into clean, production-ready web applications — built with modern stacks and shipped without the bloat.
               </p>
               <p>
-                By combining strategic thinking, rapid development workflows, and modern product execution, we deliver software solutions built for speed, scalability, and impact.
+                We work closely with founders, product teams, and growing businesses to deliver custom software that performs from day one and evolves with your needs.
               </p>
             </motion.div>
           </div>
@@ -310,11 +310,11 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
               {[
-                { title: "Product Development", statement: "End-to-end.", support: "Full digital product design and development from concept to launch." },
-                { title: "Website Engineering", statement: "Performance first.", support: "Conversion-focused websites built for growth and speed." },
-                { title: "Business Systems", statement: "Streamline everything.", support: "Custom internal platforms that automate workflows and operations." },
-                { title: "MVP Launch", statement: "Validate fast.", support: "Rapid validation and launch for startup ideas." },
-                { title: "Digital Transformation", statement: "Modernise at scale.", support: "Solutions that optimise business processes for the long run." },
+                { title: "Custom Web Apps", statement: "Built for you.", support: "Full-stack web applications tailored to your business logic, workflows, and users." },
+                { title: "MVP Development", statement: "Ship in weeks.", support: "Take your idea from zero to a working product fast — without cutting corners on quality." },
+                { title: "SaaS Platforms", statement: "Multi-tenant ready.", support: "Scalable SaaS architectures with auth, billing, dashboards, and role management built in." },
+                { title: "API & Integrations", statement: "Connect everything.", support: "RESTful and GraphQL APIs, third-party integrations, and backend services that just work." },
+                { title: "Legacy Modernisation", statement: "Rewrite. Rebuild.", support: "Replace outdated systems with modern, maintainable software that your team will actually enjoy using." },
               ].map((service, i) => (
                 <motion.div 
                   key={service.title}
@@ -347,16 +347,16 @@ export default function Home() {
               className="mb-24"
             >
               <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">[ 03 — Execution ]</h2>
-              <div className="text-4xl md:text-6xl font-bold tracking-tight">Discover → Define → Build → Launch → Scale</div>
+              <div className="text-4xl md:text-6xl font-bold tracking-tight">Scope → Architect → Code → Ship → Iterate</div>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12">
               {[
-                { step: "01", title: "Discover", desc: "Understand business goals, identify opportunities, and map the clearest path forward." },
-                { step: "02", title: "Define", desc: "Shape the product strategy, scope, and architecture before a single line of code is written." },
-                { step: "03", title: "Build", desc: "Rapid development and iteration — shipping working software at every milestone." },
-                { step: "04", title: "Launch", desc: "Deploy with precision. Go live with confidence and remove friction from day one." },
-                { step: "05", title: "Scale", desc: "Optimise, automate, and evolve the product for long-term growth and impact." }
+                { step: "01", title: "Scope", desc: "We get into the details — requirements, constraints, edge cases — so nothing gets lost in translation." },
+                { step: "02", title: "Architect", desc: "We design the technical foundation: stack, data models, APIs, and infrastructure — before writing a line of code." },
+                { step: "03", title: "Code", desc: "Focused sprints, clean commits, and continuous delivery — you see progress every week, not every quarter." },
+                { step: "04", title: "Ship", desc: "CI/CD pipelines, staging environments, and production-ready deployments. We don't just hand you files." },
+                { step: "05", title: "Iterate", desc: "Software is never done. We stay involved — fixing, improving, and evolving based on real usage." }
               ].map((phase, i) => (
                 <motion.div 
                   key={phase.step}
@@ -423,14 +423,14 @@ export default function Home() {
             className="relative max-w-4xl mx-auto"
           >
             <motion.h2 variants={fadeUp} className="text-5xl md:text-8xl font-bold tracking-tighter mb-8">
-              BUILD WHAT’S<br />NEXT.
+              GOT AN IDEA?<br />LET’S BUILD IT.
             </motion.h2>
             <motion.p variants={fadeUp} className="text-lg md:text-xl text-white/50 font-light mb-12">
-              Let’s create digital products that move your business forward.
+              Tell us what you’re trying to build. We’ll find the fastest path to make it real.
             </motion.p>
             <motion.div variants={fadeUp}>
               <Link href="/work-with-us" className="inline-block border border-white px-12 py-6 text-sm font-bold tracking-[0.2em] uppercase hover:bg-white hover:text-black transition-all duration-300">
-                Book a Discovery Call
+                Start a Conversation
               </Link>
             </motion.div>
           </motion.div>
@@ -441,3 +441,4 @@ export default function Home() {
     </div>
   );
 }
+
