@@ -3,6 +3,7 @@ import { animate, motion, useInView, useScroll, useMotionValue, useSpring, useTr
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -43,6 +44,7 @@ const staggerContainer = {
 };
 
 export default function Home() {
+  useDocumentTitle("Runway 14 | Web Apps, Websites, SEO & AI Automation");
   const { scrollYProgress } = useScroll();
 
   const mouseX = useMotionValue(0);
@@ -167,14 +169,14 @@ export default function Home() {
             className="w-full max-w-7xl mx-auto flex flex-col items-center text-center mt-20"
           >
             <motion.div variants={fadeUp} className="text-xs md:text-sm tracking-[0.3em] text-white/50 uppercase mb-8">
-              Custom Software &amp; Web App Development
+              Web Apps · Websites · SEO · AI Automation
             </motion.div>
             <motion.h1 variants={fadeUp} className="text-5xl md:text-7xl lg:text-9xl font-bold tracking-tighter leading-none mb-8">
-              WE WRITE<br />
-              <span className="text-white/20">THE CODE.</span>
+              WE BUILD<br />
+              <span className="text-white/20">DIGITAL MOMENTUM.</span>
             </motion.h1>
             <motion.p variants={fadeUp} className="text-lg md:text-xl text-white/50 max-w-2xl font-light mb-12">
-              We build web apps, websites, SEO foundations, and AI-driven automations that solve real business problems — fast, scalable, and engineered to last.
+              From web apps and websites to SEO and AI automation, we build the systems that move your business forward. Fast, scalable, and engineered to last.
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 items-center justify-center">
               <Link href="/work-with-us" className="group relative inline-flex items-center justify-center px-8 py-4 font-medium tracking-widest text-sm uppercase bg-white text-black overflow-hidden">
@@ -202,35 +204,6 @@ export default function Home() {
               />
             </div>
           </motion.div>
-        </section>
-
-        {/* LOGOS / SOCIAL PROOF */}
-        <section className="py-20 border-y border-white/5 bg-white/[0.02] overflow-hidden">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 mb-10">
-            <div className="text-xs tracking-[0.3em] uppercase text-white/40 text-center">
-              Trusted by ambitious businesses worldwide
-            </div>
-          </div>
-          <div className="relative">
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-10" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10" />
-            <motion.div
-              className="flex gap-20 whitespace-nowrap will-change-transform"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-            >
-              {Array.from({ length: 2 }).flatMap((_, i) =>
-                ["VERTEX", "NEURAL", "QUANTUM", "SYNAPSE", "AETHER", "HELIX", "ORBIT", "PARALLAX"].map((logo) => (
-                  <div
-                    key={`${logo}-${i}`}
-                    className="text-2xl md:text-3xl font-bold tracking-[0.2em] text-white/40 shrink-0"
-                  >
-                    {logo}
-                  </div>
-                ))
-              )}
-            </motion.div>
-          </div>
         </section>
 
         {/* STATS */}
@@ -271,7 +244,7 @@ export default function Home() {
               viewport={{ once: true, margin: "-100px" }}
               variants={fadeUp}
             >
-              <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">[ 01 — Studio ]</h2>
+              <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">[ 01 / Studio ]</h2>
               <div className="text-3xl md:text-5xl font-light leading-tight">
                 Code that<br />
                 <span className="font-bold">actually ships.</span>
@@ -285,7 +258,7 @@ export default function Home() {
               className="text-lg md:text-xl text-white/50 space-y-8 font-light"
             >
               <p>
-                Runway 14 is a software development startup that turns complex problems into clean, production-ready web applications — built with modern stacks and shipped without the bloat.
+                Runway 14 is a software development startup that turns complex problems into clean, production-ready web applications, built with modern stacks and shipped without the bloat.
               </p>
               <p>
                 We work closely with founders, product teams, and growing businesses to deliver custom software that performs from day one and evolves with your needs.
@@ -304,7 +277,7 @@ export default function Home() {
               variants={fadeUp}
               className="mb-24"
             >
-              <h2 className="text-xs tracking-[0.2em] text-black/50 uppercase mb-8">[ 02 — Capabilities ]</h2>
+              <h2 className="text-xs tracking-[0.2em] text-black/50 uppercase mb-8">[ 02 / Capabilities ]</h2>
               <div className="text-4xl md:text-6xl font-bold tracking-tight">What We Do</div>
             </motion.div>
 
@@ -312,7 +285,7 @@ export default function Home() {
               {[
                 { title: "Web Apps", statement: "Built for you.", support: "Full-stack web applications tailored to your business logic, workflows, and users." },
                 { title: "Websites", statement: "Look the part.", support: "Fast, modern marketing and brochure sites that convert visitors into customers." },
-                { title: "SEO", statement: "Get found.", support: "On-page and technical SEO fundamentals — structure, speed, and content that search engines actually rank." },
+                { title: "SEO", statement: "Get found.", support: "On-page and technical SEO fundamentals: structure, speed, and content that search engines actually rank." },
                 { title: "AI Automations", statement: "Work smarter.", support: "Custom AI-powered workflows that cut manual, repetitive work out of your business." },
               ].map((service, i) => (
                 <motion.div 
@@ -345,17 +318,17 @@ export default function Home() {
               variants={fadeUp}
               className="mb-24"
             >
-              <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">[ 03 — Execution ]</h2>
+              <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">[ 03 / Execution ]</h2>
               <div className="text-4xl md:text-6xl font-bold tracking-tight">Scope → Architect → Code → Ship → Iterate</div>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12">
               {[
-                { step: "01", title: "Scope", desc: "We get into the details — requirements, constraints, edge cases — so nothing gets lost in translation." },
-                { step: "02", title: "Architect", desc: "We design the technical foundation: stack, data models, APIs, and infrastructure — before writing a line of code." },
-                { step: "03", title: "Code", desc: "Focused sprints, clean commits, and continuous delivery — you see progress every week, not every quarter." },
+                { step: "01", title: "Scope", desc: "We get into the details (requirements, constraints, edge cases) so nothing gets lost in translation." },
+                { step: "02", title: "Architect", desc: "Before writing a line of code, we design the technical foundation: stack, data models, APIs, and infrastructure." },
+                { step: "03", title: "Code", desc: "Focused sprints, clean commits, and continuous delivery: you see progress every week, not every quarter." },
                 { step: "04", title: "Ship", desc: "CI/CD pipelines, staging environments, and production-ready deployments. We don't just hand you files." },
-                { step: "05", title: "Iterate", desc: "Software is never done. We stay involved — fixing, improving, and evolving based on real usage." }
+                { step: "05", title: "Iterate", desc: "Software is never done. We stay involved, fixing, improving, and evolving based on real usage." }
               ].map((phase, i) => (
                 <motion.div 
                   key={phase.step}
