@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { animate, motion, useInView, useScroll, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useEffect } from "react";
+import { motion, useScroll, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -9,29 +9,6 @@ const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
 };
-
-function Counter({ to, suffix = "", duration = 2 }: { to: number; suffix?: string; duration?: number }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
-  const [val, setVal] = useState(0);
-
-  useEffect(() => {
-    if (!inView) return;
-    const controls = animate(0, to, {
-      duration,
-      ease: [0.16, 1, 0.3, 1],
-      onUpdate: (v) => setVal(v),
-    });
-    return () => controls.stop();
-  }, [inView, to, duration]);
-
-  return (
-    <span ref={ref}>
-      {Math.round(val)}
-      {suffix}
-    </span>
-  );
-}
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -173,10 +150,10 @@ export default function Home() {
             </motion.div>
             <motion.h1 variants={fadeUp} className="text-5xl md:text-7xl lg:text-9xl font-bold tracking-tighter leading-none mb-8">
               WE BUILD<br />
-              <span className="text-white/20">DIGITAL MOMENTUM.</span>
+              <span className="text-white/20">THINGS THAT WORK.</span>
             </motion.h1>
             <motion.p variants={fadeUp} className="text-lg md:text-xl text-white/50 max-w-2xl font-light mb-12">
-              From web apps and websites to SEO and AI automation, we build the systems that move your business forward. Fast, scalable, and engineered to last.
+              Web apps, websites, SEO, and AI automation for businesses that need software to actually work, not just launch.
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 items-center justify-center">
               <Link href="/work-with-us" className="group relative inline-flex items-center justify-center px-8 py-4 font-medium tracking-widest text-sm uppercase bg-white text-black overflow-hidden">
@@ -206,35 +183,6 @@ export default function Home() {
           </motion.div>
         </section>
 
-        {/* STATS */}
-        <section className="py-24 md:py-32 px-6 md:px-12 lg:px-24 border-b border-white/5">
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={staggerContainer}
-              className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8"
-            >
-              {[
-                { value: 30, suffix: "+", label: "Apps Delivered" },
-                { value: 8, suffix: "+", label: "Industries Served" },
-                { value: 3, suffix: " wks", label: "Avg Time to MVP" },
-                { value: 100, suffix: "%", label: "Code Ownership" },
-              ].map((stat) => (
-                <motion.div key={stat.label} variants={fadeUp} className="text-center md:text-left">
-                  <div className="text-5xl md:text-7xl font-bold tracking-tighter mb-3">
-                    <Counter to={stat.value} suffix={stat.suffix} />
-                  </div>
-                  <div className="text-xs tracking-[0.25em] uppercase text-white/40">
-                    {stat.label}
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
         {/* ABOUT */}
         <section id="about" className="py-32 md:py-48 px-6 md:px-12 lg:px-24">
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
@@ -244,7 +192,7 @@ export default function Home() {
               viewport={{ once: true, margin: "-100px" }}
               variants={fadeUp}
             >
-              <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">[ 01 / Studio ]</h2>
+              <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">Studio</h2>
               <div className="text-3xl md:text-5xl font-light leading-tight">
                 Code that<br />
                 <span className="font-bold">actually ships.</span>
@@ -277,18 +225,18 @@ export default function Home() {
               variants={fadeUp}
               className="mb-24"
             >
-              <h2 className="text-xs tracking-[0.2em] text-black/50 uppercase mb-8">[ 02 / Capabilities ]</h2>
+              <h2 className="text-xs tracking-[0.2em] text-black/50 uppercase mb-8">Capabilities</h2>
               <div className="text-4xl md:text-6xl font-bold tracking-tight">What We Do</div>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
               {[
-                { title: "Web Apps", statement: "Built for you.", support: "Full-stack web applications tailored to your business logic, workflows, and users." },
-                { title: "Websites", statement: "Look the part.", support: "Fast, modern marketing and brochure sites that convert visitors into customers." },
-                { title: "SEO", statement: "Get found.", support: "On-page and technical SEO fundamentals: structure, speed, and content that search engines actually rank." },
-                { title: "AI Automations", statement: "Work smarter.", support: "Custom AI-powered workflows that cut manual, repetitive work out of your business." },
-              ].map((service, i) => (
-                <motion.div 
+                { title: "Web Apps", support: "Full-stack web applications tailored to your business logic, workflows, and users." },
+                { title: "Websites", support: "Fast, modern marketing and brochure sites that convert visitors into customers." },
+                { title: "SEO", support: "On-page and technical SEO fundamentals: structure, speed, and content that search engines actually rank." },
+                { title: "AI Automations", support: "Custom AI-powered workflows that cut manual, repetitive work out of your business." },
+              ].map((service) => (
+                <motion.div
                   key={service.title}
                   initial="hidden"
                   whileInView="visible"
@@ -296,12 +244,8 @@ export default function Home() {
                   variants={fadeUp}
                   className="border-t border-black/10 pt-8"
                 >
-                  <div className="text-sm font-bold tracking-widest mb-6">0{i + 1}</div>
                   <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
-                  <div className="space-y-2 leading-relaxed">
-                    <div className="text-black font-medium">{service.statement}</div>
-                    <div className="text-black/60">{service.support}</div>
-                  </div>
+                  <div className="text-black/60 leading-relaxed">{service.support}</div>
                 </motion.div>
               ))}
             </div>
@@ -318,27 +262,26 @@ export default function Home() {
               variants={fadeUp}
               className="mb-24"
             >
-              <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">[ 03 / Execution ]</h2>
+              <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">Execution</h2>
               <div className="text-4xl md:text-6xl font-bold tracking-tight">Scope → Architect → Code → Ship → Iterate</div>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12">
               {[
-                { step: "01", title: "Scope", desc: "We get into the details (requirements, constraints, edge cases) so nothing gets lost in translation." },
-                { step: "02", title: "Architect", desc: "Before writing a line of code, we design the technical foundation: stack, data models, APIs, and infrastructure." },
-                { step: "03", title: "Code", desc: "Focused sprints, clean commits, and continuous delivery: you see progress every week, not every quarter." },
-                { step: "04", title: "Ship", desc: "CI/CD pipelines, staging environments, and production-ready deployments. We don't just hand you files." },
-                { step: "05", title: "Iterate", desc: "Software is never done. We stay involved, fixing, improving, and evolving based on real usage." }
-              ].map((phase, i) => (
-                <motion.div 
-                  key={phase.step}
+                { title: "Scope", desc: "We get into the details (requirements, constraints, edge cases) so nothing gets lost in translation." },
+                { title: "Architect", desc: "Before writing a line of code, we design the technical foundation: stack, data models, APIs, and infrastructure." },
+                { title: "Code", desc: "Focused sprints, clean commits, and continuous delivery: you see progress every week, not every quarter." },
+                { title: "Ship", desc: "CI/CD pipelines, staging environments, and production-ready deployments. We don't just hand you files." },
+                { title: "Iterate", desc: "Software is never done. We stay involved, fixing, improving, and evolving based on real usage." }
+              ].map((phase) => (
+                <motion.div
+                  key={phase.title}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: "-50px" }}
                   variants={fadeUp}
                   className="border-t border-white/10 pt-8 relative"
                 >
-                  <div className="text-xs font-mono tracking-widest text-white/50 mb-6">{phase.step}</div>
                   <h3 className="text-xl font-bold mb-4">{phase.title}</h3>
                   <p className="text-white/40 text-sm leading-relaxed">{phase.desc}</p>
                 </motion.div>
