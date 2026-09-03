@@ -58,7 +58,7 @@ export default function Home() {
 
       <main>
         {/* HERO SECTION */}
-        <section className="relative h-screen flex items-center justify-center px-6 md:px-12 lg:px-24 overflow-hidden">
+        <section className="relative min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-24 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none">
             <motion.div
               className="absolute -top-1/3 left-1/2 -translate-x-1/2 h-[120vmin] w-[120vmin]"
@@ -164,22 +164,22 @@ export default function Home() {
                 See What We Do
               </a>
             </motion.div>
-          </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5, duration: 1 }}
-            className="absolute bottom-12 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 text-white/30 text-xs tracking-widest uppercase"
-          >
-            <span>Scroll</span>
-            <div className="h-12 w-[1px] overflow-hidden bg-white/10">
-              <motion.div
-                className="h-full w-full origin-top bg-white/50"
-                animate={{ scaleY: [0, 1, 0], y: ["-100%", "0%", "100%"] }}
-                transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.5, duration: 1 }}
+              className="hidden sm:flex flex-col items-center gap-2 text-white/30 text-xs tracking-widest uppercase mt-16"
+            >
+              <span>Scroll</span>
+              <div className="h-12 w-[1px] overflow-hidden bg-white/10">
+                <motion.div
+                  className="h-full w-full origin-top bg-white/50"
+                  animate={{ scaleY: [0, 1, 0], y: ["-100%", "0%", "100%"] }}
+                  transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                />
+              </div>
+            </motion.div>
           </motion.div>
         </section>
 
