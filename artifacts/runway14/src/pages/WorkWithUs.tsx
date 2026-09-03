@@ -22,16 +22,33 @@ const staggerContainer = {
 export default function WorkWithUs() {
   const { scrollYProgress } = useScroll();
   const [hasExistingProduct, setHasExistingProduct] = useState("no");
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [servicesError, setServicesError] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  function toggleService(service: string) {
+    setSelectedServices((prev) =>
+      prev.includes(service) ? prev.filter((s) => s !== service) : [...prev, service]
+    );
+    setServicesError(false);
+  }
 
   function handleWorkWithUsSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
+    if (selectedServices.length === 0) {
+      setServicesError(true);
+      return;
+    }
+
     const formData = new FormData(event.currentTarget);
+    const services = formData.getAll("services");
     const details = [
       `Name: ${formData.get("name")}`,
       `Email: ${formData.get("email")}`,
       `Company / Project: ${formData.get("company") || "Not provided"}`,
+      "",
+      `Services: ${services.join(", ")}`,
       "",
       "What are you building?",
       `${formData.get("project")}`,
@@ -98,7 +115,32 @@ export default function WorkWithUs() {
               </div>
 
               <div className="space-y-6">
-                <div className="text-xs tracking-[0.25em] uppercase text-white/40">02 / Project</div>
+                <div className="text-xs tracking-[0.25em] uppercase text-white/40">02 / Services</div>
+                <fieldset className="space-y-4">
+                  <legend className="text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Which service(s) are you interested in? *</legend>
+                  <div className="grid grid-cols-2 gap-4">
+                    {["Web Apps", "Website", "SEO", "AI Automations"].map((service) => (
+                      <label key={service} className="cursor-pointer border border-white/15 px-4 py-4 text-sm tracking-[0.18em] uppercase text-white/60 transition-colors has-[:checked]:border-white has-[:checked]:text-white">
+                        <input
+                          type="checkbox"
+                          name="services"
+                          value={service}
+                          checked={selectedServices.includes(service)}
+                          onChange={() => toggleService(service)}
+                          className="sr-only"
+                        />
+                        {service}
+                      </label>
+                    ))}
+                  </div>
+                  {servicesError && (
+                    <div className="text-sm text-white/50">Pick at least one service.</div>
+                  )}
+                </fieldset>
+              </div>
+
+              <div className="space-y-6">
+                <div className="text-xs tracking-[0.25em] uppercase text-white/40">03 / Project</div>
                 <label className="block">
                   <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">What are you building? *</span>
                   <textarea required name="project" rows={4} className="w-full resize-none bg-transparent border border-white/15 px-4 py-4 text-white outline-none transition-colors focus:border-white" />
@@ -110,7 +152,7 @@ export default function WorkWithUs() {
               </div>
 
               <div className="space-y-6">
-                <div className="text-xs tracking-[0.25em] uppercase text-white/40">03 / Product Context</div>
+                <div className="text-xs tracking-[0.25em] uppercase text-white/40">04 / Product Context</div>
                 <fieldset className="space-y-4">
                   <legend className="text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Do you have an existing website or product?</legend>
                   <div className="grid grid-cols-2 gap-4">
@@ -139,7 +181,7 @@ export default function WorkWithUs() {
               </div>
 
               <div className="space-y-6">
-                <div className="text-xs tracking-[0.25em] uppercase text-white/40">04 / Budget</div>
+                <div className="text-xs tracking-[0.25em] uppercase text-white/40">05 / Budget</div>
                 <fieldset>
                   <legend className="text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Budget Range *</legend>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
