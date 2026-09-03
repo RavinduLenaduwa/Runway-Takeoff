@@ -174,7 +174,7 @@ export default function Home() {
               <span className="text-white/20">THE CODE.</span>
             </motion.h1>
             <motion.p variants={fadeUp} className="text-lg md:text-xl text-white/50 max-w-2xl font-light mb-12">
-              We build custom software and web applications that solve real business problems — fast, scalable, and engineered to last.
+              We build web apps, websites, SEO foundations, and AI-driven automations that solve real business problems — fast, scalable, and engineered to last.
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 items-center justify-center">
               <Link href="/work-with-us" className="group relative inline-flex items-center justify-center px-8 py-4 font-medium tracking-widest text-sm uppercase bg-white text-black overflow-hidden">
@@ -305,16 +305,15 @@ export default function Home() {
               className="mb-24"
             >
               <h2 className="text-xs tracking-[0.2em] text-black/50 uppercase mb-8">[ 02 — Capabilities ]</h2>
-              <div className="text-4xl md:text-6xl font-bold tracking-tight">What We Build</div>
+              <div className="text-4xl md:text-6xl font-bold tracking-tight">What We Do</div>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
               {[
-                { title: "Custom Web Apps", statement: "Built for you.", support: "Full-stack web applications tailored to your business logic, workflows, and users." },
-                { title: "MVP Development", statement: "Ship in weeks.", support: "Take your idea from zero to a working product fast — without cutting corners on quality." },
-                { title: "SaaS Platforms", statement: "Multi-tenant ready.", support: "Scalable SaaS architectures with auth, billing, dashboards, and role management built in." },
-                { title: "API & Integrations", statement: "Connect everything.", support: "RESTful and GraphQL APIs, third-party integrations, and backend services that just work." },
-                { title: "Legacy Modernisation", statement: "Rewrite. Rebuild.", support: "Replace outdated systems with modern, maintainable software that your team will actually enjoy using." },
+                { title: "Web Apps", statement: "Built for you.", support: "Full-stack web applications tailored to your business logic, workflows, and users." },
+                { title: "Websites", statement: "Look the part.", support: "Fast, modern marketing and brochure sites that convert visitors into customers." },
+                { title: "SEO", statement: "Get found.", support: "On-page and technical SEO fundamentals — structure, speed, and content that search engines actually rank." },
+                { title: "AI Automations", statement: "Work smarter.", support: "Custom AI-powered workflows that cut manual, repetitive work out of your business." },
               ].map((service, i) => (
                 <motion.div 
                   key={service.title}
