@@ -3,6 +3,7 @@ import { motion, useScroll } from "framer-motion";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { useDocumentTitle } from "@/hooks/use-document-title";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -20,6 +21,7 @@ const staggerContainer = {
 };
 
 export default function WorkWithUs() {
+  useDocumentTitle("Work With Us | Runway 14");
   const { scrollYProgress } = useScroll();
   const [hasExistingProduct, setHasExistingProduct] = useState("no");
   const [selectedServices, setSelectedServices] = useState<string[]>([]);

@@ -5,6 +5,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import WorkWithUs from "@/pages/WorkWithUs";
+import Privacy from "@/pages/Privacy";
+import Terms from "@/pages/Terms";
 import { useEffect } from "react";
 
 const queryClient = new QueryClient();
@@ -24,6 +26,8 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/work-with-us" component={WorkWithUs} />
+      <Route path="/privacy" component={Privacy} />
+      <Route path="/terms" component={Terms} />
       <Route component={NotFound} />
     </Switch>
   );
