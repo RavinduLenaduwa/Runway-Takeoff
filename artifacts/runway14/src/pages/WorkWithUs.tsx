@@ -3,7 +3,8 @@ import { motion, useScroll } from "framer-motion";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { useDocumentTitle } from "@/hooks/use-document-title";
+import { useDocumentMeta } from "@/hooks/use-document-meta";
+import { PageBreadcrumb } from "@/components/PageBreadcrumb";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -21,7 +22,11 @@ const staggerContainer = {
 };
 
 export default function WorkWithUs() {
-  useDocumentTitle("Work With Us | Runway 14");
+  useDocumentMeta({
+    title: "Work With Us | Runway 14",
+    description: "Tell Runway 14 what you're building. Get a clear quote and a realistic timeline before any work begins.",
+    path: "work-with-us",
+  });
   const { scrollYProgress } = useScroll();
   const [hasExistingProduct, setHasExistingProduct] = useState("no");
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
@@ -100,6 +105,7 @@ export default function WorkWithUs() {
             className="max-w-7xl mx-auto"
           >
             <motion.div variants={fadeUp} className="mb-16">
+              <PageBreadcrumb label="Work With Us" path="work-with-us" />
               <Link href="/" className="inline-block text-xs tracking-[0.25em] uppercase text-white/40 hover:text-white transition-colors mb-10">
                 Back to runway
               </Link>

@@ -2,7 +2,8 @@ import { motion, useScroll } from "framer-motion";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { useDocumentTitle } from "@/hooks/use-document-title";
+import { useDocumentMeta } from "@/hooks/use-document-meta";
+import { PageBreadcrumb } from "@/components/PageBreadcrumb";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -20,7 +21,11 @@ const staggerContainer = {
 };
 
 export default function Terms() {
-  useDocumentTitle("Terms of Service | Runway 14");
+  useDocumentMeta({
+    title: "Terms of Service | Runway 14",
+    description: "The terms governing use of the Runway 14 website and how Runway 14 project engagements are agreed.",
+    path: "terms",
+  });
   const { scrollYProgress } = useScroll();
 
   return (
@@ -40,6 +45,7 @@ export default function Terms() {
             className="max-w-3xl mx-auto"
           >
             <motion.div variants={fadeUp} className="mb-16">
+              <PageBreadcrumb label="Terms of Service" path="terms" />
               <Link href="/" className="inline-block text-xs tracking-[0.25em] uppercase text-white/40 hover:text-white transition-colors mb-10">
                 Back to runway
               </Link>
@@ -61,7 +67,7 @@ export default function Terms() {
               <div className="space-y-4">
                 <h2 className="text-white text-xl font-bold">Project engagements</h2>
                 <p>
-                  Reaching out through the Work With Us form or by email doesn't create a contract. Actual project work, scope, pricing, timelines, and deliverables are agreed separately in writing before any work begins.
+                  Reaching out through the <Link href="/work-with-us" className="text-white hover:opacity-60 transition-opacity">Work With Us</Link> form or by email doesn't create a contract. Actual project work, scope, pricing, timelines, and deliverables are agreed separately in writing before any work begins.
                 </p>
               </div>
 
@@ -75,7 +81,7 @@ export default function Terms() {
               <div className="space-y-4">
                 <h2 className="text-white text-xl font-bold">Contact</h2>
                 <p>
-                  Questions about these terms can go to <a href="mailto:hello@runway14.com" className="text-white hover:opacity-60 transition-opacity">hello@runway14.com</a>.
+                  Questions about these terms can go to <a href="mailto:hello@runway14.com" className="text-white hover:opacity-60 transition-opacity">hello@runway14.com</a>. See also our <Link href="/privacy" className="text-white hover:opacity-60 transition-opacity">Privacy Policy</Link>.
                 </p>
               </div>
             </motion.div>

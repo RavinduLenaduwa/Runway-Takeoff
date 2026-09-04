@@ -2,7 +2,8 @@ import { motion, useScroll } from "framer-motion";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { useDocumentTitle } from "@/hooks/use-document-title";
+import { useDocumentMeta } from "@/hooks/use-document-meta";
+import { PageBreadcrumb } from "@/components/PageBreadcrumb";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -20,7 +21,11 @@ const staggerContainer = {
 };
 
 export default function Privacy() {
-  useDocumentTitle("Privacy Policy | Runway 14");
+  useDocumentMeta({
+    title: "Privacy Policy | Runway 14",
+    description: "How Runway 14 handles the information you share through the Work With Us form. No tracking, no cookies, no data stored on our servers.",
+    path: "privacy",
+  });
   const { scrollYProgress } = useScroll();
 
   return (
@@ -40,6 +45,7 @@ export default function Privacy() {
             className="max-w-3xl mx-auto"
           >
             <motion.div variants={fadeUp} className="mb-16">
+              <PageBreadcrumb label="Privacy Policy" path="privacy" />
               <Link href="/" className="inline-block text-xs tracking-[0.25em] uppercase text-white/40 hover:text-white transition-colors mb-10">
                 Back to runway
               </Link>
@@ -54,7 +60,7 @@ export default function Privacy() {
               <div className="space-y-4">
                 <h2 className="text-white text-xl font-bold">What we collect</h2>
                 <p>
-                  The Work With Us form asks for your name, email, company or project name, and details about what you're building. That's the only personal information this site collects.
+                  The <Link href="/work-with-us" className="text-white hover:opacity-60 transition-opacity">Work With Us</Link> form asks for your name, email, company or project name, and details about what you're building. That's the only personal information this site collects.
                 </p>
               </div>
 
@@ -75,7 +81,7 @@ export default function Privacy() {
               <div className="space-y-4">
                 <h2 className="text-white text-xl font-bold">Questions</h2>
                 <p>
-                  Reach us at <a href="mailto:hello@runway14.com" className="text-white hover:opacity-60 transition-opacity">hello@runway14.com</a> with any questions about this policy.
+                  Reach us at <a href="mailto:hello@runway14.com" className="text-white hover:opacity-60 transition-opacity">hello@runway14.com</a> with any questions about this policy. See also our <Link href="/terms" className="text-white hover:opacity-60 transition-opacity">Terms of Service</Link>.
                 </p>
               </div>
             </motion.div>
