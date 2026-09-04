@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useDocumentTitle } from "@/hooks/use-document-title";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -287,6 +288,49 @@ export default function Home() {
                 </motion.div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section id="faq" className="py-32 md:py-48 px-6 md:px-12 lg:px-24 border-b border-white/5">
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeUp}
+              className="mb-16"
+            >
+              <h2 className="text-xs tracking-[0.2em] text-white/50 uppercase mb-8">FAQ</h2>
+              <div className="text-4xl md:text-6xl font-bold tracking-tight">Common Questions</div>
+            </motion.div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={fadeUp}
+            >
+              <Accordion type="single" collapsible>
+                {[
+                  { q: "What do you actually build?", a: "Web apps, websites, SEO foundations, and AI-driven automations. If it needs to work and actually ship, it's the kind of project we take on." },
+                  { q: "How much does a project cost?", a: "It depends on scope, so we don't publish flat pricing. Tell us what you're building through Work With Us and we'll follow up with a clear quote before anything begins." },
+                  { q: "How long does a project take?", a: "Timelines vary by scope. We'll give you a realistic estimate upfront, before you commit to anything, not after." },
+                  { q: "Do you work with early-stage startups, or only established businesses?", a: "Both. We build MVPs for founders getting started, and add capacity for teams that already have a product and need to move faster." },
+                  { q: "What happens after launch? Do you offer ongoing support?", a: "Software isn't done at launch. We stay involved, fixing, improving, and evolving what we build based on real usage." },
+                  { q: "How do I get started?", a: "Fill out the Work With Us form with a few details about your project. We'll follow up to map out next steps." },
+                ].map((item) => (
+                  <AccordionItem key={item.q} value={item.q} className="border-white/10">
+                    <AccordionTrigger className="text-left text-lg md:text-xl font-medium text-white hover:no-underline hover:opacity-70 py-6">
+                      {item.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-white/50 text-base leading-relaxed pb-6">
+                      {item.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </motion.div>
           </div>
         </section>
 

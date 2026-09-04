@@ -7,6 +7,7 @@ const mobileLinks = [
   { href: "/#about", label: "About" },
   { href: "/#services", label: "Services" },
   { href: "/#process", label: "Process" },
+  { href: "/#faq", label: "FAQ" },
 ];
 
 export function Navbar() {
@@ -54,7 +55,7 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-10 bg-black text-white md:hidden"
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-10 overflow-y-auto bg-black text-white md:hidden"
           >
             {mobileLinks.map((link, i) => (
               <motion.a
