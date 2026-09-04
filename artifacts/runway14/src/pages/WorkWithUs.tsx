@@ -25,25 +25,40 @@ export default function WorkWithUs() {
   const { scrollYProgress } = useScroll();
   const [hasExistingProduct, setHasExistingProduct] = useState("no");
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [servicesError, setServicesError] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
 
   function toggleService(service: string) {
     setSelectedServices((prev) =>
       prev.includes(service) ? prev.filter((s) => s !== service) : [...prev, service]
     );
-    setServicesError(false);
+    setErrors((prev) => ({ ...prev, services: "" }));
+  }
+
+  function clearError(field: string) {
+    setErrors((prev) => (prev[field] ? { ...prev, [field]: "" } : prev));
   }
 
   function handleWorkWithUsSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (selectedServices.length === 0) {
-      setServicesError(true);
+    const formData = new FormData(event.currentTarget);
+    const nextErrors: Record<string, string> = {};
+
+    if (!formData.get("name")?.toString().trim()) nextErrors.name = "Tell us your name.";
+    if (!formData.get("email")?.toString().trim()) nextErrors.email = "Tell us your email.";
+    if (selectedServices.length === 0) nextErrors.services = "Pick at least one service.";
+    if (!formData.get("project")?.toString().trim()) nextErrors.project = "Tell us what you're building.";
+    if (!formData.get("goal")?.toString().trim()) nextErrors.goal = "Tell us your goal.";
+    if (hasExistingProduct === "yes" && !formData.get("url")?.toString().trim()) nextErrors.url = "Add the URL.";
+    if (!formData.get("budget")) nextErrors.budget = "Pick a budget range.";
+
+    if (Object.values(nextErrors).some(Boolean)) {
+      setErrors(nextErrors);
       return;
     }
+    setErrors({});
 
-    const formData = new FormData(event.currentTarget);
     const services = formData.getAll("services");
     const details = [
       `Name: ${formData.get("name")}`,
@@ -97,17 +112,33 @@ export default function WorkWithUs() {
               </p>
             </motion.div>
 
-            <motion.form variants={fadeUp} onSubmit={handleWorkWithUsSubmit} className="max-w-4xl ml-auto space-y-12">
+            <motion.form variants={fadeUp} onSubmit={handleWorkWithUsSubmit} noValidate className="max-w-4xl ml-auto space-y-12">
               <div className="space-y-6">
                 <div className="text-xs tracking-[0.25em] uppercase text-white/40">01 / Basics</div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <label className="block">
                     <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Name *</span>
-                    <input required name="name" type="text" className="w-full bg-transparent border border-white/15 px-4 py-4 text-white outline-none transition-colors focus:border-white" />
+                    <input
+                      required
+                      name="name"
+                      type="text"
+                      onChange={() => clearError("name")}
+                      aria-invalid={!!errors.name}
+                      className={`w-full bg-transparent border px-4 py-4 text-white outline-none transition-colors focus:border-white ${errors.name ? "border-white" : "border-white/15"}`}
+                    />
+                    {errors.name && <div className="mt-2 text-sm text-white/50">{errors.name}</div>}
                   </label>
                   <label className="block">
                     <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Email *</span>
-                    <input required name="email" type="email" className="w-full bg-transparent border border-white/15 px-4 py-4 text-white outline-none transition-colors focus:border-white" />
+                    <input
+                      required
+                      name="email"
+                      type="email"
+                      onChange={() => clearError("email")}
+                      aria-invalid={!!errors.email}
+                      className={`w-full bg-transparent border px-4 py-4 text-white outline-none transition-colors focus:border-white ${errors.email ? "border-white" : "border-white/15"}`}
+                    />
+                    {errors.email && <div className="mt-2 text-sm text-white/50">{errors.email}</div>}
                   </label>
                 </div>
                 <label className="block">
@@ -135,8 +166,8 @@ export default function WorkWithUs() {
                       </label>
                     ))}
                   </div>
-                  {servicesError && (
-                    <div className="text-sm text-white/50">Pick at least one service.</div>
+                  {errors.services && (
+                    <div className="text-sm text-white/50">{errors.services}</div>
                   )}
                 </fieldset>
               </div>
@@ -145,11 +176,28 @@ export default function WorkWithUs() {
                 <div className="text-xs tracking-[0.25em] uppercase text-white/40">03 / Project</div>
                 <label className="block">
                   <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">What are you building? *</span>
-                  <textarea required name="project" rows={4} className="w-full resize-none bg-transparent border border-white/15 px-4 py-4 text-white outline-none transition-colors focus:border-white" />
+                  <textarea
+                    required
+                    name="project"
+                    rows={4}
+                    onChange={() => clearError("project")}
+                    aria-invalid={!!errors.project}
+                    className={`w-full resize-none bg-transparent border px-4 py-4 text-white outline-none transition-colors focus:border-white ${errors.project ? "border-white" : "border-white/15"}`}
+                  />
+                  {errors.project && <div className="mt-2 text-sm text-white/50">{errors.project}</div>}
                 </label>
                 <label className="block">
                   <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Goal *</span>
-                  <textarea required name="goal" rows={3} className="w-full resize-none bg-transparent border border-white/15 px-4 py-4 text-white outline-none transition-colors focus:border-white" placeholder="What are you trying to achieve?" />
+                  <textarea
+                    required
+                    name="goal"
+                    rows={3}
+                    onChange={() => clearError("goal")}
+                    aria-invalid={!!errors.goal}
+                    placeholder="What are you trying to achieve?"
+                    className={`w-full resize-none bg-transparent border px-4 py-4 text-white outline-none transition-colors focus:border-white ${errors.goal ? "border-white" : "border-white/15"}`}
+                  />
+                  {errors.goal && <div className="mt-2 text-sm text-white/50">{errors.goal}</div>}
                 </label>
               </div>
 
@@ -177,7 +225,16 @@ export default function WorkWithUs() {
                 {hasExistingProduct === "yes" && (
                   <motion.label initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="block">
                     <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">URL *</span>
-                    <input required name="url" type="url" className="w-full bg-transparent border border-white/15 px-4 py-4 text-white outline-none transition-colors focus:border-white" placeholder="https://" />
+                    <input
+                      required
+                      name="url"
+                      type="url"
+                      onChange={() => clearError("url")}
+                      aria-invalid={!!errors.url}
+                      placeholder="https://"
+                      className={`w-full bg-transparent border px-4 py-4 text-white outline-none transition-colors focus:border-white ${errors.url ? "border-white" : "border-white/15"}`}
+                    />
+                    {errors.url && <div className="mt-2 text-sm text-white/50">{errors.url}</div>}
                   </motion.label>
                 )}
               </div>
@@ -189,11 +246,12 @@ export default function WorkWithUs() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {["<$2k", "$2k–$5k", "$5k–$10k", "$10k+"].map((budget) => (
                       <label key={budget} className="cursor-pointer border border-white/15 px-4 py-4 text-sm tracking-[0.18em] uppercase text-white/60 transition-colors has-[:checked]:border-white has-[:checked]:text-white">
-                        <input required type="radio" name="budget" value={budget} className="sr-only" />
+                        <input required type="radio" name="budget" value={budget} onChange={() => clearError("budget")} className="sr-only" />
                         {budget}
                       </label>
                     ))}
                   </div>
+                  {errors.budget && <div className="mt-4 text-sm text-white/50">{errors.budget}</div>}
                 </fieldset>
               </div>
 
