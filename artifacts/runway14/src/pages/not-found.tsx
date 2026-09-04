@@ -1,8 +1,8 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { useDocumentTitle } from "@/hooks/use-document-title";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -20,7 +20,19 @@ const staggerContainer = {
 };
 
 export default function NotFound() {
-  useDocumentTitle("Page Not Found | Runway 14");
+  useEffect(() => {
+    const previousTitle = document.title;
+    document.title = "Page Not Found | Runway 14";
+
+    const robotsEl = document.querySelector('meta[name="robots"]');
+    const previousRobots = robotsEl?.getAttribute("content") ?? null;
+    robotsEl?.setAttribute("content", "noindex, follow");
+
+    return () => {
+      document.title = previousTitle;
+      if (previousRobots !== null) robotsEl?.setAttribute("content", previousRobots);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black overflow-hidden font-sans flex flex-col">
