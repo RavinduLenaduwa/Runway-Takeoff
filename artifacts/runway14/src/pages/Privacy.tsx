@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
 import { PageBreadcrumb } from "@/components/PageBreadcrumb";
+import { caption, ink } from "@/lib/theme";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -46,17 +47,17 @@ export default function Privacy() {
           >
             <motion.div variants={fadeUp} className="mb-16">
               <PageBreadcrumb label="Privacy Policy" path="privacy" />
-              <Link href="/" className="inline-block text-xs tracking-[0.25em] uppercase text-white/40 hover:text-white transition-colors mb-10">
+              <Link href="/" className={`inline-block text-sm ${ink.supporting} hover:text-white transition-colors mb-10`}>
                 Back to runway
               </Link>
-              <div className="text-xs tracking-[0.3em] uppercase text-white/50 mb-8">Legal</div>
+              <div className={`${caption} mb-4`}>Legal</div>
               <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-none mb-8">
                 PRIVACY<br />POLICY.
               </h1>
-              <p className="text-lg text-white/50 font-light">Last updated 2026</p>
+              <p className={`text-lg ${ink.supporting} font-light`}>Last updated 2026</p>
             </motion.div>
 
-            <motion.div variants={fadeUp} className="space-y-12 text-white/60 font-light leading-relaxed">
+            <motion.div variants={fadeUp} className={`space-y-12 ${ink.supporting} font-light leading-relaxed`}>
               <div className="space-y-4">
                 <h2 className="text-white text-xl font-bold">What we collect</h2>
                 <p>

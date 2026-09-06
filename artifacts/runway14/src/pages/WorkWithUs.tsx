@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
 import { PageBreadcrumb } from "@/components/PageBreadcrumb";
+import { caption, ink } from "@/lib/theme";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -106,14 +107,14 @@ export default function WorkWithUs() {
           >
             <motion.div variants={fadeUp} className="mb-16">
               <PageBreadcrumb label="Work With Us" path="work-with-us" />
-              <Link href="/" className="inline-block text-xs tracking-[0.25em] uppercase text-white/40 hover:text-white transition-colors mb-10">
+              <Link href="/" className={`inline-block text-sm ${ink.supporting} hover:text-white transition-colors mb-10`}>
                 Back to runway
               </Link>
-              <div className="text-xs tracking-[0.3em] uppercase text-white/50 mb-8">Project Intake</div>
+              <div className={`${caption} mb-4`}>Project Intake</div>
               <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-none mb-8">
                 WORK WITH<br />US.
               </h1>
-              <p className="text-lg md:text-xl text-white/50 font-light max-w-2xl">
+              <p className={`text-lg md:text-xl ${ink.supporting} font-light max-w-2xl`}>
                 Tell us what you’re building. We’ll map the shortest path from idea to launch.
               </p>
             </motion.div>
@@ -262,11 +263,11 @@ export default function WorkWithUs() {
               </div>
 
               <div className="flex flex-col sm:flex-row sm:items-center gap-6">
-                <button type="submit" className="border border-white bg-white px-10 py-5 text-sm font-bold tracking-[0.2em] uppercase text-black transition-all duration-300 hover:bg-black hover:text-white">
+                <button type="submit" className="border border-white bg-white px-10 py-5 text-sm font-bold text-black transition-all duration-300 hover:bg-black hover:text-white">
                   Send Inquiry
                 </button>
                 {submitted && (
-                  <div className="text-sm text-white/50">
+                  <div className={`text-sm ${ink.supporting}`}>
                     Draft created. Send it from your email client.
                   </div>
                 )}
