@@ -41,25 +41,32 @@ export default function Home() {
         {/* HERO SECTION */}
         <section className="relative min-h-screen flex items-center px-6 md:px-12 lg:px-24 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <svg
-              className="hidden lg:block absolute -right-[6%] top-1/2 -translate-y-1/2 h-[80%] w-auto opacity-[0.16]"
-              viewBox="0 0 620 400"
-              fill="none"
-              aria-hidden="true"
+            <motion.div
+              className="absolute inset-0"
+              initial={{ opacity: 0, scale: 0.94 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
             >
-              <text
-                x="610"
-                y="330"
-                textAnchor="end"
-                fontFamily="Inter, sans-serif"
-                fontWeight="800"
-                fontSize="420"
-                stroke="white"
-                strokeWidth="2.5"
+              <svg
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] h-auto opacity-[0.07] lg:left-auto lg:right-[-6%] lg:top-1/2 lg:translate-x-0 lg:-translate-y-1/2 lg:h-[80%] lg:w-auto lg:opacity-[0.16]"
+                viewBox="0 0 620 400"
+                fill="none"
+                aria-hidden="true"
               >
-                14
-              </text>
-            </svg>
+                <text
+                  x="610"
+                  y="330"
+                  textAnchor="end"
+                  fontFamily="Inter, sans-serif"
+                  fontWeight="800"
+                  fontSize="420"
+                  stroke="white"
+                  strokeWidth="2.5"
+                >
+                  14
+                </text>
+              </svg>
+            </motion.div>
             <motion.div
               className="absolute left-0 right-0 top-1/2 h-px bg-white/10"
               style={{ transformOrigin: "left" }}
