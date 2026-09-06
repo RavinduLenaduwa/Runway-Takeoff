@@ -41,45 +41,32 @@ export default function Home() {
         {/* HERO SECTION */}
         <section className="relative min-h-screen flex items-center px-6 md:px-12 lg:px-24 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <svg
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] h-auto opacity-[0.07] lg:left-auto lg:right-[-6%] lg:top-1/2 lg:translate-x-0 lg:-translate-y-1/2 lg:h-[80%] lg:w-auto lg:opacity-[0.16]"
-              viewBox="0 0 620 400"
-              fill="none"
-              aria-hidden="true"
+            <motion.div
+              className="absolute inset-0"
+              initial={{ opacity: 0, scale: 0.94 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
             >
-              {/* "1": flag stroke into the stem, drawn as one line */}
-              <motion.path
-                d="M370,90 L420,25 L420,320"
-                stroke="white"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 0.9, ease: [0.65, 0, 0.35, 1], delay: 0.3 }}
-              />
-              {/* "4": diagonal + crossbar, then the vertical stroke drawn separately through it */}
-              <motion.path
-                d="M520,25 L450,235 L600,235"
-                stroke="white"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 0.8, ease: [0.65, 0, 0.35, 1], delay: 1.2 }}
-              />
-              <motion.path
-                d="M520,25 L520,320"
-                stroke="white"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 0.5, ease: [0.65, 0, 0.35, 1], delay: 1.9 }}
-              />
-            </svg>
+              <svg
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] h-auto opacity-[0.07] lg:left-auto lg:right-[-6%] lg:top-1/2 lg:translate-x-0 lg:-translate-y-1/2 lg:h-[80%] lg:w-auto lg:opacity-[0.16]"
+                viewBox="0 0 620 400"
+                fill="none"
+                aria-hidden="true"
+              >
+                <text
+                  x="610"
+                  y="330"
+                  textAnchor="end"
+                  fontFamily="Inter, sans-serif"
+                  fontWeight="800"
+                  fontSize="420"
+                  stroke="white"
+                  strokeWidth="2.5"
+                >
+                  14
+                </text>
+              </svg>
+            </motion.div>
             <motion.div
               className="absolute left-0 right-0 top-1/2 h-px bg-white/10"
               style={{ transformOrigin: "left" }}
