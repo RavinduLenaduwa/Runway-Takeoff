@@ -30,7 +30,7 @@ export function PageBreadcrumb({ label, path }: PageBreadcrumbProps) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Breadcrumb className="mb-6">
-        <BreadcrumbList className="text-xs tracking-[0.2em] uppercase text-white/40">
+        <BreadcrumbList className="text-sm text-white/40">
           <BreadcrumbItem>
             <BreadcrumbLink asChild className="hover:text-white transition-colors">
               <Link href="/">Runway 14</Link>

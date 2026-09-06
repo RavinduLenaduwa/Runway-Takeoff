@@ -26,14 +26,14 @@ export function Navbar() {
           <span className="inline-flex items-center justify-center border border-current px-1.5 py-1 text-xs leading-none">14</span>
         </Link>
 
-        <div className="col-start-2 hidden md:flex items-center justify-center gap-8 text-sm tracking-widest font-medium uppercase">
+        <div className="col-start-2 hidden md:flex items-center justify-center gap-8 text-sm font-medium">
           {mobileLinks.map((link) => (
             <a key={link.href} href={link.href} className="hover:opacity-50 transition-opacity">{link.label}</a>
           ))}
         </div>
 
         <div className="col-start-3 flex items-center justify-self-end gap-4">
-          <Link href="/work-with-us" className="text-sm font-medium tracking-widest uppercase border border-white/20 px-4 py-2 hover:bg-white hover:text-black transition-colors duration-300">
+          <Link href="/work-with-us" className="text-sm font-medium border border-white/20 px-4 py-2 hover:bg-white hover:text-black transition-colors duration-300">
             Work With Us
           </Link>
           <button
@@ -65,7 +65,7 @@ export function Navbar() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + i * 0.05, duration: 0.4 }}
-                className="text-3xl font-bold tracking-tight uppercase"
+                className="text-3xl font-bold tracking-tight"
               >
                 {link.label}
               </motion.a>
@@ -78,7 +78,7 @@ export function Navbar() {
               <Link
                 href="/work-with-us"
                 onClick={() => setIsOpen(false)}
-                className="inline-flex text-sm font-medium tracking-widest uppercase border border-white/20 px-6 py-3 hover:bg-white hover:text-black transition-colors duration-300"
+                className="inline-flex text-sm font-medium border border-white/20 px-6 py-3 hover:bg-white hover:text-black transition-colors duration-300"
               >
                 Work With Us
               </Link>
