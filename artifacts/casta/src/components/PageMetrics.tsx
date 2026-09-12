@@ -7,7 +7,7 @@ interface Reading {
 }
 
 const PENDING: Reading[] = [
-  { label: "rendered", value: "—" },
+  { label: "loaded", value: "—" },
   { label: "transferred", value: "—" },
   { label: "requests", value: "—" },
   { label: "cookies", value: "—" },
@@ -15,17 +15,20 @@ const PENDING: Reading[] = [
 
 function measure(): Reading[] {
   const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
-  const paint = performance.getEntriesByType("paint").find((entry) => entry.name === "first-contentful-paint");
   const resources = performance.getEntriesByType("resource") as PerformanceResourceTiming[];
 
-  const rendered = paint?.startTime ?? nav?.domContentLoadedEventEnd ?? 0;
+  // Deliberately DOMContentLoaded and nothing else. First Contentful Paint is
+  // the nicer number but browsers throttle painting in a backgrounded tab, so
+  // it reports wildly inflated times through no fault of the page — and a panel
+  // that silently swapped between two definitions of "how fast" would be lying.
+  const loaded = nav ? `${Math.round(nav.domContentLoadedEventEnd)} ms` : "n/a";
   // A repeat view served entirely from cache genuinely transfers 0 bytes, so
   // this is reported as measured rather than floored to something flattering.
   const bytes = (nav?.transferSize ?? 0) + resources.reduce((total, r) => total + (r.transferSize || 0), 0);
   const cookies = document.cookie.split(";").filter((c) => c.trim()).length;
 
   return [
-    { label: "rendered", value: `${Math.round(rendered)} ms` },
+    { label: "loaded", value: loaded },
     { label: "transferred", value: `${Math.round(bytes / 1024)} KB` },
     { label: "requests", value: `${resources.length + (nav ? 1 : 0)}` },
     { label: "cookies", value: `${cookies}` },
