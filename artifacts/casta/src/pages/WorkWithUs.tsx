@@ -1,15 +1,16 @@
 import { useState, type FormEvent } from "react";
-import { motion } from "framer-motion";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
 import { PageBreadcrumb } from "@/components/PageBreadcrumb";
-import { container, ink, shell } from "@/lib/theme";
+import { container, ink, line, shell } from "@/lib/theme";
 
-const fieldLabel = "block text-sm text-white/60 mb-2";
-const stepLabel = "text-sm text-white/50";
-const inputBase = "w-full bg-transparent border px-4 py-4 text-white outline-none transition-colors focus:border-white";
-const choiceBase = "cursor-pointer border border-white/15 px-4 py-4 text-sm text-white/70 transition-colors has-[:checked]:border-white has-[:checked]:text-white";
+const fieldLabel = "block text-sm text-[var(--ink-dim)] mb-2";
+const stepLabel = "text-sm text-[var(--ink-dim)]";
+const inputBase = "w-full bg-[var(--panel)] border px-4 py-3 text-[var(--ink)] outline-none transition-colors focus:border-[var(--ink)]";
+const choiceBase = "cursor-pointer border border-[var(--rule-strong)] bg-[var(--panel)] px-4 py-3 text-sm text-[var(--ink-dim)] transition-colors has-[:checked]:border-[var(--ink)] has-[:checked]:text-[var(--ink)]";
+const errorText = `text-sm ${ink.signal}`;
+const fieldBorder = (invalid: boolean) => (invalid ? "border-[var(--signal)]" : "border-[var(--rule-strong)]");
 
 export default function WorkWithUs() {
   useDocumentMeta({
@@ -78,20 +79,20 @@ export default function WorkWithUs() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans">
+    <div className="min-h-screen font-sans">
       <Navbar />
 
       <main className={shell}>
-        <section className="pt-32 md:pt-44 pb-24 md:pb-32">
+        <section className="pt-28 md:pt-36 pb-20 md:pb-28">
           <div className={container}>
-            <div className="max-w-3xl">
+            <div className="max-w-2xl">
               <PageBreadcrumb label="Work With Us" path="work-with-us" />
-              <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">Work with us</h1>
-              <p className={`mt-5 text-base md:text-lg ${ink.supporting} leading-relaxed`}>
+              <h1 className="text-[1.75rem] md:text-[2.25rem] font-semibold tracking-tight">Work with us</h1>
+              <p className={`mt-4 text-base ${ink.supporting} leading-relaxed`}>
                 Tell us what you're building. We'll map the shortest path from idea to launch.
               </p>
 
-              <form onSubmit={handleWorkWithUsSubmit} noValidate className="mt-16 space-y-14">
+              <form onSubmit={handleWorkWithUsSubmit} noValidate className="mt-12 space-y-12">
                 <div className="space-y-6">
                   <div className={stepLabel}>01 / Basics</div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -103,9 +104,9 @@ export default function WorkWithUs() {
                         type="text"
                         onChange={() => clearError("name")}
                         aria-invalid={!!errors.name}
-                        className={`${inputBase} ${errors.name ? "border-white" : "border-white/15"}`}
+                        className={`${inputBase} ${fieldBorder(!!errors.name)}`}
                       />
-                      {errors.name && <div className={`mt-2 text-sm ${ink.faint}`}>{errors.name}</div>}
+                      {errors.name && <div className={`mt-2 ${errorText}`}>{errors.name}</div>}
                     </label>
                     <label className="block">
                       <span className={fieldLabel}>Email *</span>
@@ -115,14 +116,14 @@ export default function WorkWithUs() {
                         type="email"
                         onChange={() => clearError("email")}
                         aria-invalid={!!errors.email}
-                        className={`${inputBase} ${errors.email ? "border-white" : "border-white/15"}`}
+                        className={`${inputBase} ${fieldBorder(!!errors.email)}`}
                       />
-                      {errors.email && <div className={`mt-2 text-sm ${ink.faint}`}>{errors.email}</div>}
+                      {errors.email && <div className={`mt-2 ${errorText}`}>{errors.email}</div>}
                     </label>
                   </div>
                   <label className="block">
                     <span className={fieldLabel}>Company / project name</span>
-                    <input name="company" type="text" className={`${inputBase} border-white/15`} />
+                    <input name="company" type="text" className={`${inputBase} border-[var(--rule-strong)]`} />
                   </label>
                 </div>
 
@@ -145,7 +146,7 @@ export default function WorkWithUs() {
                         </label>
                       ))}
                     </div>
-                    {errors.services && <div className={`text-sm ${ink.faint}`}>{errors.services}</div>}
+                    {errors.services && <div className={`${errorText}`}>{errors.services}</div>}
                   </fieldset>
                 </div>
 
@@ -159,9 +160,9 @@ export default function WorkWithUs() {
                       rows={4}
                       onChange={() => clearError("project")}
                       aria-invalid={!!errors.project}
-                      className={`${inputBase} resize-none ${errors.project ? "border-white" : "border-white/15"}`}
+                      className={`${inputBase} resize-none ${fieldBorder(!!errors.project)}`}
                     />
-                    {errors.project && <div className={`mt-2 text-sm ${ink.faint}`}>{errors.project}</div>}
+                    {errors.project && <div className={`mt-2 ${errorText}`}>{errors.project}</div>}
                   </label>
                   <label className="block">
                     <span className={fieldLabel}>Goal *</span>
@@ -172,9 +173,9 @@ export default function WorkWithUs() {
                       onChange={() => clearError("goal")}
                       aria-invalid={!!errors.goal}
                       placeholder="What are you trying to achieve?"
-                      className={`${inputBase} resize-none ${errors.goal ? "border-white" : "border-white/15"}`}
+                      className={`${inputBase} resize-none ${fieldBorder(!!errors.goal)}`}
                     />
-                    {errors.goal && <div className={`mt-2 text-sm ${ink.faint}`}>{errors.goal}</div>}
+                    {errors.goal && <div className={`mt-2 ${errorText}`}>{errors.goal}</div>}
                   </label>
                 </div>
 
@@ -200,7 +201,7 @@ export default function WorkWithUs() {
                     </div>
                   </fieldset>
                   {hasExistingProduct === "yes" && (
-                    <motion.label initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="block">
+                    <label className="block">
                       <span className={fieldLabel}>URL *</span>
                       <input
                         required
@@ -209,10 +210,10 @@ export default function WorkWithUs() {
                         onChange={() => clearError("url")}
                         aria-invalid={!!errors.url}
                         placeholder="https://"
-                        className={`${inputBase} ${errors.url ? "border-white" : "border-white/15"}`}
+                        className={`${inputBase} ${fieldBorder(!!errors.url)}`}
                       />
-                      {errors.url && <div className={`mt-2 text-sm ${ink.faint}`}>{errors.url}</div>}
-                    </motion.label>
+                      {errors.url && <div className={`mt-2 ${errorText}`}>{errors.url}</div>}
+                    </label>
                   )}
                 </div>
 
@@ -228,12 +229,12 @@ export default function WorkWithUs() {
                         </label>
                       ))}
                     </div>
-                    {errors.budget && <div className={`mt-4 text-sm ${ink.faint}`}>{errors.budget}</div>}
+                    {errors.budget && <div className={`mt-4 ${errorText}`}>{errors.budget}</div>}
                   </fieldset>
                 </div>
 
                 <div className="flex flex-col sm:flex-row sm:items-center gap-6">
-                  <button type="submit" className="border border-white bg-white px-10 py-5 text-sm font-semibold text-black transition-colors duration-200 hover:bg-black hover:text-white">
+                  <button type="submit" className={`border ${line.strong} bg-[var(--ink)] px-8 py-3 text-sm font-semibold text-[var(--ground)] transition-colors duration-200 hover:bg-transparent hover:text-[var(--ink)] hover:border-[var(--ink)]`}>
                     Send inquiry
                   </button>
                   {submitted && (

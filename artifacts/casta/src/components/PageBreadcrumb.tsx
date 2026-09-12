@@ -30,15 +30,15 @@ export function PageBreadcrumb({ label, path }: PageBreadcrumbProps) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Breadcrumb className="mb-6">
-        <BreadcrumbList className="text-sm text-white/50">
+        <BreadcrumbList className="text-sm text-[var(--ink-dim)]">
           <BreadcrumbItem>
-            <BreadcrumbLink asChild className="hover:text-white transition-colors">
+            <BreadcrumbLink asChild className="hover:text-[var(--ink)] transition-colors">
               <Link href="/">Casta</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
-          <BreadcrumbSeparator className="[&>svg]:w-3 [&>svg]:h-3 text-white/30" />
+          <BreadcrumbSeparator className="[&>svg]:w-3 [&>svg]:h-3 text-[var(--rule-strong)]" />
           <BreadcrumbItem>
-            <BreadcrumbPage className="text-white">{label}</BreadcrumbPage>
+            <BreadcrumbPage className="text-[var(--ink)]">{label}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

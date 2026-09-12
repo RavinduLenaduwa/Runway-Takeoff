@@ -1,10 +1,10 @@
-import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { PageMetrics } from "@/components/PageMetrics";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { block, container, heading, ink, shell } from "@/lib/theme";
+import { block, container, heading, ink, line, shell } from "@/lib/theme";
 
 const services = [
   { title: "Web Apps", support: "Full-stack web applications tailored to your business logic, workflows, and users." },
@@ -21,43 +21,14 @@ const phases = [
   { title: "Iterate", desc: "Software is never done. We stay involved, fixing, improving, and evolving based on real usage." },
 ];
 
-/**
- * The wordmark as a cast slug: a solid block with CASTA struck out of it, so the
- * page's own black shows through the letterforms. textLength pins the glyph run to
- * the block's width, which keeps the cut identical whether or not Archivo has loaded.
- */
-function CastMark() {
-  const reduceMotion = useReducedMotion();
-
-  return (
-    <motion.div
-      initial={reduceMotion ? false : { clipPath: "inset(100% 0 0 0)" }}
-      animate={{ clipPath: "inset(0% 0 0 0)" }}
-      transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-    >
-      <svg viewBox="0 0 1000 300" className="block w-full h-auto" role="img" aria-label="Casta">
-        <mask id="casta-slug" maskUnits="userSpaceOnUse" x="0" y="0" width="1000" height="300">
-          <rect width="1000" height="300" fill="white" />
-          <text
-            x="500"
-            y="235"
-            textAnchor="middle"
-            textLength="860"
-            lengthAdjust="spacingAndGlyphs"
-            fontFamily="Archivo, sans-serif"
-            fontWeight="800"
-            fontStretch="125%"
-            fontSize="230"
-            fill="black"
-          >
-            CASTA
-          </text>
-        </mask>
-        <rect width="1000" height="300" fill="white" mask="url(#casta-slug)" />
-      </svg>
-    </motion.div>
-  );
-}
+const faqs = [
+  { q: "What do you actually build?", a: "Web apps, websites, SEO foundations, and AI-driven automations. If it needs to work and actually ship, it's the kind of project we take on." },
+  { q: "How much does a project cost?", a: <>It depends on scope, so we don't publish flat pricing. Tell us what you're building through <Link href="/work-with-us" className="underline underline-offset-4 hover:text-[var(--signal)] transition-colors">Work With Us</Link> and we'll follow up with a clear quote before anything begins.</> },
+  { q: "How long does a project take?", a: "Timelines vary by scope. We'll give you a realistic estimate upfront, before you commit to anything, not after." },
+  { q: "Do you work with early-stage startups, or only established businesses?", a: "Both. We build MVPs for founders getting started, and add capacity for teams that already have a product and need to move faster." },
+  { q: "What happens after launch? Do you offer ongoing support?", a: "Software isn't done at launch. We stay involved, fixing, improving, and evolving what we build based on real usage." },
+  { q: "How do I get started?", a: <>Fill out the <Link href="/work-with-us" className="underline underline-offset-4 hover:text-[var(--signal)] transition-colors">Work With Us</Link> form with a few details about your project. We'll follow up to map out next steps.</> },
+];
 
 export default function Home() {
   useDocumentMeta({
@@ -67,39 +38,39 @@ export default function Home() {
   });
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans">
+    <div className="min-h-screen font-sans">
       <Navbar />
 
       <main>
-        {/* HERO */}
-        <section className={`${shell} pt-32 pb-24 md:pt-44 md:pb-32`}>
-          <div className={container}>
-            <CastMark />
-
-            <div className="mt-12 md:mt-16 max-w-2xl">
+        {/* HERO: the claim, and the page measuring itself against it */}
+        <section className={`${shell} pt-28 pb-20 md:pt-36 md:pb-28`}>
+          <div className={`${container} grid grid-cols-1 gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:items-center`}>
+            <div>
               <h1 className={`${heading.hero} font-semibold tracking-tight`}>
                 We build things that work.
               </h1>
-              <p className={`mt-5 text-base md:text-lg ${ink.supporting} leading-relaxed`}>
+              <p className={`mt-5 text-base md:text-lg ${ink.supporting} leading-relaxed max-w-xl`}>
                 Web apps, websites, SEO, and AI automation for businesses that need software to actually work, not just launch.
               </p>
               <Link
                 href="/work-with-us"
-                className="mt-10 inline-block border border-white px-8 py-4 text-sm font-medium hover:bg-white hover:text-black transition-colors duration-200"
+                className={`mt-8 inline-block border ${line.strong} px-6 py-3 text-sm font-medium transition-colors hover:border-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--ground)]`}
               >
-                Start building
+                Start a project
               </Link>
             </div>
+
+            <PageMetrics />
           </div>
         </section>
 
         {/* ABOUT */}
-        <section id="about" className={`${shell} ${block} border-t border-white/10`}>
-          <div className={`${container} grid grid-cols-1 gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-20`}>
+        <section id="about" className={`${shell} ${block} border-t ${line.rule}`}>
+          <div className={`${container} grid grid-cols-1 gap-8 lg:grid-cols-[1fr_1.6fr] lg:gap-16`}>
             <h2 className={`${heading.section} font-semibold tracking-tight`}>
               Code that actually ships.
             </h2>
-            <div className={`space-y-6 text-base md:text-lg ${ink.supporting} leading-relaxed`}>
+            <div className={`space-y-5 text-base ${ink.supporting} leading-relaxed max-w-2xl`}>
               <p>
                 Casta is a software development studio that turns complex problems into clean, production-ready web applications, built with modern stacks and shipped without the bloat.
               </p>
@@ -111,15 +82,13 @@ export default function Home() {
         </section>
 
         {/* SERVICES */}
-        <section id="services" className={`${shell} ${block} border-t border-white/10`}>
+        <section id="services" className={`${shell} ${block} border-t ${line.rule}`}>
           <div className={container}>
-            <h2 className={`${heading.section} font-semibold tracking-tight mb-14 md:mb-20`}>
-              What we do
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 border-b border-white/10 gap-x-10">
+            <h2 className={`${heading.section} font-semibold tracking-tight mb-10`}>What we do</h2>
+            <div className={`grid grid-cols-1 md:grid-cols-2 gap-x-16 border-b ${line.rule}`}>
               {services.map((service) => (
-                <div key={service.title} className="border-t border-white/10 py-8 xl:py-10">
-                  <h3 className={`${heading.card} font-semibold mb-3`}>{service.title}</h3>
+                <div key={service.title} className={`border-t ${line.rule} py-6`}>
+                  <h3 className={`${heading.card} font-semibold mb-2`}>{service.title}</h3>
                   <p className={`text-sm ${ink.supporting} leading-relaxed`}>{service.support}</p>
                 </div>
               ))}
@@ -128,19 +97,19 @@ export default function Home() {
         </section>
 
         {/* PROCESS */}
-        <section id="process" className={`${shell} ${block} border-t border-white/10`}>
+        <section id="process" className={`${shell} ${block} border-t ${line.rule}`}>
           <div className={container}>
-            <h2 className={`${heading.section} font-semibold tracking-tight mb-14 md:mb-20`}>
-              Scope → Architect → Code → Ship → Iterate
+            <h2 className={`${heading.section} font-semibold tracking-tight mb-10`}>
+              Scope, architect, code, ship, iterate
             </h2>
-            <ol className="border-b border-white/10">
+            <ol className={`border-b ${line.rule}`}>
               {phases.map((phase) => (
                 <li
                   key={phase.title}
-                  className="border-t border-white/10 py-6 md:py-8 grid grid-cols-1 gap-2 md:grid-cols-[180px_1fr] md:gap-10"
+                  className={`border-t ${line.rule} py-5 grid grid-cols-1 gap-1.5 md:grid-cols-[160px_1fr] md:gap-10`}
                 >
-                  <h3 className={`${heading.card} font-semibold`}>{phase.title}</h3>
-                  <p className={`text-sm md:text-base ${ink.supporting} leading-relaxed max-w-2xl`}>{phase.desc}</p>
+                  <h3 className="text-base font-semibold">{phase.title}</h3>
+                  <p className={`text-sm ${ink.supporting} leading-relaxed max-w-2xl`}>{phase.desc}</p>
                 </li>
               ))}
             </ol>
@@ -148,25 +117,16 @@ export default function Home() {
         </section>
 
         {/* FAQ */}
-        <section id="faq" className={`${shell} ${block} border-t border-white/10`}>
+        <section id="faq" className={`${shell} ${block} border-t ${line.rule}`}>
           <div className={container}>
-            <h2 className={`${heading.section} font-semibold tracking-tight mb-10 md:mb-14`}>
-              Common questions
-            </h2>
+            <h2 className={`${heading.section} font-semibold tracking-tight mb-8`}>Common questions</h2>
             <Accordion type="single" collapsible className="max-w-3xl">
-              {[
-                { q: "What do you actually build?", a: "Web apps, websites, SEO foundations, and AI-driven automations. If it needs to work and actually ship, it's the kind of project we take on." },
-                { q: "How much does a project cost?", a: <>It depends on scope, so we don't publish flat pricing. Tell us what you're building through <Link href="/work-with-us" className="text-white underline underline-offset-4 hover:opacity-70 transition-opacity">Work With Us</Link> and we'll follow up with a clear quote before anything begins.</> },
-                { q: "How long does a project take?", a: "Timelines vary by scope. We'll give you a realistic estimate upfront, before you commit to anything, not after." },
-                { q: "Do you work with early-stage startups, or only established businesses?", a: "Both. We build MVPs for founders getting started, and add capacity for teams that already have a product and need to move faster." },
-                { q: "What happens after launch? Do you offer ongoing support?", a: "Software isn't done at launch. We stay involved, fixing, improving, and evolving what we build based on real usage." },
-                { q: "How do I get started?", a: <>Fill out the <Link href="/work-with-us" className="text-white underline underline-offset-4 hover:opacity-70 transition-opacity">Work With Us</Link> form with a few details about your project. We'll follow up to map out next steps.</> },
-              ].map((item) => (
-                <AccordionItem key={item.q} value={item.q} className="border-white/10">
-                  <AccordionTrigger className="text-left text-base md:text-lg font-medium text-white hover:no-underline hover:opacity-70 py-6">
+              {faqs.map((item) => (
+                <AccordionItem key={item.q} value={item.q} className={line.rule}>
+                  <AccordionTrigger className="text-left text-base font-medium hover:no-underline hover:text-[var(--signal)] py-4">
                     {item.q}
                   </AccordionTrigger>
-                  <AccordionContent className={`${ink.supporting} text-sm md:text-base leading-relaxed pb-6 max-w-2xl`}>
+                  <AccordionContent className={`text-sm ${ink.supporting} leading-relaxed pb-5 max-w-2xl`}>
                     {item.a}
                   </AccordionContent>
                 </AccordionItem>
@@ -176,20 +136,20 @@ export default function Home() {
         </section>
 
         {/* CTA */}
-        <section id="contact" className={`${shell} ${block} border-t border-white/10`}>
+        <section id="contact" className={`${shell} ${block} border-t ${line.rule}`}>
           <div className={container}>
-            <div className="max-w-3xl">
+            <div className="max-w-2xl">
               <h2 className={`${heading.section} font-semibold tracking-tight`}>
                 Got an idea? Let's build it.
               </h2>
-              <p className={`mt-5 text-base md:text-lg ${ink.supporting} leading-relaxed`}>
+              <p className={`mt-4 text-base ${ink.supporting} leading-relaxed`}>
                 Tell us what you're trying to build. We'll find the fastest path to make it real.
               </p>
               <Link
                 href="/work-with-us"
-                className="mt-10 inline-block border border-white px-8 py-4 text-sm font-medium hover:bg-white hover:text-black transition-colors duration-200"
+                className={`mt-8 inline-block border ${line.strong} px-6 py-3 text-sm font-medium transition-colors hover:border-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--ground)]`}
               >
-                Start a conversation
+                Start a project
               </Link>
             </div>
           </div>
