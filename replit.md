@@ -15,7 +15,7 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - **Validation**: Zod (`zod/v4`), `drizzle-zod`
 - **API codegen**: Orval (from OpenAPI spec)
 - **Build**: esbuild (CJS bundle)
-- **Web artifact**: Runway 14 React + Vite landing page at `artifacts/runway14`
+- **Web artifact**: Casta React + Vite landing page at `artifacts/casta`
 
 ## Key Commands
 

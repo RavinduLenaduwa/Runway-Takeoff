@@ -1,14 +1,14 @@
-name: Deploy Runway 14 to GitHub Pages
+name: Deploy Casta to GitHub Pages
 
 on:
   push:
     branches: [main]
     paths:
-      - "artifacts/runway14/**"
+      - "artifacts/casta/**"
       - "lib/**"
       - "pnpm-lock.yaml"
       - "pnpm-workspace.yaml"
-      - ".github/workflows/deploy-runway14.yml"
+      - ".github/workflows/deploy-casta.yml"
   workflow_dispatch:
 
 permissions:
@@ -40,14 +40,14 @@ jobs:
       - name: Build
         env:
           PORT: "5173"
-          BASE_PATH: /Runway-Takeoff/
-        run: pnpm --filter @workspace/runway14 run build
+          BASE_PATH: /Casta/
+        run: pnpm --filter @workspace/casta run build
 
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: artifacts/runway14/dist/public
+          path: artifacts/casta/dist/public
 
   deploy:
     needs: build

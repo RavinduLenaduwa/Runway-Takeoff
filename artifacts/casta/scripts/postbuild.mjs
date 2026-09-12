@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const outDir = path.resolve(import.meta.dirname, "..", "dist", "public");
-const baseUrl = "https://ravindulenaduwa.github.io/Runway-Takeoff/";
+const baseUrl = "https://ravindulenaduwa.github.io/Casta/";
 
 const template = fs.readFileSync(path.join(outDir, "index.html"), "utf8");
 
@@ -14,18 +14,18 @@ const template = fs.readFileSync(path.join(outDir, "index.html"), "utf8");
 const routes = [
   {
     path: "work-with-us",
-    title: "Work With Us | Runway 14",
-    description: "Tell Runway 14 what you're building. Get a clear quote and a realistic timeline before any work begins.",
+    title: "Work With Us | Casta",
+    description: "Tell Casta what you're building. Get a clear quote and a realistic timeline before any work begins.",
   },
   {
     path: "privacy",
-    title: "Privacy Policy | Runway 14",
-    description: "How Runway 14 handles the information you share through the Work With Us form. No tracking, no cookies, no data stored on our servers.",
+    title: "Privacy Policy | Casta",
+    description: "How Casta handles the information you share through the Work With Us form. No tracking, no cookies, no data stored on our servers.",
   },
   {
     path: "terms",
-    title: "Terms of Service | Runway 14",
-    description: "The terms governing use of the Runway 14 website and how Runway 14 project engagements are agreed.",
+    title: "Terms of Service | Casta",
+    description: "The terms governing use of the Casta website and how Casta project engagements are agreed.",
   },
 ];
 

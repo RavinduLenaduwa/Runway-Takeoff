@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const BASE_URL = "https://ravindulenaduwa.github.io/Runway-Takeoff/";
+const BASE_URL = "https://ravindulenaduwa.github.io/Casta/";
 
 interface DocumentMeta {
   title: string;

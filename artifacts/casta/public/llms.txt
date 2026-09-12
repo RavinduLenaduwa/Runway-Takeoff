@@ -1,0 +1,16 @@
+# Casta
+
+> Casta builds web apps, websites, SEO, and AI automation for companies that want software that actually works.
+
+Casta is a software development studio. Its four services: full-stack web applications, marketing and brochure websites, on-page and technical SEO, and AI-powered workflow automation. It works with early-stage founders building an MVP and with established teams that already have a product and need more capacity.
+
+## Pages
+
+- [Home](https://ravindulenaduwa.github.io/Casta/): overview, services, process, and FAQ
+- [Work With Us](https://ravindulenaduwa.github.io/Casta/work-with-us): project intake form to start a conversation
+- [Privacy Policy](https://ravindulenaduwa.github.io/Casta/privacy): what data is collected and how it's handled
+- [Terms of Service](https://ravindulenaduwa.github.io/Casta/terms): terms governing use of the site and project engagements
+
+## Contact
+
+hello@casta.dev
