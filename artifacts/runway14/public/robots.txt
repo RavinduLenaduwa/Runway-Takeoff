@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://ravindulenaduwa.github.io/Runway-Takeoff/sitemap.xml

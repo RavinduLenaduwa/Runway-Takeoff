@@ -1,8 +1,8 @@
 kind = "web"
 previewPath = "/"
-title = "Runway 14"
+title = "Casta"
 version = "1.0.0"
-id = "artifacts/runway14"
+id = "artifacts/casta"
 router = "path"
 
 [[integratedSkills]]
@@ -15,11 +15,11 @@ paths = [ "/" ]
 localPort = 24013
 
 [services.development]
-run = "pnpm --filter @workspace/runway14 run dev"
+run = "pnpm --filter @workspace/casta run dev"
 
 [services.production]
-build = [ "pnpm", "--filter", "@workspace/runway14", "run", "build" ]
-publicDir = "artifacts/runway14/dist/public"
+build = [ "pnpm", "--filter", "@workspace/casta", "run", "build" ]
+publicDir = "artifacts/casta/dist/public"
 serve = "static"
 
 [[services.production.rewrites]]
