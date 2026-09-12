@@ -21,7 +21,8 @@ function measure(): Reading[] {
   // the nicer number but browsers throttle painting in a backgrounded tab, so
   // it reports wildly inflated times through no fault of the page — and a panel
   // that silently swapped between two definitions of "how fast" would be lying.
-  const loaded = nav ? `${Math.round(nav.domContentLoadedEventEnd)} ms` : "n/a";
+  const dcl = nav?.domContentLoadedEventEnd ?? 0;
+  const loaded = dcl > 0 ? `${Math.round(dcl)} ms` : "—";
   // A repeat view served entirely from cache genuinely transfers 0 bytes, so
   // this is reported as measured rather than floored to something flattering.
   const bytes = (nav?.transferSize ?? 0) + resources.reduce((total, r) => total + (r.transferSize || 0), 0);
@@ -39,21 +40,25 @@ export function PageMetrics() {
   const [readings, setReadings] = useState<Reading[]>(PENDING);
 
   useEffect(() => {
-    // Settle briefly after load so late resources (webfonts) are counted.
-    let timer: number;
-    const run = () => {
-      timer = window.setTimeout(() => setReadings(measure()), 250);
+    // Webfonts are fetched only once the CSS has been parsed, so a single
+    // reading taken shortly after load misses them and undercounts both bytes
+    // and requests. Re-read as entries actually arrive, and stop once the page
+    // has gone quiet, so the panel settles on the real totals.
+    let settle: number;
+    const update = () => {
+      window.clearTimeout(settle);
+      settle = window.setTimeout(() => setReadings(measure()), 200);
     };
 
-    if (document.readyState === "complete") {
-      run();
-    } else {
-      window.addEventListener("load", run, { once: true });
-    }
+    update();
+    const observer = new PerformanceObserver(update);
+    observer.observe({ type: "resource", buffered: true });
+    const stop = window.setTimeout(() => observer.disconnect(), 5000);
 
     return () => {
-      window.clearTimeout(timer);
-      window.removeEventListener("load", run);
+      window.clearTimeout(settle);
+      window.clearTimeout(stop);
+      observer.disconnect();
     };
   }, []);
 
