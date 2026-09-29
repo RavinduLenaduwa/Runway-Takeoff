@@ -1,0 +1,150 @@
+import * as React from "react";
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { ChevronDown } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+
+type AccordionVariant = "default" | "card";
+
+const VariantContext = React.createContext<AccordionVariant>("default");
+
+type AccordionProps = React.ComponentProps<typeof AccordionPrimitive.Root> & {
+  variant?: AccordionVariant;
+};
+
+function Accordion({ variant = "default", className, ...props }: AccordionProps) {
+  return (
+    <VariantContext.Provider value={variant}>
+      <AccordionPrimitive.Root
+        data-variant={variant}
+        className={cn(variant === "card" && "grid gap-3", className)}
+        {...props}
+      />
+    </VariantContext.Provider>
+  );
+}
+
+function AccordionItem({ className, ...props }: React.ComponentProps<typeof AccordionPrimitive.Item>) {
+  const variant = React.useContext(VariantContext);
+  return (
+    <AccordionPrimitive.Item
+      className={cn(
+        variant === "card"
+          ? "border border-[var(--line)] bg-[var(--panel)] transition-colors data-[state=open]:border-[var(--line-2)]"
+          : "border-b border-[var(--line)]",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+function AccordionTrigger({ className, children, ...props }: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
+  const variant = React.useContext(VariantContext);
+  return (
+    <AccordionPrimitive.Header className="flex">
+      <AccordionPrimitive.Trigger
+        className={cn(
+          "group flex flex-1 cursor-pointer items-center justify-between gap-4 text-left font-medium transition-colors hover:text-[var(--ink)]",
+          variant === "card" ? "px-5 py-5 md:px-6" : "py-4",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+        <ChevronDown
+          aria-hidden="true"
+          className="size-4 shrink-0 text-[var(--dim)] transition-transform duration-200 group-data-[state=open]:rotate-180 group-data-[state=open]:text-[var(--sign)]"
+        />
+      </AccordionPrimitive.Trigger>
+    </AccordionPrimitive.Header>
+  );
+}
+
+function AccordionContent({ className, children, ...props }: React.ComponentProps<typeof AccordionPrimitive.Content>) {
+  const variant = React.useContext(VariantContext);
+  return (
+    <AccordionPrimitive.Content className="acc-content overflow-hidden" {...props}>
+      <div className={cn(variant === "card" ? "px-5 pb-5 md:px-6" : "pb-4", className)}>{children}</div>
+    </AccordionPrimitive.Content>
+  );
+}
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = React.useState(
+    () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  React.useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = () => setReduced(query.matches);
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
+  }, []);
+  return reduced;
+}
+
+// How long to hold after a character before the next one, so the text reads
+// with the rhythm of writing rather than a constant tick.
+function pauseAfter(char: string, speed: number) {
+  if (/[.!?]/.test(char)) return speed * 10;
+  if (/[,;:]/.test(char)) return speed * 4;
+  return 0;
+}
+
+function StreamingText({ text, speed, startDelay }: { text: string; speed: number; startDelay: number }) {
+  const reduced = usePrefersReducedMotion();
+  const [shown, setShown] = React.useState(reduced ? text.length : 0);
+
+  React.useEffect(() => {
+    if (reduced) {
+      setShown(text.length);
+      return;
+    }
+    setShown(0);
+    let count = 0;
+    let timer: number;
+    const tick = () => {
+      count += 1;
+      setShown(count);
+      if (count < text.length) timer = window.setTimeout(tick, speed + pauseAfter(text[count - 1], speed));
+    };
+    timer = window.setTimeout(tick, startDelay);
+    return () => window.clearTimeout(timer);
+  }, [text, speed, startDelay, reduced]);
+
+  const done = shown >= text.length;
+
+  // The finished text sits underneath at zero opacity. It holds the panel at its
+  // final height from the first frame, so nothing below jumps as words arrive,
+  // and it stays in the accessibility tree as the copy a screen reader reads.
+  // The streamed overlay on top is hidden from assistive tech.
+  return (
+    <p className="relative">
+      <span className="opacity-0">{text}</span>
+      <span aria-hidden="true" className="absolute inset-0">
+        {text.slice(0, shown)}
+        {!done && <span className="stream-caret" />}
+      </span>
+    </p>
+  );
+}
+
+type AccordionStreamingContentProps = Omit<React.ComponentProps<typeof AccordionPrimitive.Content>, "children"> & {
+  text: string;
+  /** Milliseconds per character. */
+  speed?: number;
+  /** Milliseconds to wait after opening before the first character. */
+  startDelay?: number;
+};
+
+// Radix unmounts closed content, so every open is a fresh mount and the answer
+// streams in again each time it is revealed.
+function AccordionStreamingContent({ text, speed = 18, startDelay = 160, className, ...props }: AccordionStreamingContentProps) {
+  return (
+    <AccordionContent className={className} {...props}>
+      <StreamingText text={text} speed={speed} startDelay={startDelay} />
+    </AccordionContent>
+  );
+}
+
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent, AccordionStreamingContent };

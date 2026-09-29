@@ -438,12 +438,36 @@
     .fields { grid-template-columns: 1fr 1fr; }
   }
 
-  /* FAQ */
-  .faq { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px clamp(32px, 5vw, 64px); }
-  .faq > div { display: grid; gap: 8px; align-content: start; }
-  .faq h3 { font-size: 21px; }
-  .faq p { color: var(--mid); font-size: 16px; max-width: 30em; }
-  @media (max-width: 720px) { .faq { grid-template-columns: 1fr; } }
+  /* FAQ: streaming answers in card-style accordion items */
+  .faq-acc h3 { font-size: 20px; letter-spacing: 0; }
+  .faq-acc button { font: 600 20px/1.25 var(--display); color: var(--ink); }
+  .faq-acc p { color: var(--mid); font-size: 16px; line-height: 1.6; max-width: 46em; }
+
+  /* Radix measures the panel and exposes its height, so opening and closing
+     animate to the real size of the finished answer. */
+  .acc-content[data-state="open"] { animation: acc-down 0.22s ease-out; }
+  .acc-content[data-state="closed"] { animation: acc-up 0.18s ease-out; }
+  @keyframes acc-down {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height); }
+  }
+  @keyframes acc-up {
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0; }
+  }
+
+  .stream-caret {
+    display: inline-block;
+    width: 0.5em;
+    height: 1.05em;
+    margin-left: 2px;
+    vertical-align: -0.16em;
+    background: var(--sign);
+    animation: caret-blink 0.9s steps(1) infinite;
+  }
+  @keyframes caret-blink {
+    50% { opacity: 0; }
+  }
 
   /* Closing */
   .close {

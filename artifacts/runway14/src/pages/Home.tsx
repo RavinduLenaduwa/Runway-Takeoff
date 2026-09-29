@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { BoardingPass } from "@/components/BoardingPass";
 import { BrowserWire } from "@/components/BrowserWire";
 import { PixelIcon, type PixelIconName } from "@/components/PixelIcon";
+import AccordionGenerative, { type GenerativeAnswer } from "@/components/ui/accordion-generative";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
 
 const services: { icon: PixelIconName; title: string; body: string }[] = [
@@ -20,11 +21,11 @@ const steps: { icon: PixelIconName; title: string; body: ReactNode }[] = [
   { icon: "plane", title: "Approve, and we build", body: "Weekly updates until launch. You own the code." },
 ];
 
-const faqs = [
-  { q: "Why no price list?", a: "Every project is different, so we quote each one in writing after reading your brief." },
-  { q: "Is the quote really free?", a: "Yes. You only pay once you approve it and work starts." },
-  { q: "Do you work with clients abroad?", a: "Yes. We work remotely, in writing, and invoice in USD." },
-  { q: "Who owns the code?", a: "You do, from day one." },
+const faqs: GenerativeAnswer[] = [
+  { value: "price-list", question: "Why no price list?", answer: "Every project is different, so we quote each one in writing after reading your brief." },
+  { value: "free-quote", question: "Is the quote really free?", answer: "Yes. You only pay once you approve it and work starts." },
+  { value: "abroad", question: "Do you work with clients abroad?", answer: "Yes. We work remotely, in writing, and invoice in USD." },
+  { value: "code", question: "Who owns the code?", answer: "You do, from day one." },
 ];
 
 export default function Home() {
@@ -120,14 +121,7 @@ export default function Home() {
               <span className="loc"><b>C</b>FAQ</span>
               <h2>Common questions</h2>
             </div>
-            <div className="faq">
-              {faqs.map((item) => (
-                <div key={item.q}>
-                  <h3>{item.q}</h3>
-                  <p>{item.a}</p>
-                </div>
-              ))}
-            </div>
+            <AccordionGenerative items={faqs} defaultValue="price-list" className="faq-acc max-w-3xl" />
           </div>
         </section>
 
