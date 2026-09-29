@@ -1,34 +1,23 @@
 import { useState, type FormEvent } from "react";
-import { motion, useScroll } from "framer-motion";
-import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { useDocumentMeta } from "@/hooks/use-document-meta";
 import { PageBreadcrumb } from "@/components/PageBreadcrumb";
-import { caption, ink } from "@/lib/theme";
+import { useDocumentMeta } from "@/hooks/use-document-meta";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
+const SERVICES = ["Website", "Web Apps", "SEO", "AI Automations"];
+const BUDGETS = [
+  { value: "<$2k", label: "Under $2k" },
+  { value: "$2k–$5k", label: "$2k to $5k" },
+  { value: "$5k–$10k", label: "$5k to $10k" },
+  { value: "$10k+", label: "$10k or more" },
+];
 
 export default function WorkWithUs() {
   useDocumentMeta({
-    title: "Work With Us | Runway 14",
-    description: "Tell Runway 14 what you're building. Get a clear quote and a realistic timeline before any work begins.",
+    title: "Start a Project | Runway 14",
+    description: "Send Runway 14 a short brief. You get a written plan and a fixed price in USD, free, before you commit to anything.",
     path: "work-with-us",
   });
-  const { scrollYProgress } = useScroll();
   const [hasExistingProduct, setHasExistingProduct] = useState("no");
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -45,7 +34,7 @@ export default function WorkWithUs() {
     setErrors((prev) => (prev[field] ? { ...prev, [field]: "" } : prev));
   }
 
-  function handleWorkWithUsSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -61,6 +50,8 @@ export default function WorkWithUs() {
 
     if (Object.values(nextErrors).some(Boolean)) {
       setErrors(nextErrors);
+      const first = Object.keys(nextErrors)[0];
+      document.getElementById(`field-${first}`)?.scrollIntoView({ block: "center" });
       return;
     }
     setErrors({});
@@ -85,199 +76,193 @@ export default function WorkWithUs() {
       `Budget: ${formData.get("budget")}`
     ].filter(Boolean).join("\n");
 
-    window.location.href = `mailto:hello@runway14.com?subject=${encodeURIComponent("New RWY14 project inquiry")}&body=${encodeURIComponent(details)}`;
+    window.location.href = `mailto:hello@runway14.com?subject=${encodeURIComponent("Project brief for Runway 14")}&body=${encodeURIComponent(details)}`;
     setSubmitted(true);
   }
 
+  const error = (field: string) =>
+    errors[field] ? <p id={`${field}-error`} className="err">{errors[field]}</p> : null;
+  const describedBy = (field: string) => (errors[field] ? `${field}-error` : undefined);
+
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black overflow-hidden font-sans">
+    <>
       <Navbar />
-      <motion.div
-        className="fixed top-0 left-0 right-0 z-[60] h-px origin-left bg-white"
-        style={{ scaleX: scrollYProgress }}
-      />
 
-      <main className="px-6 md:px-12 lg:px-24">
-        <section className="pt-40 md:pt-48 pb-32">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
-            className="max-w-7xl mx-auto"
-          >
-            <motion.div variants={fadeUp} className="mb-16">
-              <PageBreadcrumb label="Work With Us" path="work-with-us" />
-              <Link href="/" className={`inline-block text-sm ${ink.supporting} hover:text-white transition-colors mb-10`}>
-                Back to runway
-              </Link>
-              <div className={`${caption} mb-4`}>Project Intake</div>
-              <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-none mb-8">
-                WORK WITH<br />US.
-              </h1>
-              <p className={`text-lg md:text-xl ${ink.supporting} font-light max-w-2xl`}>
-                Tell us what you’re building. We’ll map the shortest path from idea to launch.
+      <main className="wrap page">
+        <div className="intro">
+          <PageBreadcrumb label="Start a project" path="work-with-us" />
+          <span className="loc"><b>14</b>Project brief</span>
+          <h1>Start a project</h1>
+          <p>
+            A few lines on what you need, about ten minutes. You get a written plan and a fixed price in USD, <span className="hl">free</span>, before you commit to anything.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} noValidate className="brief">
+          <div className="group">
+            <p className="group-label">About you</p>
+            <div className="two">
+              <label className="field" id="field-name">
+                <span className="field-label">Name</span>
+                <input
+                  className="input"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  required
+                  onChange={() => clearError("name")}
+                  aria-invalid={!!errors.name}
+                  aria-describedby={describedBy("name")}
+                />
+                {error("name")}
+              </label>
+              <label className="field" id="field-email">
+                <span className="field-label">Email</span>
+                <input
+                  className="input"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  onChange={() => clearError("email")}
+                  aria-invalid={!!errors.email}
+                  aria-describedby={describedBy("email")}
+                />
+                {error("email")}
+              </label>
+            </div>
+            <label className="field">
+              <span className="field-label">Company or project name <span className="opt">(optional)</span></span>
+              <input className="input" name="company" type="text" autoComplete="organization" />
+            </label>
+          </div>
+
+          <div className="group">
+            <p className="group-label">What you need</p>
+            <fieldset className="field" id="field-services" aria-describedby={describedBy("services")}>
+              <legend className="field-label mb-2">Which services? Pick any that apply.</legend>
+              <div className="choices">
+                {SERVICES.map((service) => (
+                  <label key={service} className="choice">
+                    <input
+                      type="checkbox"
+                      name="services"
+                      value={service}
+                      checked={selectedServices.includes(service)}
+                      onChange={() => toggleService(service)}
+                      className="sr-only"
+                    />
+                    {service}
+                  </label>
+                ))}
+              </div>
+              {error("services")}
+            </fieldset>
+          </div>
+
+          <div className="group">
+            <p className="group-label">The project</p>
+            <label className="field" id="field-project">
+              <span className="field-label">What are you building?</span>
+              <textarea
+                className="input"
+                name="project"
+                rows={4}
+                required
+                onChange={() => clearError("project")}
+                aria-invalid={!!errors.project}
+                aria-describedby={describedBy("project")}
+              />
+              {error("project")}
+            </label>
+            <label className="field" id="field-goal">
+              <span className="field-label">What should it achieve?</span>
+              <textarea
+                className="input"
+                name="goal"
+                rows={3}
+                required
+                placeholder="More bookings, less manual work, a first version to show investors..."
+                onChange={() => clearError("goal")}
+                aria-invalid={!!errors.goal}
+                aria-describedby={describedBy("goal")}
+              />
+              {error("goal")}
+            </label>
+          </div>
+
+          <div className="group">
+            <p className="group-label">What exists already</p>
+            <fieldset className="field">
+              <legend className="field-label mb-2">Do you have an existing website or product?</legend>
+              <div className="choices">
+                {[{ value: "yes", label: "Yes" }, { value: "no", label: "No" }].map((option) => (
+                  <label key={option.value} className="choice">
+                    <input
+                      type="radio"
+                      name="existingProduct"
+                      value={option.value}
+                      checked={hasExistingProduct === option.value}
+                      onChange={() => setHasExistingProduct(option.value)}
+                      className="sr-only"
+                    />
+                    {option.label}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+            {hasExistingProduct === "yes" && (
+              <label className="field" id="field-url">
+                <span className="field-label">Where can we see it?</span>
+                <input
+                  className="input"
+                  name="url"
+                  type="url"
+                  required
+                  placeholder="https://"
+                  onChange={() => clearError("url")}
+                  aria-invalid={!!errors.url}
+                  aria-describedby={describedBy("url")}
+                />
+                {error("url")}
+              </label>
+            )}
+          </div>
+
+          <div className="group">
+            <p className="group-label">Budget</p>
+            <fieldset className="field" id="field-budget" aria-describedby={describedBy("budget")}>
+              <legend className="field-label mb-2">Roughly what have you set aside, in USD?</legend>
+              <div className="choices">
+                {BUDGETS.map((budget) => (
+                  <label key={budget.value} className="choice">
+                    <input
+                      type="radio"
+                      name="budget"
+                      value={budget.value}
+                      onChange={() => clearError("budget")}
+                      className="sr-only"
+                    />
+                    {budget.label}
+                  </label>
+                ))}
+              </div>
+              {error("budget")}
+            </fieldset>
+          </div>
+
+          <div className="submit-row">
+            <button type="submit" className="btn">Send brief <span className="arrow">&rarr;</span></button>
+            {submitted && (
+              <p className="sent" role="status">
+                Your email app should have opened with the brief filled in. Send it from there, or write to hello@runway14.com.
               </p>
-            </motion.div>
-
-            <motion.form variants={fadeUp} onSubmit={handleWorkWithUsSubmit} noValidate className="max-w-4xl ml-auto space-y-12">
-              <div className="space-y-6">
-                <div className="text-xs tracking-[0.25em] uppercase text-white/40">01 / Basics</div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <label className="block">
-                    <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Name *</span>
-                    <input
-                      required
-                      name="name"
-                      type="text"
-                      onChange={() => clearError("name")}
-                      aria-invalid={!!errors.name}
-                      className={`w-full bg-transparent border px-4 py-4 text-white outline-none transition-colors focus:border-white ${errors.name ? "border-white" : "border-white/15"}`}
-                    />
-                    {errors.name && <div className="mt-2 text-sm text-white/50">{errors.name}</div>}
-                  </label>
-                  <label className="block">
-                    <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Email *</span>
-                    <input
-                      required
-                      name="email"
-                      type="email"
-                      onChange={() => clearError("email")}
-                      aria-invalid={!!errors.email}
-                      className={`w-full bg-transparent border px-4 py-4 text-white outline-none transition-colors focus:border-white ${errors.email ? "border-white" : "border-white/15"}`}
-                    />
-                    {errors.email && <div className="mt-2 text-sm text-white/50">{errors.email}</div>}
-                  </label>
-                </div>
-                <label className="block">
-                  <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Company / Project Name</span>
-                  <input name="company" type="text" className="w-full bg-transparent border border-white/15 px-4 py-4 text-white outline-none transition-colors focus:border-white" />
-                </label>
-              </div>
-
-              <div className="space-y-6">
-                <div className="text-xs tracking-[0.25em] uppercase text-white/40">02 / Services</div>
-                <fieldset className="space-y-4">
-                  <legend className="text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Which service(s) are you interested in? *</legend>
-                  <div className="grid grid-cols-2 gap-4">
-                    {["Web Apps", "Website", "SEO", "AI Automations"].map((service) => (
-                      <label key={service} className="cursor-pointer border border-white/15 px-4 py-4 text-sm tracking-[0.18em] uppercase text-white/60 transition-colors has-[:checked]:border-white has-[:checked]:text-white">
-                        <input
-                          type="checkbox"
-                          name="services"
-                          value={service}
-                          checked={selectedServices.includes(service)}
-                          onChange={() => toggleService(service)}
-                          className="sr-only"
-                        />
-                        {service}
-                      </label>
-                    ))}
-                  </div>
-                  {errors.services && (
-                    <div className="text-sm text-white/50">{errors.services}</div>
-                  )}
-                </fieldset>
-              </div>
-
-              <div className="space-y-6">
-                <div className="text-xs tracking-[0.25em] uppercase text-white/40">03 / Project</div>
-                <label className="block">
-                  <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">What are you building? *</span>
-                  <textarea
-                    required
-                    name="project"
-                    rows={4}
-                    onChange={() => clearError("project")}
-                    aria-invalid={!!errors.project}
-                    className={`w-full resize-none bg-transparent border px-4 py-4 text-white outline-none transition-colors focus:border-white ${errors.project ? "border-white" : "border-white/15"}`}
-                  />
-                  {errors.project && <div className="mt-2 text-sm text-white/50">{errors.project}</div>}
-                </label>
-                <label className="block">
-                  <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Goal *</span>
-                  <textarea
-                    required
-                    name="goal"
-                    rows={3}
-                    onChange={() => clearError("goal")}
-                    aria-invalid={!!errors.goal}
-                    placeholder="What are you trying to achieve?"
-                    className={`w-full resize-none bg-transparent border px-4 py-4 text-white outline-none transition-colors focus:border-white ${errors.goal ? "border-white" : "border-white/15"}`}
-                  />
-                  {errors.goal && <div className="mt-2 text-sm text-white/50">{errors.goal}</div>}
-                </label>
-              </div>
-
-              <div className="space-y-6">
-                <div className="text-xs tracking-[0.25em] uppercase text-white/40">04 / Product Context</div>
-                <fieldset className="space-y-4">
-                  <legend className="text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Do you have an existing website or product?</legend>
-                  <div className="grid grid-cols-2 gap-4">
-                    {["yes", "no"].map((option) => (
-                      <label key={option} className="cursor-pointer border border-white/15 px-4 py-4 text-sm tracking-[0.18em] uppercase text-white/60 transition-colors has-[:checked]:border-white has-[:checked]:text-white">
-                        <input
-                          required
-                          type="radio"
-                          name="existingProduct"
-                          value={option}
-                          checked={hasExistingProduct === option}
-                          onChange={() => setHasExistingProduct(option)}
-                          className="sr-only"
-                        />
-                        {option}
-                      </label>
-                    ))}
-                  </div>
-                </fieldset>
-                {hasExistingProduct === "yes" && (
-                  <motion.label initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="block">
-                    <span className="block text-xs tracking-[0.2em] uppercase text-white/40 mb-3">URL *</span>
-                    <input
-                      required
-                      name="url"
-                      type="url"
-                      onChange={() => clearError("url")}
-                      aria-invalid={!!errors.url}
-                      placeholder="https://"
-                      className={`w-full bg-transparent border px-4 py-4 text-white outline-none transition-colors focus:border-white ${errors.url ? "border-white" : "border-white/15"}`}
-                    />
-                    {errors.url && <div className="mt-2 text-sm text-white/50">{errors.url}</div>}
-                  </motion.label>
-                )}
-              </div>
-
-              <div className="space-y-6">
-                <div className="text-xs tracking-[0.25em] uppercase text-white/40">05 / Budget</div>
-                <fieldset>
-                  <legend className="text-xs tracking-[0.2em] uppercase text-white/40 mb-3">Budget Range *</legend>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {["<$2k", "$2k–$5k", "$5k–$10k", "$10k+"].map((budget) => (
-                      <label key={budget} className="cursor-pointer border border-white/15 px-4 py-4 text-sm tracking-[0.18em] uppercase text-white/60 transition-colors has-[:checked]:border-white has-[:checked]:text-white">
-                        <input required type="radio" name="budget" value={budget} onChange={() => clearError("budget")} className="sr-only" />
-                        {budget}
-                      </label>
-                    ))}
-                  </div>
-                  {errors.budget && <div className="mt-4 text-sm text-white/50">{errors.budget}</div>}
-                </fieldset>
-              </div>
-
-              <div className="flex flex-col sm:flex-row sm:items-center gap-6">
-                <button type="submit" className="border border-white bg-white px-10 py-5 text-sm font-bold text-black transition-all duration-300 hover:bg-black hover:text-white">
-                  Send Inquiry
-                </button>
-                {submitted && (
-                  <div className={`text-sm ${ink.supporting}`}>
-                    Draft created. Send it from your email client.
-                  </div>
-                )}
-              </div>
-            </motion.form>
-          </motion.div>
-        </section>
+            )}
+          </div>
+        </form>
       </main>
 
       <Footer />
-    </div>
+    </>
   );
 }

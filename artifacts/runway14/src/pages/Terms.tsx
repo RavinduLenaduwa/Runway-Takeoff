@@ -1,25 +1,8 @@
-import { motion, useScroll } from "framer-motion";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { useDocumentMeta } from "@/hooks/use-document-meta";
 import { PageBreadcrumb } from "@/components/PageBreadcrumb";
-import { caption, ink } from "@/lib/theme";
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
+import { useDocumentMeta } from "@/hooks/use-document-meta";
 
 export default function Terms() {
   useDocumentMeta({
@@ -27,70 +10,51 @@ export default function Terms() {
     description: "The terms governing use of the Runway 14 website and how Runway 14 project engagements are agreed.",
     path: "terms",
   });
-  const { scrollYProgress } = useScroll();
 
   return (
-    <div className="min-h-screen bg-black text-white selection:bg-white selection:text-black overflow-hidden font-sans">
+    <>
       <Navbar />
-      <motion.div
-        className="fixed top-0 left-0 right-0 z-[60] h-px origin-left bg-white"
-        style={{ scaleX: scrollYProgress }}
-      />
 
-      <main className="px-6 md:px-12 lg:px-24">
-        <section className="pt-40 md:pt-48 pb-32">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
-            className="max-w-3xl mx-auto"
-          >
-            <motion.div variants={fadeUp} className="mb-16">
-              <PageBreadcrumb label="Terms of Service" path="terms" />
-              <Link href="/" className={`inline-block text-sm ${ink.supporting} hover:text-white transition-colors mb-10`}>
-                Back to runway
-              </Link>
-              <div className={`${caption} mb-4`}>Legal</div>
-              <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-none mb-8">
-                TERMS OF<br />SERVICE.
-              </h1>
-              <p className={`text-lg ${ink.supporting} font-light`}>Last updated 2026</p>
-            </motion.div>
+      <main className="wrap page">
+        <div className="intro">
+          <PageBreadcrumb label="Terms of Service" path="terms" />
+          <span className="loc"><b>14</b>Legal</span>
+          <h1>Terms of Service</h1>
+          <p className="worn">Last updated 2026</p>
+        </div>
 
-            <motion.div variants={fadeUp} className={`space-y-12 ${ink.supporting} font-light leading-relaxed`}>
-              <div className="space-y-4">
-                <h2 className="text-white text-xl font-bold">This website</h2>
-                <p>
-                  This site is provided as-is, to introduce Runway 14 and let you get in touch about a project. It's provided without warranties of any kind, and we may update or change it at any time.
-                </p>
-              </div>
+        <div className="prose">
+          <div>
+            <h2>This website</h2>
+            <p>
+              This site is provided as-is, to introduce Runway 14 and let you get in touch about a project. It's provided without warranties of any kind, and we may update or change it at any time.
+            </p>
+          </div>
 
-              <div className="space-y-4">
-                <h2 className="text-white text-xl font-bold">Project engagements</h2>
-                <p>
-                  Reaching out through the <Link href="/work-with-us" className="text-white hover:opacity-60 transition-opacity">Work With Us</Link> form or by email doesn't create a contract. Actual project work, scope, pricing, timelines, and deliverables are agreed separately in writing before any work begins.
-                </p>
-              </div>
+          <div>
+            <h2>Project engagements</h2>
+            <p>
+              Sending a <Link href="/work-with-us">project brief</Link> or an email doesn't create a contract. Actual project work, scope, pricing, timelines, and deliverables are agreed separately in writing before any work begins.
+            </p>
+          </div>
 
-              <div className="space-y-4">
-                <h2 className="text-white text-xl font-bold">Intellectual property</h2>
-                <p>
-                  The content, design, and branding on this site belong to Runway 14. For client projects, ownership and licensing of the delivered work is defined in that project's own agreement.
-                </p>
-              </div>
+          <div>
+            <h2>Intellectual property</h2>
+            <p>
+              The content, design, and branding on this site belong to Runway 14. For client projects, ownership and licensing of the delivered work is defined in that project's own agreement.
+            </p>
+          </div>
 
-              <div className="space-y-4">
-                <h2 className="text-white text-xl font-bold">Contact</h2>
-                <p>
-                  Questions about these terms can go to <a href="mailto:hello@runway14.com" className="text-white hover:opacity-60 transition-opacity">hello@runway14.com</a>. See also our <Link href="/privacy" className="text-white hover:opacity-60 transition-opacity">Privacy Policy</Link>.
-                </p>
-              </div>
-            </motion.div>
-          </motion.div>
-        </section>
+          <div>
+            <h2>Contact</h2>
+            <p>
+              Questions about these terms can go to <a href="mailto:hello@runway14.com">hello@runway14.com</a>. See also our <Link href="/privacy">Privacy Policy</Link>.
+            </p>
+          </div>
+        </div>
       </main>
 
       <Footer />
-    </div>
+    </>
   );
 }

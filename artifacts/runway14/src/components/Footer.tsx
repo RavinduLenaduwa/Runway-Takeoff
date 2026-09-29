@@ -2,23 +2,17 @@ import { Link } from "wouter";
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/10 py-12 px-6 md:px-12 lg:px-24 text-sm text-white/45 flex flex-col md:flex-row justify-between items-center gap-6">
-      <div className="text-center md:text-left">
-        <div className="font-bold tracking-tight text-white/70 mb-1">Runway 14</div>
-        <div className="text-xs">Digital Products. Built to Scale.</div>
-      </div>
-      <div className="text-xs">
-        &copy; {new Date().getFullYear()} Runway 14. All rights reserved.
-      </div>
-      <div className="flex flex-col md:items-end gap-3">
-        <div className="flex gap-6 text-xs">
-          <a href="mailto:hello@runway14.com" className="hover:text-white transition-colors">hello@runway14.com</a>
+    <>
+      <div className="threshold" aria-hidden="true" />
+      <footer className="site-footer">
+        <div className="wrap">
+          <span>&copy; {new Date().getFullYear()} Runway 14</span>
+          <a href="mailto:hello@runway14.com">hello@runway14.com</a>
+          <Link href="/privacy">Privacy</Link>
+          <Link href="/terms">Terms</Link>
+          <span className="rt" aria-hidden="true">RWY 14 &middot; HDG 140&deg;</span>
         </div>
-        <div className="flex gap-6 text-xs">
-          <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-          <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 }

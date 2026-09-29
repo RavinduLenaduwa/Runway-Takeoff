@@ -1,13 +1,15 @@
 # Runway 14
 
-> Runway 14 builds web apps, websites, SEO, and AI automation for companies that want software that actually works.
+> A remote software studio building websites, web apps, SEO and AI automation. Every project is quoted in writing, with a fixed price in USD, before any work starts.
 
-Runway 14 is a software development studio. Its four services: full-stack web applications, marketing and brochure websites, on-page and technical SEO, and AI-powered workflow automation. It works with early-stage founders building an MVP and with established teams that already have a product and need more capacity.
+Runway 14 works remotely with clients worldwide, in writing, and invoices in USD. Its four services: marketing websites the client can edit themselves; web apps such as portals, internal tools and SaaS products; technical SEO; and AI automation of repetitive work.
+
+How an engagement works: the client sends a short brief (about ten minutes). Runway 14 replies with a written quote covering scope, milestones and a fixed price, at no cost. Nothing is owed until the client approves the quote. After approval, work proceeds with weekly updates until launch, and the client owns the code from day one.
 
 ## Pages
 
-- [Home](https://ravindulenaduwa.github.io/Runway-Takeoff/): overview, services, process, and FAQ
-- [Work With Us](https://ravindulenaduwa.github.io/Runway-Takeoff/work-with-us): project intake form to start a conversation
+- [Home](https://ravindulenaduwa.github.io/Runway-Takeoff/): services, how it works, and FAQ
+- [Start a project](https://ravindulenaduwa.github.io/Runway-Takeoff/work-with-us): the project brief form
 - [Privacy Policy](https://ravindulenaduwa.github.io/Runway-Takeoff/privacy): what data is collected and how it's handled
 - [Terms of Service](https://ravindulenaduwa.github.io/Runway-Takeoff/terms): terms governing use of the site and project engagements
 

@@ -14,13 +14,13 @@ const template = fs.readFileSync(path.join(outDir, "index.html"), "utf8");
 const routes = [
   {
     path: "work-with-us",
-    title: "Work With Us | Runway 14",
-    description: "Tell Runway 14 what you're building. Get a clear quote and a realistic timeline before any work begins.",
+    title: "Start a Project | Runway 14",
+    description: "Send Runway 14 a short brief. You get a written plan and a fixed price in USD, free, before you commit to anything.",
   },
   {
     path: "privacy",
     title: "Privacy Policy | Runway 14",
-    description: "How Runway 14 handles the information you share through the Work With Us form. No tracking, no cookies, no data stored on our servers.",
+    description: "How Runway 14 handles the information you share in a project brief. No tracking, no cookies, no data stored on our servers.",
   },
   {
     path: "terms",
