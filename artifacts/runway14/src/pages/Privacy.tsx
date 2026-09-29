@@ -20,7 +20,7 @@ export default function Privacy() {
           <PageBreadcrumb label="Privacy Policy" path="privacy" />
           <span className="loc"><b>14</b>Legal</span>
           <h1>Privacy Policy</h1>
-          <p className="worn">Last updated 2026</p>
+          <p className="mid">Last updated 2026</p>
         </div>
 
         <div className="prose">

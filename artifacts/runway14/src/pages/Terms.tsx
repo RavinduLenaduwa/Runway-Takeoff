@@ -20,7 +20,7 @@ export default function Terms() {
           <PageBreadcrumb label="Terms of Service" path="terms" />
           <span className="loc"><b>14</b>Legal</span>
           <h1>Terms of Service</h1>
-          <p className="worn">Last updated 2026</p>
+          <p className="mid">Last updated 2026</p>
         </div>
 
         <div className="prose">

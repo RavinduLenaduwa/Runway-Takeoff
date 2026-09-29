@@ -51,7 +51,7 @@ export function Navbar() {
             <a key={link.href} href={link.href} onClick={() => setOpen(false)}>{link.label}</a>
           ))}
           <Link href="/work-with-us" className="btn" onClick={() => setOpen(false)}>
-            Start a project <span className="arrow">&rarr;</span>
+            Start a project
           </Link>
         </div>
       )}

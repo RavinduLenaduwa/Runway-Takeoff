@@ -1,29 +1,18 @@
-import { useEffect, type ReactNode } from "react";
+import { useEffect } from "react";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { BoardingPass } from "@/components/BoardingPass";
-import { PixelIcon, type PixelIconName } from "@/components/PixelIcon";
+import { RunwayNight } from "@/components/RunwayNight";
+import { LedIcon, type LedIconName } from "@/components/LedIcon";
+import { StepsStack } from "@/components/StepsStack";
+import { Faq } from "@/components/Faq";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
 
-const services: { icon: PixelIconName; title: string; body: string }[] = [
-  { icon: "web", title: "Websites", body: "Fast marketing sites you can edit yourself." },
-  { icon: "app", title: "Web apps", body: "Portals, internal tools and SaaS products." },
-  { icon: "seo", title: "SEO", body: "Technical fixes that help people find you." },
-  { icon: "ai", title: "AI automation", body: "Repetitive work handed to software." },
-];
-
-const steps: { icon: PixelIconName; title: string; body: ReactNode }[] = [
-  { icon: "brief", title: "Send a short brief", body: "A few lines on what you need. About ten minutes." },
-  { icon: "quote", title: "Get a written quote", body: <>Scope, milestones and a fixed price. <span className="hl">Free</span>.</> },
-  { icon: "plane", title: "Approve, and we build", body: "Weekly updates until launch. You own the code." },
-];
-
-const faqs = [
-  { q: "Why no price list?", a: "Every project is different, so we quote each one in writing after reading your brief." },
-  { q: "Is the quote really free?", a: "Yes. You only pay once you approve it and work starts." },
-  { q: "Do you work with clients abroad?", a: "Yes. We work remotely, in writing, and invoice in USD." },
-  { q: "Who owns the code?", a: "You do, from day one." },
+const services: { icon: LedIconName; label: string; lead: string; strong: string; tail?: string }[] = [
+  { icon: "web", label: "Websites", lead: "Fast marketing sites ", strong: "you can edit yourself." },
+  { icon: "app", label: "Web apps", lead: "", strong: "Portals, internal tools", tail: " and SaaS products." },
+  { icon: "seo", label: "SEO", lead: "Technical fixes that ", strong: "help people find you." },
+  { icon: "ai", label: "AI automation", lead: "", strong: "Repetitive work", tail: " handed to software." },
 ];
 
 export default function Home() {
@@ -47,38 +36,53 @@ export default function Home() {
       <Navbar />
 
       <main id="top">
-        <div className="wrap hero">
-          <div className="copy">
-            <span className="loc"><b>14</b>Software studio</span>
-            <h1>Websites, web apps, SEO and AI automation, quoted before we start.</h1>
-            <p className="sub">
-              Send a short brief. You get a written plan and a fixed price in USD, <span className="hl">free</span>, before you commit to anything.
-            </p>
-            <div className="ctas">
-              <Link href="/work-with-us" className="btn">Start a project <span className="arrow">&rarr;</span></Link>
-              <a href="#process" className="btn ghost">How it works</a>
+        <section className="hero">
+          <div className="hero-art"><RunwayNight /></div>
+          <div className="wrap">
+            <div className="copy">
+              <span className="tag">Software studio</span>
+              <h1>
+                Websites, web apps, SEO and AI automation,
+                <br />
+                <span className="accent">quoted before we start.</span>
+              </h1>
+              <p className="sub">
+                Send a short brief. You get a written plan and a fixed price in USD, <span className="hl">free</span>, before you commit to anything.
+              </p>
+              <div className="ctas">
+                <Link href="/work-with-us" className="btn">Start a project</Link>
+                <a href="#process" className="btn ghost">How it works</a>
+              </div>
+              <p className="fine">Remote, in writing, and invoiced in USD.</p>
             </div>
           </div>
-          <BoardingPass />
-        </div>
+        </section>
 
         <section id="services" className="band">
           <div className="wrap">
             <div className="head">
-              <span className="loc"><b>A</b>Services</span>
-              <h2>Four things we build.</h2>
+              <div className="lead">
+                <span className="tag">Services</span>
+                <h2>
+                  Four things we build.
+                  <br />
+                  <span className="accent">One brief to start any of them.</span>
+                </h2>
+              </div>
+              <p>Not sure which one you need? Describe the problem in your brief and we'll suggest one.</p>
             </div>
-            <div className="svc">
-              {services.map((service) => (
-                <div key={service.title}>
-                  <div className="t">
-                    <PixelIcon name={service.icon} />
-                    <h3>{service.title}</h3>
-                  </div>
-                  <p>{service.body}</p>
+            <div className="rows">
+              {services.map((s) => (
+                <div key={s.label} className="row">
+                  <LedIcon name={s.icon} />
+                  <p className="big">
+                    {s.lead}
+                    <strong>{s.strong}</strong>
+                    {s.tail}
+                  </p>
+                  <span className="note">{s.label}</span>
                 </div>
               ))}
-              <p className="note">Not sure which one you need? Describe the problem and we'll suggest one.</p>
             </div>
           </div>
         </section>
@@ -86,51 +90,55 @@ export default function Home() {
         <section id="process" className="band">
           <div className="wrap">
             <div className="head">
-              <span className="loc"><b>B</b>How it works</span>
-              <h2>Nothing to pay until you approve the quote.</h2>
+              <div className="lead">
+                <span className="tag">How it works</span>
+                <h2>
+                  Nothing to pay
+                  <br />
+                  <span className="accent">until you approve the quote.</span>
+                </h2>
+              </div>
+              <p>Three steps, all in writing. You see the plan and the price before anything is built.</p>
             </div>
-            <ol className="steps">
-              {steps.map((step, i) => (
-                <li key={step.title}>
-                  <div className="t">
-                    <span className="n">STEP {i + 1}</span>
-                    <PixelIcon name={step.icon} />
-                  </div>
-                  <h3>{step.title}</h3>
-                  <p>{step.body}</p>
-                </li>
-              ))}
-            </ol>
+            <StepsStack />
           </div>
         </section>
 
         <section id="faq" className="band">
-          <div className="wrap">
-            <div className="head">
-              <span className="loc"><b>C</b>FAQ</span>
-              <h2>Common questions</h2>
+          <div className="wrap faq-wrap">
+            <div className="faq-side">
+              <span className="tag">FAQ</span>
+              <h2>
+                Common
+                <br />
+                <span className="accent">questions.</span>
+              </h2>
+              <div className="side-card">
+                <p>Something not covered here? Ask us by email and we'll answer in writing.</p>
+                <a href="mailto:hello@runway14.com" className="btn">hello@runway14.com</a>
+              </div>
             </div>
-            <div className="faq">
-              {faqs.map((item) => (
-                <div key={item.q}>
-                  <h3>{item.q}</h3>
-                  <p>{item.a}</p>
-                </div>
-              ))}
-            </div>
+            <Faq />
           </div>
         </section>
 
-        <div id="start" className="wrap close">
-          <div>
-            <h2>Tell us what you're building.</h2>
+        <section className="close">
+          <div className="close-art">
+            <LedIcon name="plane" factor={2} pad={3} size={520} />
+          </div>
+          <div className="close-body">
+            <h2>
+              Tell us what
+              <br />
+              <span className="accent">you're building.</span>
+            </h2>
             <p>Start with a brief. The quote is <span className="hl">free</span>, and you decide from there.</p>
+            <div className="ctas">
+              <Link href="/work-with-us" className="btn">Start a project</Link>
+              <a href="mailto:hello@runway14.com" className="btn ghost">Email us</a>
+            </div>
           </div>
-          <div className="ctas">
-            <Link href="/work-with-us" className="btn">Start a project <span className="arrow">&rarr;</span></Link>
-            <a href="mailto:hello@runway14.com" className="btn ghost">hello@runway14.com</a>
-          </div>
-        </div>
+        </section>
       </main>
 
       <Footer />
