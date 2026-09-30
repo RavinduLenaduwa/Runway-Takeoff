@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import { useSectionHref } from "@/hooks/use-section-href";
 
-// Section links must carry the deploy base path. A bare "/#services" is an
-// absolute URL, so on GitHub Pages it resolves to the domain root and leaves the
-// site entirely.
-const base = import.meta.env.BASE_URL;
-const sectionLinks = [
-  { href: `${base}#services`, label: "Services" },
-  { href: `${base}#process`, label: "How it works" },
-  { href: `${base}#faq`, label: "FAQ" },
+const sections = [
+  { id: "services", label: "Services" },
+  { id: "process", label: "How it works" },
+  { id: "faq", label: "FAQ" },
 ];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const sectionHref = useSectionHref();
+  const sectionLinks = sections.map((s) => ({ href: sectionHref(s.id), label: s.label }));
 
   useEffect(() => {
     if (!open) return;

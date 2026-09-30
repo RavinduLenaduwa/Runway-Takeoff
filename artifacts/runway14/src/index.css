@@ -37,6 +37,12 @@
 @layer base {
   html { scroll-padding-top: calc(var(--nav-h) + 16px); }
 
+  /* Header links to #services and the like glide down instead of jumping.
+     Only for visitors who haven't asked for less motion. */
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+
   body {
     background: var(--ground);
     color: var(--ink);

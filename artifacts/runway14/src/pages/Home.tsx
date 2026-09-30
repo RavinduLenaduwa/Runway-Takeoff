@@ -66,10 +66,12 @@ export default function Home() {
 
   // Arriving at /#faq from another page or a shared link: the browser tries its
   // hash jump before React has rendered the section and silently gives up.
+  // "instant" so a fresh page opens at the section instead of gliding down to it
+  // from the top, which the smooth scrolling in index.css would otherwise do.
   useEffect(() => {
     const id = decodeURIComponent(window.location.hash.slice(1));
     if (!id) return;
-    const frame = requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView());
+    const frame = requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: "instant" }));
     return () => cancelAnimationFrame(frame);
   }, []);
 
