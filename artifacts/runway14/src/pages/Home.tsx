@@ -11,14 +11,36 @@ import RadialOrbitalTimeline, { type OrbitalItem } from "@/components/ui/radial-
 import { AppWindow, Bot, Globe, Search } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
 
-// A site needs to be found, and an app is where automation plugs in, so those
-// are the pairings each card offers.
-const services: OrbitalItem[] = [
-  { id: 1, label: "Service 01", title: "Websites", icon: Globe, relatedIds: [3, 2], content: "Fast marketing sites you can edit yourself." },
-  { id: 2, label: "Service 02", title: "Web apps", icon: AppWindow, relatedIds: [4, 1], content: "Portals, internal tools and SaaS products." },
-  { id: 3, label: "Service 03", title: "SEO", icon: Search, relatedIds: [1], content: "Technical fixes that help people find you." },
-  { id: 4, label: "Service 04", title: "AI automation", icon: Bot, relatedIds: [2], content: "Repetitive work handed to software." },
+// Two views of the same four services, with different jobs. The list says what
+// each one is (`content`). The orbit says how they connect (`related`), so its
+// cards carry the reason for each pairing and never repeat the description.
+const services: (OrbitalItem & { content: string })[] = [
+  {
+    id: 1, title: "Websites", icon: Globe, content: "Fast marketing sites you can edit yourself.",
+    related: [
+      { id: 3, reason: "A fast site is only useful once people can find it." },
+      { id: 2, reason: "For when the site needs logins, bookings or payments." },
+    ],
+  },
+  {
+    id: 2, title: "Web apps", icon: AppWindow, content: "Portals, internal tools and SaaS products.",
+    related: [
+      { id: 4, reason: "Automations plug into the app's data and workflows." },
+      { id: 1, reason: "The public face that sits in front of the product." },
+    ],
+  },
+  {
+    id: 3, title: "SEO", icon: Search, content: "Technical fixes that help people find you.",
+    related: [{ id: 1, reason: "Search results start at the pages people land on." }],
+  },
+  {
+    id: 4, title: "AI automation", icon: Bot, content: "Repetitive work handed to software.",
+    related: [{ id: 2, reason: "Automation needs a system to read from and write to." }],
+  },
 ];
+
+// The orbit gets the connections only; the descriptions live in the list.
+const orbitItems: OrbitalItem[] = services.map(({ id, title, icon, related }) => ({ id, title, icon, related }));
 
 const steps: { icon: PixelIconName; title: string; body: ReactNode }[] = [
   { icon: "brief", title: "Send a short brief", body: "A few lines on what you need. About ten minutes." },
@@ -78,36 +100,29 @@ export default function Home() {
             <div className="head">
               <span className="loc"><b>A</b>Services</span>
               <h2>Four things we build.</h2>
-              <p className="mid">Choose one, from the list or the orbit, to see what it pairs with.</p>
+              <p className="mid">The list says what each one is. The orbit shows how they fit together.</p>
             </div>
             <div className="svc-layout">
               <ol className="svc-list">
-                {services.map((service) => {
-                  const pairs = service.relatedIds
-                    .map((id) => services.find((s) => s.id === id)?.title)
-                    .filter(Boolean)
-                    .join(", ");
-                  return (
-                    <li key={service.id}>
-                      <button
-                        type="button"
-                        className="svc-row"
-                        aria-pressed={activeService === service.id}
-                        onClick={() => setActiveService(activeService === service.id ? null : service.id)}
-                      >
-                        <span className="n">0{service.id}</span>
-                        <span className="body">
-                          <span className="t">{service.title}</span>
-                          <span className="d">{service.content}</span>
-                          <span className="pair">Pairs with {pairs}</span>
-                        </span>
-                      </button>
-                    </li>
-                  );
-                })}
+                {services.map((service) => (
+                  <li key={service.id}>
+                    <button
+                      type="button"
+                      className="svc-row"
+                      aria-pressed={activeService === service.id}
+                      onClick={() => setActiveService(activeService === service.id ? null : service.id)}
+                    >
+                      <span className="n">0{service.id}</span>
+                      <span className="body">
+                        <span className="t">{service.title}</span>
+                        <span className="d">{service.content}</span>
+                      </span>
+                    </button>
+                  </li>
+                ))}
               </ol>
               <RadialOrbitalTimeline
-                items={services}
+                items={orbitItems}
                 hubLabel="14"
                 cta={{ href: "/work-with-us", label: "Start a brief" }}
                 activeId={activeService}

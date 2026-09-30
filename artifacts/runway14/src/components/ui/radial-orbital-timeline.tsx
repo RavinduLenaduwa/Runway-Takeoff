@@ -5,13 +5,20 @@ import { Link } from "wouter";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { cn } from "@/lib/utils";
 
+export interface OrbitalLink {
+  id: number;
+  /** Why the two belong together, shown beside the link. */
+  reason?: string;
+}
+
 export interface OrbitalItem {
   id: number;
   title: string;
-  content: string;
   icon: ElementType;
   /** Items shown under "Pairs with", which open that item when chosen. */
-  relatedIds: number[];
+  related: OrbitalLink[];
+  /** Optional body text for the open card. */
+  content?: string;
   /** Small caption at the top of the open card. */
   label?: string;
 }
@@ -152,7 +159,7 @@ export default function RadialOrbitalTimeline({
     buttonRefs.current[closing]?.focus();
   };
 
-  const related = new Set(items.find((item) => item.id === activeId)?.relatedIds ?? []);
+  const related = new Set((items.find((item) => item.id === activeId)?.related ?? []).map((link) => link.id));
 
   return (
     <div
@@ -216,31 +223,33 @@ export default function RadialOrbitalTimeline({
               >
                 {item.label && <span className="orbit-cap">{item.label}</span>}
                 <h3>{item.title}</h3>
-                <p>{item.content}</p>
+                {item.content && <p>{item.content}</p>}
 
-                {item.relatedIds.length > 0 && (
+                {item.related.length > 0 && (
                   <div className="orbit-rel">
                     <span className="orbit-cap">Pairs with</span>
-                    <div className="orbit-chips">
-                      {item.relatedIds.map((relatedId) => {
-                        const relatedItem = items.find((i) => i.id === relatedId);
+                    <ul className="orbit-pairs">
+                      {item.related.map((link) => {
+                        const relatedItem = items.find((i) => i.id === link.id);
                         if (!relatedItem) return null;
                         return (
-                          <button
-                            key={relatedId}
-                            type="button"
-                            className="orbit-chip"
-                            onClick={() => {
-                              open(relatedId);
-                              requestAnimationFrame(() => buttonRefs.current[relatedId]?.focus());
-                            }}
-                          >
-                            {relatedItem.title}
-                            <ArrowRight size={12} aria-hidden="true" />
-                          </button>
+                          <li key={link.id}>
+                            <button
+                              type="button"
+                              className="orbit-chip"
+                              onClick={() => {
+                                open(link.id);
+                                requestAnimationFrame(() => buttonRefs.current[link.id]?.focus());
+                              }}
+                            >
+                              {relatedItem.title}
+                              <ArrowRight size={12} aria-hidden="true" />
+                            </button>
+                            {link.reason && <p>{link.reason}</p>}
+                          </li>
                         );
                       })}
-                    </div>
+                    </ul>
                   </div>
                 )}
 
