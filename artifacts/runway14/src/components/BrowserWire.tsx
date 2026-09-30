@@ -1,9 +1,11 @@
+import { reveal } from "@/lib/reveal";
+
 // A deliberately neutral hero object: an unbranded browser window holding a
 // page skeleton. It says "we build sites and apps" without depicting any one
 // client, product or theme, and the single orange block is the only colour.
 export function BrowserWire() {
   return (
-    <div className="wire" aria-hidden="true">
+    <div className="wire" aria-hidden="true" {...reveal(240, "right")}>
       <div className="wire-top">
         <i />
         <i />

@@ -10,6 +10,7 @@ import AccordionGenerative, { type GenerativeAnswer } from "@/components/ui/acco
 import RadialOrbitalTimeline, { type OrbitalItem } from "@/components/ui/radial-orbital-timeline";
 import { AppWindow, Bot, Globe, Search } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
+import { reveal } from "@/lib/reveal";
 
 // Two views of the same four services, with different jobs. The list says what
 // each one is (`content`). The orbit says how they connect (`related`), so its
@@ -81,12 +82,12 @@ export default function Home() {
           <AsciiArt className="hero-bg" />
           <div className="wrap hero">
             <div className="copy">
-              <span className="loc"><b>14</b>Software studio</span>
-              <h1>Websites, web apps, SEO and AI automation, quoted before we start.</h1>
-              <p className="sub">
+              <span className="loc" {...reveal(0)}><b>14</b>Software studio</span>
+              <h1 {...reveal(90)}>Websites, web apps, SEO and AI automation, quoted before we start.</h1>
+              <p className="sub" {...reveal(180)}>
                 Send a short brief. You get a written plan and a fixed price in USD, <span className="hl">free</span>, before you commit to anything.
               </p>
-              <div className="ctas">
+              <div className="ctas" {...reveal(270)}>
                 <Link href="/work-with-us" className="btn">Start a project <span className="arrow">&rarr;</span></Link>
                 <a href="#process" className="btn ghost">How it works</a>
               </div>
@@ -98,14 +99,14 @@ export default function Home() {
         <section id="services" className="band">
           <div className="wrap">
             <div className="head">
-              <span className="loc"><b>A</b>Services</span>
-              <h2>Four things we build.</h2>
-              <p className="mid">The list says what each one is. The orbit shows how they fit together.</p>
+              <span className="loc" {...reveal(0)}><b>A</b>Services</span>
+              <h2 {...reveal(80)}>Four things we build.</h2>
+              <p className="mid" {...reveal(160)}>The list says what each one is. The orbit shows how they fit together.</p>
             </div>
             <div className="svc-layout">
               <ol className="svc-list">
-                {services.map((service) => (
-                  <li key={service.id}>
+                {services.map((service, i) => (
+                  <li key={service.id} {...reveal(i * 90)}>
                     <button
                       type="button"
                       className="svc-row"
@@ -121,27 +122,29 @@ export default function Home() {
                   </li>
                 ))}
               </ol>
-              <RadialOrbitalTimeline
-                items={orbitItems}
-                hubLabel="14"
-                cta={{ href: "/work-with-us", label: "Start a brief" }}
-                activeId={activeService}
-                onActiveChange={setActiveService}
-              />
+              <div {...reveal(200, "scale")}>
+                <RadialOrbitalTimeline
+                  items={orbitItems}
+                  hubLabel="14"
+                  cta={{ href: "/work-with-us", label: "Start a brief" }}
+                  activeId={activeService}
+                  onActiveChange={setActiveService}
+                />
+              </div>
             </div>
-            <p className="svc-note">Not sure which one you need? Describe the problem and we'll suggest one.</p>
+            <p className="svc-note" {...reveal()}>Not sure which one you need? Describe the problem and we'll suggest one.</p>
           </div>
         </section>
 
         <section id="process" className="band">
           <div className="wrap">
             <div className="head">
-              <span className="loc"><b>B</b>How it works</span>
-              <h2>Nothing to pay until you approve the quote.</h2>
+              <span className="loc" {...reveal(0)}><b>B</b>How it works</span>
+              <h2 {...reveal(80)}>Nothing to pay until you approve the quote.</h2>
             </div>
             <ol className="steps">
               {steps.map((step, i) => (
-                <li key={step.title}>
+                <li key={step.title} {...reveal(i * 130)}>
                   <div className="t">
                     <span className="n">STEP {i + 1}</span>
                     <PixelIcon name={step.icon} />
@@ -151,7 +154,7 @@ export default function Home() {
                 </li>
               ))}
             </ol>
-            <div className="example">
+            <div className="example" {...reveal()}>
               <div className="cap">
                 <span className="hl">Example</span>
                 <p>A quote for a booking portal: milestones by week, what's included, and one fixed price.</p>
@@ -164,19 +167,21 @@ export default function Home() {
         <section id="faq" className="band">
           <div className="wrap">
             <div className="head">
-              <span className="loc"><b>C</b>FAQ</span>
-              <h2>Common questions</h2>
+              <span className="loc" {...reveal(0)}><b>C</b>FAQ</span>
+              <h2 {...reveal(80)}>Common questions</h2>
             </div>
-            <AccordionGenerative items={faqs} defaultValue="price-list" className="faq-acc max-w-3xl" />
+            <div {...reveal(140)}>
+              <AccordionGenerative items={faqs} defaultValue="price-list" className="faq-acc max-w-3xl" />
+            </div>
           </div>
         </section>
 
         <div id="start" className="wrap close">
           <div>
-            <h2>Tell us what you're building.</h2>
-            <p>Start with a brief. The quote is <span className="hl">free</span>, and you decide from there.</p>
+            <h2 {...reveal(0)}>Tell us what you're building.</h2>
+            <p {...reveal(90)}>Start with a brief. The quote is <span className="hl">free</span>, and you decide from there.</p>
           </div>
-          <div className="ctas">
+          <div className="ctas" {...reveal(180)}>
             <Link href="/work-with-us" className="btn">Start a project <span className="arrow">&rarr;</span></Link>
             <a href="mailto:hello@runway14.com" className="btn ghost">hello@runway14.com</a>
           </div>

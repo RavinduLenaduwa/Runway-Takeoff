@@ -4,8 +4,10 @@ import Home from "@/pages/Home";
 import WorkWithUs from "@/pages/WorkWithUs";
 import Privacy from "@/pages/Privacy";
 import Terms from "@/pages/Terms";
+import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 function Router() {
+  useScrollReveal();
   return (
     <Switch>
       <Route path="/" component={Home} />

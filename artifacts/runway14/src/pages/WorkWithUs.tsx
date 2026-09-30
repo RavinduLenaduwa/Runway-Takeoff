@@ -3,6 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageBreadcrumb } from "@/components/PageBreadcrumb";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
+import { reveal } from "@/lib/reveal";
 
 const SERVICES = ["Website", "Web Apps", "SEO", "AI Automations"];
 const BUDGETS = [
@@ -91,15 +92,15 @@ export default function WorkWithUs() {
       <main className="wrap page">
         <div className="intro">
           <PageBreadcrumb label="Start a project" path="work-with-us" />
-          <span className="loc"><b>14</b>Project brief</span>
-          <h1>Start a project</h1>
-          <p>
+          <span className="loc" {...reveal(0)}><b>14</b>Project brief</span>
+          <h1 {...reveal(80)}>Start a project</h1>
+          <p {...reveal(160)}>
             A few lines on what you need, about ten minutes. You get a written plan and a fixed price in USD, <span className="hl">free</span>, before you commit to anything.
           </p>
         </div>
 
         <form onSubmit={handleSubmit} noValidate className="brief">
-          <div className="group">
+          <div className="group" {...reveal()}>
             <p className="group-label">About you</p>
             <div className="two">
               <label className="field" id="field-name">
@@ -137,7 +138,7 @@ export default function WorkWithUs() {
             </label>
           </div>
 
-          <div className="group">
+          <div className="group" {...reveal()}>
             <p className="group-label">What you need</p>
             <fieldset className="field" id="field-services" aria-describedby={describedBy("services")}>
               <legend className="field-label mb-2">Which services? Pick any that apply.</legend>
@@ -160,7 +161,7 @@ export default function WorkWithUs() {
             </fieldset>
           </div>
 
-          <div className="group">
+          <div className="group" {...reveal()}>
             <p className="group-label">The project</p>
             <label className="field" id="field-project">
               <span className="field-label">What are you building?</span>
@@ -191,7 +192,7 @@ export default function WorkWithUs() {
             </label>
           </div>
 
-          <div className="group">
+          <div className="group" {...reveal()}>
             <p className="group-label">What exists already</p>
             <fieldset className="field">
               <legend className="field-label mb-2">Do you have an existing website or product?</legend>
@@ -229,7 +230,7 @@ export default function WorkWithUs() {
             )}
           </div>
 
-          <div className="group">
+          <div className="group" {...reveal()}>
             <p className="group-label">Budget</p>
             <fieldset className="field" id="field-budget" aria-describedby={describedBy("budget")}>
               <legend className="field-label mb-2">Roughly what have you set aside, in USD?</legend>

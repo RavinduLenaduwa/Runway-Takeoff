@@ -76,6 +76,31 @@
   }
   .mid { color: var(--mid); }
 
+  /* Scroll reveal. Elements tagged data-reveal start hidden and ease into place
+     once the observer marks them .is-in. All of it hangs off .reveal-ready,
+     which main.tsx adds, so without script (or if the script fails) everything
+     is simply visible. The delay in --d staggers siblings. */
+  .reveal-ready [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+    transition:
+      opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms),
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms);
+  }
+  .reveal-ready [data-reveal="left"] { transform: translate3d(-36px, 0, 0); }
+  .reveal-ready [data-reveal="right"] { transform: translate3d(36px, 0, 0); }
+  .reveal-ready [data-reveal="scale"] { transform: scale(0.94); }
+  .reveal-ready [data-reveal].is-in { opacity: 1; transform: none; }
+
+  /* Placed last so it wins: with motion off, or on paper, nothing is hidden. */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-ready [data-reveal],
+    .reveal-ready [data-reveal].is-in { opacity: 1; transform: none; transition: none; }
+  }
+  @media print {
+    .reveal-ready [data-reveal] { opacity: 1; transform: none; transition: none; }
+  }
+
   .hl {
     background: var(--sign);
     color: var(--sign-ink);
@@ -114,6 +139,25 @@
     border-bottom: 1px solid var(--line);
   }
   .site-nav .bar { display: flex; align-items: center; gap: 28px; height: var(--nav-h); }
+
+  /* Reading progress, drawn by the browser's own scroll timeline, so it costs
+     no script. Browsers without scroll-driven animations simply don't show it. */
+  @supports (animation-timeline: scroll()) {
+    .site-nav::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: var(--sign);
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: read-progress linear both;
+      animation-timeline: scroll(root block);
+    }
+    @keyframes read-progress { to { transform: scaleX(1); } }
+  }
   .logo {
     display: flex;
     align-items: center;
@@ -124,8 +168,8 @@
   }
   .logo i {
     font-style: normal;
-    background: var(--ink);
-    color: var(--ground);
+    background: var(--sign);
+    color: var(--sign-ink);
     padding: 4px 5px 3px;
     font-size: 15px;
   }
@@ -511,13 +555,37 @@
 
   /* Steps */
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 3vw, 40px); }
+  /* The rule above each step is a pseudo-element rather than a border, so it can
+     draw in from the left as the step arrives. */
   .steps > li {
+    position: relative;
     display: grid;
     gap: 12px;
     align-content: start;
-    padding-top: 22px;
-    border-top: 2px solid var(--ink);
+    padding-top: 24px;
     min-width: 0;
+  }
+  .steps > li::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--ink);
+    transform-origin: left;
+  }
+  .reveal-ready .steps > li::before {
+    transform: scaleX(0);
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0ms);
+  }
+  .reveal-ready .steps > li.is-in::before { transform: scaleX(1); }
+  /* After the rules above, since equal specificity is decided by order. */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-ready .steps > li::before { transform: none; transition: none; }
+  }
+  @media print {
+    .reveal-ready .steps > li::before { transform: none; transition: none; }
   }
   .steps .t { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .steps .n { font: 500 13px/1 var(--mono); color: var(--dim); letter-spacing: 0.1em; }

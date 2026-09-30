@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { reveal } from "@/lib/reveal";
 
 export default function NotFound() {
   useEffect(() => {
@@ -24,10 +25,10 @@ export default function NotFound() {
 
       <main className="wrap page">
         <div className="intro">
-          <span className="loc"><b>404</b>Not found</span>
-          <h1>This page doesn't exist.</h1>
-          <p>The link may be wrong, or the page has moved.</p>
-          <div className="ctas">
+          <span className="loc" {...reveal(0)}><b>404</b>Not found</span>
+          <h1 {...reveal(80)}>This page doesn't exist.</h1>
+          <p {...reveal(160)}>The link may be wrong, or the page has moved.</p>
+          <div className="ctas" {...reveal(240)}>
             <Link href="/" className="btn">Back to the homepage</Link>
             <Link href="/work-with-us" className="btn ghost">Start a project</Link>
           </div>
