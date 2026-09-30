@@ -22,6 +22,9 @@ interface RadialOrbitalTimelineProps {
   hubLabel?: string;
   /** Link shown at the bottom of every open card. */
   cta?: { href: string; label: string };
+  /** Controlled selection, so a list beside the orbit can drive it. */
+  activeId?: number | null;
+  onActiveChange?: (id: number | null) => void;
   className?: string;
 }
 
@@ -35,11 +38,24 @@ const wrap = (deg: number) => ((deg % 360) + 360) % 360;
 // Adapted from the 21st.dev radial orbital timeline: items orbit a hub, and
 // choosing one turns the orbit to bring it to the top, opens its card, and
 // highlights the items it pairs with.
-export default function RadialOrbitalTimeline({ items, hubLabel, cta, className }: RadialOrbitalTimelineProps) {
+export default function RadialOrbitalTimeline({
+  items,
+  hubLabel,
+  cta,
+  activeId: controlledId,
+  onActiveChange,
+  className,
+}: RadialOrbitalTimelineProps) {
   const reduced = usePrefersReducedMotion();
   const [angle, setAngle] = useState(0);
   const angleRef = useRef(0);
-  const [activeId, setActiveId] = useState<number | null>(null);
+  const [internalId, setInternalId] = useState<number | null>(null);
+  const controlled = controlledId !== undefined;
+  const activeId = controlled ? controlledId : internalId;
+  const setActiveId = (id: number | null) => {
+    if (!controlled) setInternalId(id);
+    onActiveChange?.(id);
+  };
   const [hovering, setHovering] = useState(false);
   const [visible, setVisible] = useState(false);
   const [size, setSize] = useState({ width: 480, radius: 200 });
@@ -113,11 +129,15 @@ export default function RadialOrbitalTimeline({ items, hubLabel, cta, className 
     tweenRef.current = requestAnimationFrame(step);
   };
 
-  const open = (id: number) => {
-    const index = items.findIndex((item) => item.id === id);
-    setActiveId(id);
-    rotateTo(TOP - (index / items.length) * 360);
-  };
+  // Turns the orbit whenever the selection changes, whether it came from a node,
+  // a "Pairs with" chip, or the list beside the orbit.
+  useEffect(() => {
+    if (activeId === null) return;
+    const index = items.findIndex((item) => item.id === activeId);
+    if (index >= 0) rotateTo(TOP - (index / items.length) * 360);
+  }, [activeId]);
+
+  const open = (id: number) => setActiveId(id);
 
   const toggle = (id: number) => (activeId === id ? setActiveId(null) : open(id));
 

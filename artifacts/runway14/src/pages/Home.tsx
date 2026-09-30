@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -39,6 +39,7 @@ export default function Home() {
     description: "Websites, web apps, SEO and AI automation for clients worldwide. Send a short brief and get a written plan and a fixed USD price, free, before you commit.",
     path: "",
   });
+  const [activeService, setActiveService] = useState<number | null>(null);
 
   // Arriving at /#faq from another page or a shared link: the browser tries its
   // hash jump before React has rendered the section and silently gives up.
@@ -77,9 +78,42 @@ export default function Home() {
             <div className="head">
               <span className="loc"><b>A</b>Services</span>
               <h2>Four things we build.</h2>
-              <p className="mid">Pick one to see what it covers and what it pairs with.</p>
+              <p className="mid">Choose one, from the list or the orbit, to see what it pairs with.</p>
             </div>
-            <RadialOrbitalTimeline items={services} hubLabel="14" cta={{ href: "/work-with-us", label: "Start a brief" }} />
+            <div className="svc-layout">
+              <ol className="svc-list">
+                {services.map((service) => {
+                  const pairs = service.relatedIds
+                    .map((id) => services.find((s) => s.id === id)?.title)
+                    .filter(Boolean)
+                    .join(", ");
+                  return (
+                    <li key={service.id}>
+                      <button
+                        type="button"
+                        className="svc-row"
+                        aria-pressed={activeService === service.id}
+                        onClick={() => setActiveService(activeService === service.id ? null : service.id)}
+                      >
+                        <span className="n">0{service.id}</span>
+                        <span className="body">
+                          <span className="t">{service.title}</span>
+                          <span className="d">{service.content}</span>
+                          <span className="pair">Pairs with {pairs}</span>
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ol>
+              <RadialOrbitalTimeline
+                items={services}
+                hubLabel="14"
+                cta={{ href: "/work-with-us", label: "Start a brief" }}
+                activeId={activeService}
+                onActiveChange={setActiveService}
+              />
+            </div>
             <p className="svc-note">Not sure which one you need? Describe the problem and we'll suggest one.</p>
           </div>
         </section>
