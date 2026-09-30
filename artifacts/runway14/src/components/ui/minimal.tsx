@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import video from "@/assets/ascii-minimal.mp4";
 import poster from "@/assets/ascii-minimal-poster.webp";
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 // AsciiArt: "Minimal", made with the 21st.dev ASCII editor and baked to a
 // looping video plus poster. Self-hosted rather than loaded from 21st.dev's
@@ -13,16 +14,7 @@ import poster from "@/assets/ascii-minimal-poster.webp";
 // of view so an unseen background isn't decoding video.
 export function AsciiArt({ className }: { className?: string }) {
   const ref = useRef<HTMLVideoElement>(null);
-  const [reduced, setReduced] = useState(
-    () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-  );
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onChange = () => setReduced(query.matches);
-    query.addEventListener("change", onChange);
-    return () => query.removeEventListener("change", onChange);
-  }, []);
+  const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
     const el = ref.current;

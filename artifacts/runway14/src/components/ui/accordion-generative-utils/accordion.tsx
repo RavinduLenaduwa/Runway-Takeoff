@@ -2,6 +2,7 @@ import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { ChevronDown } from "lucide-react";
 
+import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { cn } from "@/lib/utils";
 
 type AccordionVariant = "default" | "card";
@@ -68,19 +69,6 @@ function AccordionContent({ className, children, ...props }: React.ComponentProp
       <div className={cn(variant === "card" ? "px-5 pb-5 md:px-6" : "pb-4", className)}>{children}</div>
     </AccordionPrimitive.Content>
   );
-}
-
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = React.useState(
-    () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-  );
-  React.useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onChange = () => setReduced(query.matches);
-    query.addEventListener("change", onChange);
-    return () => query.removeEventListener("change", onChange);
-  }, []);
-  return reduced;
 }
 
 // How long to hold after a character before the next one, so the text reads

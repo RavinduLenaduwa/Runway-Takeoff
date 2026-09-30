@@ -7,13 +7,17 @@ import { BrowserWire } from "@/components/BrowserWire";
 import { AsciiArt } from "@/components/ui/minimal";
 import { PixelIcon, type PixelIconName } from "@/components/PixelIcon";
 import AccordionGenerative, { type GenerativeAnswer } from "@/components/ui/accordion-generative";
+import RadialOrbitalTimeline, { type OrbitalItem } from "@/components/ui/radial-orbital-timeline";
+import { AppWindow, Bot, Globe, Search } from "lucide-react";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
 
-const services: { icon: PixelIconName; title: string; body: string }[] = [
-  { icon: "web", title: "Websites", body: "Fast marketing sites you can edit yourself." },
-  { icon: "app", title: "Web apps", body: "Portals, internal tools and SaaS products." },
-  { icon: "seo", title: "SEO", body: "Technical fixes that help people find you." },
-  { icon: "ai", title: "AI automation", body: "Repetitive work handed to software." },
+// A site needs to be found, and an app is where automation plugs in, so those
+// are the pairings each card offers.
+const services: OrbitalItem[] = [
+  { id: 1, label: "Service 01", title: "Websites", icon: Globe, relatedIds: [3, 2], content: "Fast marketing sites you can edit yourself." },
+  { id: 2, label: "Service 02", title: "Web apps", icon: AppWindow, relatedIds: [4, 1], content: "Portals, internal tools and SaaS products." },
+  { id: 3, label: "Service 03", title: "SEO", icon: Search, relatedIds: [1], content: "Technical fixes that help people find you." },
+  { id: 4, label: "Service 04", title: "AI automation", icon: Bot, relatedIds: [2], content: "Repetitive work handed to software." },
 ];
 
 const steps: { icon: PixelIconName; title: string; body: ReactNode }[] = [
@@ -73,18 +77,9 @@ export default function Home() {
             <div className="head">
               <span className="loc"><b>A</b>Services</span>
               <h2>Four things we build.</h2>
+              <p className="mid">Pick one to see what it covers and what it pairs with.</p>
             </div>
-            <div className="svc">
-              {services.map((service) => (
-                <div key={service.title}>
-                  <div className="t">
-                    <PixelIcon name={service.icon} />
-                    <h3>{service.title}</h3>
-                  </div>
-                  <p>{service.body}</p>
-                </div>
-              ))}
-            </div>
+            <RadialOrbitalTimeline items={services} hubLabel="14" cta={{ href: "/work-with-us", label: "Start a brief" }} />
             <p className="svc-note">Not sure which one you need? Describe the problem and we'll suggest one.</p>
           </div>
         </section>

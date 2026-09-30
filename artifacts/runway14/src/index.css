@@ -291,33 +291,180 @@
   .band { border-bottom: 1px solid var(--line); padding-block: clamp(64px, 8vw, 104px); }
   .head { display: grid; gap: 20px; justify-items: start; margin-bottom: clamp(36px, 5vw, 52px); max-width: 720px; }
 
-  /* Services: bordered cells, icon beside the title */
-  .svc {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    border: 1px solid var(--line);
-    background: var(--panel);
-  }
-  .svc > div {
-    display: grid;
-    gap: 12px;
-    align-content: start;
-    padding: 26px 24px 28px;
-    min-width: 0;
-  }
-  .svc > div + div { border-left: 1px solid var(--line); }
-  .svc .t { display: flex; align-items: center; gap: 12px; }
-  .svc p { color: var(--mid); font-size: 16px; }
   .svc-note { margin-top: 18px; font-size: 16px; color: var(--mid); }
-  @media (max-width: 900px) {
-    .svc { grid-template-columns: 1fr 1fr; }
-    .svc > div:nth-child(3) { border-left: 0; }
-    .svc > div:nth-child(n + 3) { border-top: 1px solid var(--line); }
+
+  /* Services orbit: the four services circle a hub; choosing one turns it to
+     the top and opens its card over the centre. */
+  .orbit {
+    position: relative;
+    height: clamp(540px, 56vw, 640px);
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(circle at 50% 50%, rgb(255 90 31 / 0.07), transparent 55%),
+      var(--panel);
   }
-  @media (max-width: 520px) {
-    .svc { grid-template-columns: 1fr; }
-    .svc > div + div { border-left: 0; border-top: 1px solid var(--line); }
+  @media (max-width: 640px) { .orbit { height: 580px; } }
+  .orbit-ring {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px dashed var(--line-2);
+    border-radius: 50%;
+    pointer-events: none;
   }
+  .orbit-hub {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 10;
+    width: 76px;
+    height: 76px;
+    margin: -38px 0 0 -38px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--ground);
+    border: 2px solid var(--sign);
+    color: var(--sign);
+    font: 700 26px/1 var(--display);
+    pointer-events: none;
+  }
+  .orbit-hub::before,
+  .orbit-hub::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    border: 1px solid var(--sign);
+    animation: orbit-ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+  .orbit-hub::after { animation-delay: 1.2s; }
+  @keyframes orbit-ping {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.9); opacity: 0; }
+  }
+
+  .orbit-node {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 48px;
+    height: 48px;
+    margin: -24px 0 0 -24px;
+    transition: opacity 0.3s;
+  }
+  .orbit-btn {
+    position: relative;
+    display: block;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .orbit-dot {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--ground);
+    border: 2px solid var(--line-2);
+    transition: transform 0.3s, background-color 0.3s, border-color 0.3s, color 0.3s;
+  }
+  .orbit-btn:hover .orbit-dot { border-color: var(--dim); }
+  /* Put the focus ring on the round dot so it follows the circle. */
+  .orbit-btn:focus-visible { outline: none; }
+  .orbit-btn:focus-visible .orbit-dot { outline: 2px solid var(--ink); outline-offset: 4px; }
+  .orbit-label {
+    position: absolute;
+    top: 56px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font: 600 17px/1 var(--display);
+    color: var(--mid);
+    transition: color 0.3s;
+  }
+  .orbit-btn:hover .orbit-label { color: var(--ink); }
+  .orbit-node.is-related .orbit-dot {
+    border-color: var(--sign);
+    animation: orbit-glow 1.6s ease-in-out infinite;
+  }
+  .orbit-node.is-related .orbit-label { color: var(--ink); }
+  @keyframes orbit-glow {
+    50% { box-shadow: 0 0 0 6px rgb(255 90 31 / 0.18); }
+  }
+  .orbit-node.is-active .orbit-dot {
+    background: var(--sign);
+    border-color: var(--sign);
+    color: var(--sign-ink);
+    transform: scale(1.18);
+    box-shadow: 0 0 0 7px rgb(255 90 31 / 0.16);
+  }
+  .orbit-node.is-active .orbit-label { color: var(--ink); }
+
+  .orbit-card {
+    position: absolute;
+    top: 92px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: grid;
+    gap: 10px;
+    padding: 18px 18px 20px;
+    background: rgb(10 10 11 / 0.96);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--line-2);
+    box-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.75);
+    cursor: default;
+  }
+  .orbit-card::before {
+    content: "";
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    width: 1px;
+    height: 14px;
+    background: var(--sign);
+  }
+  .orbit-card h3 { font-size: 24px; }
+  .orbit-card p { color: var(--mid); font-size: 15.5px; line-height: 1.55; }
+  .orbit-cap {
+    font: 500 11px/1 var(--mono);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .orbit-rel {
+    display: grid;
+    gap: 9px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+  .orbit-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .orbit-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: none;
+    border: 1px solid var(--line-2);
+    color: var(--mid);
+    font: 500 14px/1 var(--body);
+    cursor: pointer;
+  }
+  .orbit-chip:hover { border-color: var(--sign); color: var(--ink); }
+  .orbit-cta {
+    justify-self: start;
+    margin-top: 4px;
+    font: 500 13px/1 var(--mono);
+    letter-spacing: 0.04em;
+    color: var(--sign);
+  }
+  .orbit-cta:hover { text-decoration: underline; text-underline-offset: 3px; }
 
   /* Steps */
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 3vw, 40px); }
