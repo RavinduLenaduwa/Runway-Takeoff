@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { BoardingPass } from "@/components/BoardingPass";
 import { BrowserWire } from "@/components/BrowserWire";
+import { AsciiArt } from "@/components/ui/minimal";
 import { PixelIcon, type PixelIconName } from "@/components/PixelIcon";
 import AccordionGenerative, { type GenerativeAnswer } from "@/components/ui/accordion-generative";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
@@ -50,6 +51,7 @@ export default function Home() {
 
       <main id="top">
         <div className="hero-band">
+          <AsciiArt className="hero-bg" />
           <div className="wrap hero">
             <div className="copy">
               <span className="loc"><b>14</b>Software studio</span>
