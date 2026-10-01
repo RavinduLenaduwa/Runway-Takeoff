@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { Link } from "wouter";
 import { useSectionHref } from "@/hooks/use-section-href";
 
@@ -44,16 +44,22 @@ export function Navbar() {
         </button>
       </div>
 
-      {open && (
-        <div id="mobile-menu" className="wrap menu-panel">
-          {sectionLinks.map((link) => (
-            <a key={link.href} href={link.href} onClick={() => setOpen(false)}>{link.label}</a>
-          ))}
-          <Link href="/work-with-us" className="btn" onClick={() => setOpen(false)}>
-            Start a project
-          </Link>
+      {/* Always in the page, so it can animate open and shut. While closed it is
+          inert, which keeps its links out of the tab order and away from screen readers. */}
+      <div id="mobile-menu" className="menu-wrap" data-open={open} inert={!open}>
+        <div className="menu-clip">
+          <div className="wrap menu-panel">
+            {sectionLinks.map((link, i) => (
+              <a key={link.href} href={link.href} style={{ "--i": i } as CSSProperties} onClick={() => setOpen(false)}>
+                {link.label}
+              </a>
+            ))}
+            <Link href="/work-with-us" className="btn" style={{ "--i": sectionLinks.length } as CSSProperties} onClick={() => setOpen(false)}>
+              Start a project
+            </Link>
+          </div>
         </div>
-      )}
+      </div>
     </nav>
   );
 }
