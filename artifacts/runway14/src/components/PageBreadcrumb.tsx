@@ -7,7 +7,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { SITE_NAME, SITE_URL } from "@/content/site";
+import { SITE_NAME, SITE_URL, pageUrl } from "@/content/site";
 import { useSectionHref } from "@/hooks/use-section-href";
 
 interface PageBreadcrumbProps {
@@ -23,7 +23,7 @@ export function PageBreadcrumb({ label, path, parent }: PageBreadcrumbProps) {
   const trail = [
     { name: SITE_NAME, item: SITE_URL },
     ...(parent ? [{ name: parent.label, item: `${SITE_URL}#${parent.section}` }] : []),
-    { name: label, item: `${SITE_URL}${path}` },
+    { name: label, item: pageUrl(path) },
   ];
   const jsonLd = {
     "@context": "https://schema.org",

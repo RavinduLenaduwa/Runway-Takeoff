@@ -6,6 +6,12 @@ export const SITE_URL = "https://ravindulenaduwa.github.io/Runway-Takeoff/";
 export const SITE_NAME = "Runway 14";
 export const SITE_EMAIL = "hello@runway14.com";
 
+// The address a page is actually served at. GitHub Pages serves each subpage as a
+// directory and redirects the bare path to the trailing-slash one, so canonicals,
+// sitemap entries and breadcrumbs must use the slash form or they point at a URL
+// that redirects away. Home ("") is the site root.
+export const pageUrl = (path: string) => (path ? `${SITE_URL}${path.replace(/\/+$/, "")}/` : SITE_URL);
+
 // Who is behind the site. Every field is optional and empty until the owner
 // supplies it: nothing here may be guessed. Whatever is filled in appears on the
 // Privacy page and in the structured data automatically.

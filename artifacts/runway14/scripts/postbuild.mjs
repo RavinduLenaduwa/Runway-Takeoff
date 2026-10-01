@@ -8,7 +8,7 @@ const outDir = path.join(root, "dist", "public");
 // The server bundle is built from src/entry-server.tsx just before this runs. It
 // renders a route to HTML and re-exports the site facts (page meta, FAQs,
 // services) from src/content/site.ts, so this script never keeps its own copy.
-const { render, pageMeta, faqs, serviceCopy, servicePages, identity, SITE_URL, SITE_NAME, SITE_EMAIL } = await import(
+const { render, pageMeta, faqs, serviceCopy, servicePages, identity, pageUrl, SITE_URL, SITE_NAME, SITE_EMAIL } = await import(
   pathToFileURL(path.join(root, "dist", "server", "entry-server.js")).href
 );
 
@@ -106,7 +106,7 @@ function structuredData({ home, service }) {
     });
   }
   if (service) {
-    const url = `${SITE_URL}${service.meta.path}`;
+    const url = pageUrl(service.meta.path);
     graph.push(
       {
         "@type": "Service",
@@ -142,7 +142,7 @@ const notFoundHtml = template.replace(
 );
 
 for (const { route, meta, service } of routes) {
-  const url = `${SITE_URL}${meta.path}`;
+  const url = pageUrl(meta.path);
   const body = render(route);
   // A silent failure here would ship an empty page to every crawler, which is
   // the problem this step exists to prevent, so fail the build instead.
