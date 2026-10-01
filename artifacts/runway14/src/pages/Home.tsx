@@ -3,7 +3,6 @@ import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { BoardingPass } from "@/components/BoardingPass";
-import { BrowserWire } from "@/components/BrowserWire";
 import { AsciiArt } from "@/components/ui/minimal";
 import { PixelIcon, type PixelIconName } from "@/components/PixelIcon";
 import AccordionGenerative, { type GenerativeAnswer } from "@/components/ui/accordion-generative";
@@ -94,7 +93,12 @@ export default function Home() {
                 <a href="#process" className="btn ghost">How it works</a>
               </div>
             </div>
-            <BrowserWire />
+            <figure className="hero-pass" {...reveal(240, "right")}>
+              <BoardingPass />
+              <figcaption>
+                <span className="hl">Example quote</span> for a booking portal: milestones by week, what's included, and one fixed price.
+              </figcaption>
+            </figure>
           </div>
         </div>
 
@@ -156,13 +160,6 @@ export default function Home() {
                 </li>
               ))}
             </ol>
-            <div className="example" {...reveal()}>
-              <div className="cap">
-                <span className="hl">Example</span>
-                <p>A quote for a booking portal: milestones by week, what's included, and one fixed price.</p>
-              </div>
-              <BoardingPass />
-            </div>
           </div>
         </section>
 
