@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -9,6 +9,7 @@ import AccordionGenerative from "@/components/ui/accordion-generative";
 import RadialOrbitalTimeline, { type OrbitalItem } from "@/components/ui/radial-orbital-timeline";
 import { AppWindow, Bot, Globe, Search } from "lucide-react";
 import { faqs, pageMeta, serviceCopy } from "@/content/site";
+import { useDeepLinkScroll } from "@/hooks/use-deep-link-scroll";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
 import { reveal } from "@/lib/reveal";
 
@@ -49,16 +50,7 @@ export default function Home() {
   useDocumentMeta(pageMeta.home);
   const [activeService, setActiveService] = useState<number | null>(null);
 
-  // Arriving at /#faq from another page or a shared link: the browser tries its
-  // hash jump before React has rendered the section and silently gives up.
-  // "instant" so a fresh page opens at the section instead of gliding down to it
-  // from the top, which the smooth scrolling in index.css would otherwise do.
-  useEffect(() => {
-    const id = decodeURIComponent(window.location.hash.slice(1));
-    if (!id) return;
-    const frame = requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: "instant" }));
-    return () => cancelAnimationFrame(frame);
-  }, []);
+  useDeepLinkScroll();
 
   return (
     <>
