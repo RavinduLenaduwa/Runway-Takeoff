@@ -3,7 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageBreadcrumb } from "@/components/PageBreadcrumb";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
-import { pageMeta } from "@/content/site";
+import { identity, pageMeta } from "@/content/site";
 import { reveal } from "@/lib/reveal";
 
 export default function Privacy() {
@@ -27,6 +27,13 @@ export default function Privacy() {
             <p>
               Runway 14 is a software studio that works remotely with clients in Sri Lanka and abroad. We are responsible for the information you send us through this site. You can reach us at <a href="mailto:hello@runway14.com">hello@runway14.com</a>.
             </p>
+            {(identity.legalName || identity.registration || identity.location) && (
+              <p>
+                {identity.legalName && <>Runway 14 is the trading name of {identity.legalName}. </>}
+                {identity.registration && <>{identity.registration}. </>}
+                {identity.location && <>We are based in {[identity.location.locality, identity.location.country].filter(Boolean).join(", ")}.</>}
+              </p>
+            )}
           </div>
 
           <div {...reveal()}>

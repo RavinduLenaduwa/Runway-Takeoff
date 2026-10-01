@@ -349,7 +349,21 @@
     transition: color 0.2s;
   }
   .svc-row .body { display: grid; gap: 6px; }
+  .svc-list li { position: relative; }
+
+  .svc-more {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    font: 500 13px/1 var(--mono);
+    letter-spacing: 0.04em;
+    color: var(--mid);
+    transition: color 0.2s;
+  }
+  .svc-more:hover { color: var(--sign); }
+  .svc-more:focus-visible { outline: 2px solid var(--sign); outline-offset: 4px; }
   .svc-row .t {
+    padding-right: 96px;
     font: 600 28px/1.1 var(--display);
     transition: color 0.2s;
   }
@@ -753,6 +767,48 @@
     margin-bottom: clamp(40px, 5vw, 56px);
   }
   .page .intro p { color: var(--mid); font-size: clamp(18px, 1.5vw, 20px); max-width: 32em; }
+
+  /* Service pages */
+  .svc-page .intro { margin-bottom: clamp(48px, 6vw, 72px); }
+  .svc-sec { display: grid; gap: 24px; max-width: 760px; margin-bottom: clamp(48px, 6vw, 72px); }
+  .svc-sec h2 { font-size: clamp(26px, 2.6vw, 32px); }
+  .inc { border-top: 1px solid var(--line); }
+  .inc li {
+    display: grid;
+    gap: 6px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .inc h3 { font-size: 21px; letter-spacing: 0; }
+  .inc p { color: var(--mid); font-size: 17px; max-width: 40em; }
+  .ticks { display: grid; gap: 12px; }
+  .ticks li { position: relative; padding-left: 28px; font-size: 18px; max-width: 40em; }
+  .ticks li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 12px;
+    height: 12px;
+    background: var(--sign);
+  }
+  .elsewhere { color: var(--mid); font-size: 17px; max-width: 40em; }
+  .elsewhere a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .elsewhere a:hover { text-decoration-color: var(--sign); }
+  .related { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 640px) { .related { grid-template-columns: 1fr; } }
+  .related a {
+    display: grid;
+    gap: 8px;
+    height: 100%;
+    padding: 22px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    transition: border-color 0.2s;
+  }
+  .related a:hover { border-color: var(--sign); }
+  .related .t { font: 600 24px/1.1 var(--display); }
+  .related .d { color: var(--mid); font-size: 16px; line-height: 1.5; }
 
   /* Brief form */
   .brief { display: grid; gap: 44px; max-width: 760px; }

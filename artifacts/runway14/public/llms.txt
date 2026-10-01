@@ -9,6 +9,10 @@ How an engagement works: the client sends a short brief (about ten minutes). Run
 ## Pages
 
 - [Home](https://ravindulenaduwa.github.io/Runway-Takeoff/): services, how it works, and FAQ
+- [Websites](https://ravindulenaduwa.github.io/Runway-Takeoff/services/websites): marketing sites the client can edit themselves
+- [Web apps](https://ravindulenaduwa.github.io/Runway-Takeoff/services/web-apps): portals, internal tools and SaaS products
+- [SEO](https://ravindulenaduwa.github.io/Runway-Takeoff/services/seo): technical SEO, with no promised rankings
+- [AI automation](https://ravindulenaduwa.github.io/Runway-Takeoff/services/ai-automation): automating repetitive work, with a person kept in charge where mistakes are costly
 - [Start a project](https://ravindulenaduwa.github.io/Runway-Takeoff/work-with-us): the project brief form
 - [Privacy Policy](https://ravindulenaduwa.github.io/Runway-Takeoff/privacy): what data is collected and how it's handled
 - [Terms of Service](https://ravindulenaduwa.github.io/Runway-Takeoff/terms): terms governing use of the site and project engagements

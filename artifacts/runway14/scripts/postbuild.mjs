@@ -8,7 +8,7 @@ const outDir = path.join(root, "dist", "public");
 // The server bundle is built from src/entry-server.tsx just before this runs. It
 // renders a route to HTML and re-exports the site facts (page meta, FAQs,
 // services) from src/content/site.ts, so this script never keeps its own copy.
-const { render, pageMeta, faqs, serviceCopy, SITE_URL, SITE_NAME, SITE_EMAIL } = await import(
+const { render, pageMeta, faqs, serviceCopy, servicePages, identity, SITE_URL, SITE_NAME, SITE_EMAIL } = await import(
   pathToFileURL(path.join(root, "dist", "server", "entry-server.js")).href
 );
 
@@ -19,6 +19,7 @@ const routes = [
   { route: "/work-with-us", meta: pageMeta.workWithUs },
   { route: "/privacy", meta: pageMeta.privacy },
   { route: "/terms", meta: pageMeta.terms },
+  ...servicePages.map((page) => ({ route: `/${page.meta.path}`, meta: page.meta, service: page })),
 ];
 
 const escapeHtml = (text) => text.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
@@ -46,7 +47,7 @@ function withMeta(html, { title, description, url }) {
 const areaServed = [{ "@type": "Country", name: "Sri Lanka" }, "Worldwide"];
 const orgId = `${SITE_URL}#organization`;
 
-function structuredData({ home }) {
+function structuredData({ home, service }) {
   const graph = [
     {
       "@type": "Organization",
@@ -57,6 +58,16 @@ function structuredData({ home }) {
       logo: `${SITE_URL}favicon.svg`,
       email: SITE_EMAIL,
       description: "A remote software studio building websites, web apps, SEO and AI automation. Every project is quoted in writing, with a fixed price, before work starts.",
+      ...(identity.legalName && { legalName: identity.legalName }),
+      ...(identity.location && {
+        address: {
+          "@type": "PostalAddress",
+          ...(identity.location.locality && { addressLocality: identity.location.locality }),
+          addressCountry: identity.location.country,
+        },
+      }),
+      ...(identity.founders?.length && { founder: identity.founders.map((name) => ({ "@type": "Person", name })) }),
+      ...(identity.sameAs?.length && { sameAs: identity.sameAs }),
       areaServed,
       knowsAbout: ["Web development", "Web applications", "Search engine optimization", "AI automation"],
       hasOfferCatalog: {
@@ -94,6 +105,29 @@ function structuredData({ home }) {
       })),
     });
   }
+  if (service) {
+    const url = `${SITE_URL}${service.meta.path}`;
+    graph.push(
+      {
+        "@type": "Service",
+        "@id": `${url}#service`,
+        name: service.name,
+        description: service.lede,
+        url,
+        provider: { "@id": orgId },
+        areaServed,
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${url}#faq`,
+        mainEntity: service.faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: { "@type": "Answer", text: faq.answer },
+        })),
+      },
+    );
+  }
   const json = JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replace(/</g, "\\u003c");
   return `<script type="application/ld+json">${json}</script>\n  `;
 }
@@ -107,7 +141,7 @@ const notFoundHtml = template.replace(
   `$1noindex, follow$2`,
 );
 
-for (const { route, meta } of routes) {
+for (const { route, meta, service } of routes) {
   const url = `${SITE_URL}${meta.path}`;
   const body = render(route);
   // A silent failure here would ship an empty page to every crawler, which is
@@ -117,7 +151,7 @@ for (const { route, meta } of routes) {
   let html = withMeta(template, { ...meta, url });
   if (!html.includes('<div id="root"></div>')) throw new Error("index.html has no empty #root to render into");
   html = html.replace('<div id="root"></div>', () => `<div id="root">${body}</div>`);
-  html = html.replace("</head>", () => `${structuredData({ home: route === "/" })}</head>`);
+  html = html.replace("</head>", () => `${structuredData({ home: route === "/", service })}</head>`);
 
   const dir = path.join(outDir, meta.path);
   fs.mkdirSync(dir, { recursive: true });

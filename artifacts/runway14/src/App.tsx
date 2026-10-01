@@ -4,6 +4,7 @@ import Home from "@/pages/Home";
 import WorkWithUs from "@/pages/WorkWithUs";
 import Privacy from "@/pages/Privacy";
 import Terms from "@/pages/Terms";
+import ServicePage from "@/pages/ServicePage";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
@@ -16,6 +17,7 @@ function Router() {
       <Route path="/work-with-us" component={WorkWithUs} />
       <Route path="/privacy" component={Privacy} />
       <Route path="/terms" component={Terms} />
+      <Route path="/services/:slug">{(params) => <ServicePage slug={params.slug} />}</Route>
       <Route component={NotFound} />
     </Switch>
   );

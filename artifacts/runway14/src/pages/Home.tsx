@@ -34,7 +34,7 @@ const orbitMeta: Record<number, Pick<OrbitalItem, "icon" | "related">> = {
   4: { icon: Bot, related: [{ id: 2, reason: "Automation needs a system to read from and write to." }] },
 };
 
-const services: (OrbitalItem & { content: string })[] = serviceCopy.map((copy) => ({ ...copy, ...orbitMeta[copy.id] }));
+const services: (OrbitalItem & { content: string; slug: string })[] = serviceCopy.map((copy) => ({ ...copy, ...orbitMeta[copy.id] }));
 
 // The orbit gets the connections only; the descriptions live in the list.
 const orbitItems: OrbitalItem[] = services.map(({ id, title, icon, related }) => ({ id, title, icon, related }));
@@ -111,6 +111,9 @@ export default function Home() {
                         <span className="d">{service.content}</span>
                       </span>
                     </button>
+                    <Link href={`/services/${service.slug}`} className="svc-more" aria-label={`${service.title}: details`}>
+                      Details <span aria-hidden="true">&rarr;</span>
+                    </Link>
                   </li>
                 ))}
               </ol>

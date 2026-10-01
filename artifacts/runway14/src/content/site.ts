@@ -6,6 +6,22 @@ export const SITE_URL = "https://ravindulenaduwa.github.io/Runway-Takeoff/";
 export const SITE_NAME = "Runway 14";
 export const SITE_EMAIL = "hello@runway14.com";
 
+// Who is behind the site. Every field is optional and empty until the owner
+// supplies it: nothing here may be guessed. Whatever is filled in appears on the
+// Privacy page and in the structured data automatically.
+export const identity: {
+  /** The registered business name, if Runway 14 is a trading name. */
+  legalName?: string;
+  /** Registration number and the register it is on, as it should be shown. */
+  registration?: string;
+  /** Where the studio is based. */
+  location?: { locality?: string; country: string };
+  /** The person or people who run it. */
+  founders?: string[];
+  /** Profile pages that are really the studio's: LinkedIn, GitHub, and so on. */
+  sameAs?: string[];
+} = {};
+
 export interface PageMeta {
   title: string;
   description: string;
@@ -37,10 +53,10 @@ export const pageMeta = {
 } satisfies Record<string, PageMeta>;
 
 export const serviceCopy = [
-  { id: 1, title: "Websites", content: "Fast marketing sites you can edit yourself." },
-  { id: 2, title: "Web apps", content: "Portals, internal tools and SaaS products." },
-  { id: 3, title: "SEO", content: "Technical fixes that help people find you." },
-  { id: 4, title: "AI automation", content: "Repetitive work handed to software." },
+  { id: 1, slug: "websites", title: "Websites", content: "Fast marketing sites you can edit yourself." },
+  { id: 2, slug: "web-apps", title: "Web apps", content: "Portals, internal tools and SaaS products." },
+  { id: 3, slug: "seo", title: "SEO", content: "Technical fixes that help people find you." },
+  { id: 4, slug: "ai-automation", title: "AI automation", content: "Repetitive work handed to software." },
 ];
 
 export const faqs = [

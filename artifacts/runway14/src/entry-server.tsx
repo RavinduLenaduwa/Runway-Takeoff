@@ -9,3 +9,4 @@ export function render(route: string) {
 }
 
 export * from "./content/site";
+export * from "./content/service-pages";
