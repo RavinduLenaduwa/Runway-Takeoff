@@ -21,9 +21,11 @@ function Router() {
   );
 }
 
-function App() {
+// `ssrPath` is only passed by the build, which renders each page to static HTML
+// without a browser address to read.
+function App({ ssrPath }: { ssrPath?: string }) {
   return (
-    <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+    <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")} ssrPath={ssrPath}>
       <Router />
     </WouterRouter>
   );

@@ -6,7 +6,7 @@ export function Footer() {
       <div className="threshold" aria-hidden="true" />
       <footer className="site-footer">
         <div className="wrap">
-          <span>&copy; {new Date().getFullYear()} Runway 14</span>
+          <span suppressHydrationWarning>&copy; {new Date().getFullYear()} Runway 14</span>
           <a href="mailto:hello@runway14.com">hello@runway14.com</a>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>

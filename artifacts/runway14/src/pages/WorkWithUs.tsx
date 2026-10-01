@@ -3,16 +3,13 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageBreadcrumb } from "@/components/PageBreadcrumb";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
+import { pageMeta } from "@/content/site";
 import { reveal } from "@/lib/reveal";
 
 const SERVICES = ["Website", "Web Apps", "SEO", "AI Automations"];
 
 export default function WorkWithUs() {
-  useDocumentMeta({
-    title: "Start a Project | Runway 14",
-    description: "Send Runway 14 a short brief. You get a written plan and a fixed price, free, before you commit to anything.",
-    path: "work-with-us",
-  });
+  useDocumentMeta(pageMeta.workWithUs);
   const [hasExistingProduct, setHasExistingProduct] = useState("no");
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});

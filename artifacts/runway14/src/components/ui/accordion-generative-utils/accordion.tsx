@@ -79,12 +79,16 @@ function pauseAfter(char: string, speed: number) {
   return 0;
 }
 
-function StreamingText({ text, speed, startDelay }: { text: string; speed: number; startDelay: number }) {
+function StreamingText({ text, speed, startDelay, active }: { text: string; speed: number; startDelay: number; active: boolean }) {
   const reduced = usePrefersReducedMotion();
-  const [shown, setShown] = React.useState(reduced ? text.length : 0);
+  // Closed answers hold their full text, so the page source carries every
+  // answer. Only the one that is open at load starts empty and streams.
+  const [shown, setShown] = React.useState(active && !reduced ? 0 : text.length);
 
-  React.useEffect(() => {
-    if (reduced) {
+  // Layout effect so reopening restarts from empty before the browser paints,
+  // rather than flashing the finished answer first.
+  React.useLayoutEffect(() => {
+    if (!active || reduced) {
       setShown(text.length);
       return;
     }
@@ -98,39 +102,43 @@ function StreamingText({ text, speed, startDelay }: { text: string; speed: numbe
     };
     timer = window.setTimeout(tick, startDelay);
     return () => window.clearTimeout(timer);
-  }, [text, speed, startDelay, reduced]);
+  }, [text, speed, startDelay, reduced, active]);
 
   const done = shown >= text.length;
 
-  // The finished text sits underneath at zero opacity. It holds the panel at its
-  // final height from the first frame, so nothing below jumps as words arrive,
-  // and it stays in the accessibility tree as the copy a screen reader reads.
-  // The streamed overlay on top is hidden from assistive tech.
+  // The finished text sits underneath. It holds the panel at its final height
+  // from the first frame, so nothing below jumps as words arrive, and it stays
+  // in the accessibility tree as the copy a screen reader reads. It is only
+  // made invisible once scripts are running (.stream-under in index.css), so
+  // without JavaScript the answer is plain text. The streamed overlay on top is
+  // hidden from assistive tech.
   return (
     <p className="relative">
-      <span className="opacity-0">{text}</span>
+      <span className="stream-under">{text}</span>
       <span aria-hidden="true" className="absolute inset-0">
         {text.slice(0, shown)}
-        {!done && <span className="stream-caret" />}
+        {active && !done && <span className="stream-caret" />}
       </span>
     </p>
   );
 }
 
-type AccordionStreamingContentProps = Omit<React.ComponentProps<typeof AccordionPrimitive.Content>, "children"> & {
+type AccordionStreamingContentProps = Omit<React.ComponentProps<typeof AccordionPrimitive.Content>, "children" | "forceMount"> & {
   text: string;
+  /** Whether this item is the open one. Each time it becomes true the answer streams in again. */
+  open: boolean;
   /** Milliseconds per character. */
   speed?: number;
   /** Milliseconds to wait after opening before the first character. */
   startDelay?: number;
 };
 
-// Radix unmounts closed content, so every open is a fresh mount and the answer
-// streams in again each time it is revealed.
-function AccordionStreamingContent({ text, speed = 18, startDelay = 160, className, ...props }: AccordionStreamingContentProps) {
+// Mounted even while closed (forceMount), so the answer is in the page for
+// crawlers and the closed panel is hidden by CSS instead of being removed.
+function AccordionStreamingContent({ text, open, speed = 18, startDelay = 160, className, ...props }: AccordionStreamingContentProps) {
   return (
-    <AccordionContent className={className} {...props}>
-      <StreamingText text={text} speed={speed} startDelay={startDelay} />
+    <AccordionContent forceMount className={className} {...props}>
+      <StreamingText text={text} speed={speed} startDelay={startDelay} active={open} />
     </AccordionContent>
   );
 }

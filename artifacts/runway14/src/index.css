@@ -669,20 +669,27 @@
   .faq-acc p { color: var(--mid); font-size: 16px; line-height: 1.6; max-width: 46em; }
 
   /* Radix measures the panel and exposes its height, so opening and closing
-     animate to the real size of the finished answer. */
+     animate to the real size of the finished answer. Closed panels stay in the
+     page (so the answers are in the HTML) and are collapsed here: zero height
+     and visibility hidden, which also takes them out of the accessibility tree.
+     The closing keyframes keep them visible while they animate shut. */
   .acc-content[data-state="open"] { animation: acc-down 0.22s ease-out; }
-  .acc-content[data-state="closed"] { animation: acc-up 0.18s ease-out; }
+  .acc-content[data-state="closed"] { height: 0; visibility: hidden; animation: acc-up 0.18s ease-out; }
   @keyframes acc-down {
     from { height: 0; }
     to { height: var(--radix-accordion-content-height); }
   }
   @keyframes acc-up {
-    from { height: var(--radix-accordion-content-height); }
-    to { height: 0; }
+    from { height: var(--radix-accordion-content-height); visibility: visible; }
+    to { height: 0; visibility: visible; }
   }
 
+  /* The streaming effect needs scripts. Without them (or if they fail) the
+     answer stays plain readable text: the finished copy is shown and the caret
+     is not. .reveal-ready is only present while scripts are running. */
+  .reveal-ready .stream-under { opacity: 0; }
   .stream-caret {
-    display: inline-block;
+    display: none;
     width: 0.5em;
     height: 1.05em;
     margin-left: 2px;
@@ -690,6 +697,7 @@
     background: var(--sign);
     animation: caret-blink 0.9s steps(1) infinite;
   }
+  .reveal-ready .stream-caret { display: inline-block; }
   @keyframes caret-blink {
     50% { opacity: 0; }
   }

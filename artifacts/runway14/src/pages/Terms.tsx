@@ -3,14 +3,11 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageBreadcrumb } from "@/components/PageBreadcrumb";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
+import { pageMeta } from "@/content/site";
 import { reveal } from "@/lib/reveal";
 
 export default function Terms() {
-  useDocumentMeta({
-    title: "Terms of Service | Runway 14",
-    description: "The terms governing use of the Runway 14 website and how Runway 14 project engagements are agreed.",
-    path: "terms",
-  });
+  useDocumentMeta(pageMeta.terms);
 
   return (
     <>

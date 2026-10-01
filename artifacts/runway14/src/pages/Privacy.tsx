@@ -3,14 +3,11 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageBreadcrumb } from "@/components/PageBreadcrumb";
 import { useDocumentMeta } from "@/hooks/use-document-meta";
+import { pageMeta } from "@/content/site";
 import { reveal } from "@/lib/reveal";
 
 export default function Privacy() {
-  useDocumentMeta({
-    title: "Privacy Policy | Runway 14",
-    description: "How Runway 14 handles the information you share in a project brief. No tracking, no cookies, and the site itself stores nothing.",
-    path: "privacy",
-  });
+  useDocumentMeta(pageMeta.privacy);
 
   return (
     <>

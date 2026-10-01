@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Sparkles } from "lucide-react";
 
 import {
@@ -24,12 +25,14 @@ interface AccordionGenerativeProps {
 }
 
 export default function AccordionGenerative({ items, defaultValue, speed = 12, className }: AccordionGenerativeProps) {
+  const [value, setValue] = useState(defaultValue ?? "");
   return (
     <Accordion
       type="single"
       collapsible
       variant="card"
-      defaultValue={defaultValue}
+      value={value}
+      onValueChange={setValue}
       className={cn("w-full max-w-lg", className)}
     >
       {items.map((item) => (
@@ -40,7 +43,7 @@ export default function AccordionGenerative({ items, defaultValue, speed = 12, c
               {item.question}
             </span>
           </AccordionTrigger>
-          <AccordionStreamingContent text={item.answer} speed={speed} />
+          <AccordionStreamingContent text={item.answer} open={value === item.value} speed={speed} />
         </AccordionItem>
       ))}
     </Accordion>
