@@ -12,7 +12,34 @@ const { render, pageMeta, faqs, serviceCopy, servicePages, identity, pageUrl, SI
   pathToFileURL(path.join(root, "dist", "server", "entry-server.js")).href
 );
 
-const template = fs.readFileSync(path.join(outDir, "index.html"), "utf8");
+// The fonts the first screen of every page is set in. Their filenames carry a
+// content hash, so they can only be named once the build has run. Without a
+// preload the browser finds them only after the stylesheet arrives, and the page
+// first paints in a fallback font and swaps a second or so later. Barlow 500 is
+// left out on purpose: only the form labels use it, and a preload that is not
+// needed costs bandwidth on exactly the slow connections this is for.
+const PRELOAD_FONTS = [
+  "barlow-400",
+  "barlow-semi-condensed-600",
+  "barlow-semi-condensed-700",
+  "ibm-plex-mono-400",
+  "ibm-plex-mono-500",
+];
+
+function addFontPreloads(html) {
+  const assets = fs.readdirSync(path.join(outDir, "assets"));
+  // The deploy base (/Runway-Takeoff/) is whatever the built stylesheet link uses.
+  const base = html.match(/href="([^"]*?)assets\/index-[^"]+\.css"/)?.[1];
+  if (base === undefined) throw new Error("Could not find the stylesheet link to work out the base path");
+  const tags = PRELOAD_FONTS.map((name) => {
+    const file = assets.find((f) => f.startsWith(`${name}-`) && f.endsWith(".woff2"));
+    if (!file) throw new Error(`No built font file for "${name}", so it cannot be preloaded`);
+    return `<link rel="preload" href="${base}assets/${file}" as="font" type="font/woff2" crossorigin>`;
+  });
+  return html.replace(/(<meta name="viewport"[^>]*>)/, (_, viewport) => `${viewport}\n    ${tags.join("\n    ")}`);
+}
+
+const template = addFontPreloads(fs.readFileSync(path.join(outDir, "index.html"), "utf8"));
 
 const routes = [
   { route: "/", meta: pageMeta.home },
