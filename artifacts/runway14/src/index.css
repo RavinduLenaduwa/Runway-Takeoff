@@ -193,39 +193,80 @@
     border: 0;
     cursor: pointer;
   }
+  /* Three lines that fold into a cross. The middle one fades while the outer two
+     slide to the centre and rotate, so the icon reads as one object changing
+     shape rather than two icons swapping. */
   .burger span {
     display: block;
-    width: 26px;
-    height: 14px;
-    border-block: 2px solid var(--ink);
     position: relative;
+    width: 26px;
+    height: 2px;
+    background: var(--ink);
+    transition: background-color 0.15s 0.05s;
   }
+  .burger span::before,
   .burger span::after {
     content: "";
     position: absolute;
     left: 0;
     right: 0;
-    top: 4px;
     height: 2px;
     background: var(--ink);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .burger[aria-expanded="true"] span { border-color: transparent; }
-  .burger[aria-expanded="true"] span::before,
-  .burger[aria-expanded="true"] span::after {
-    content: "";
+  .burger span::before { transform: translateY(-7px) rotate(0deg); }
+  .burger span::after { transform: translateY(7px) rotate(0deg); }
+  .burger[aria-expanded="true"] span { background: transparent; }
+  .burger[aria-expanded="true"] span::before { transform: translateY(0) rotate(45deg); }
+  .burger[aria-expanded="true"] span::after { transform: translateY(0) rotate(-45deg); }
+  .burger:focus-visible { outline: 2px solid var(--sign); outline-offset: 2px; }
+
+  /* The panel grows from zero height (the 0fr to 1fr row trick animates to the
+     content's real height), and its links settle in one after another. Closing
+     is quick and has no stagger. Hidden with visibility once shut, after the
+     height has finished closing. It floats over the page instead of pushing it
+     down: a menu that changes the page's layout while it animates makes the
+     browser measure a link's target before the menu has finished closing, and
+     the page then scrolls to the wrong place. */
+  .menu-wrap {
     position: absolute;
+    top: calc(100% + 1px);
     left: 0;
     right: 0;
-    top: 4px;
-    height: 2px;
-    background: var(--ink);
+    background: var(--ground);
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0.4s;
   }
-  .burger[aria-expanded="true"] span::before { transform: rotate(45deg); }
-  .burger[aria-expanded="true"] span::after { transform: rotate(-45deg); }
-
-  .menu-panel { display: grid; gap: 2px; padding-block: 12px 24px; border-top: 1px solid var(--line); }
+  .menu-wrap[data-open="true"] {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s;
+  }
+  .menu-clip { min-height: 0; overflow: hidden; }
+  .menu-panel { display: grid; gap: 2px; padding-block: 12px 24px; border-bottom: 1px solid var(--line); }
   .menu-panel a:not(.btn) { font: 600 24px/1.2 var(--display); padding-block: 10px; }
   .menu-panel .btn { margin-top: 14px; justify-self: start; }
+  .menu-panel > * {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .menu-wrap[data-open="true"] .menu-panel > * {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.3s ease-out calc(80ms + var(--i, 0) * 55ms), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) calc(80ms + var(--i, 0) * 55ms);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .burger span,
+    .burger span::before,
+    .burger span::after,
+    .menu-wrap,
+    .menu-wrap[data-open="true"],
+    .menu-panel > *,
+    .menu-wrap[data-open="true"] .menu-panel > * { transition: none; }
+  }
 
   @media (max-width: 820px) {
     .site-nav .links,
@@ -233,7 +274,7 @@
     .burger { display: inline-grid; }
   }
   @media (min-width: 821px) {
-    .menu-panel { display: none; }
+    .menu-wrap { display: none; }
   }
 
   /* Buttons */
