@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 
-import { SITE_URL } from "@/content/site";
+import { pageUrl } from "@/content/site";
 
 interface DocumentMeta {
   title: string;
   description: string;
-  /** Path relative to SITE_URL, e.g. "" for home or "work-with-us" for /work-with-us */
+  /** Path relative to the site root, e.g. "" for home or "work-with-us" for /work-with-us */
   path: string;
 }
 
@@ -25,7 +25,7 @@ function setAttr(selector: string, attr: string, value: string) {
  */
 export function useDocumentMeta({ title, description, path }: DocumentMeta) {
   useEffect(() => {
-    const url = `${SITE_URL}${path}`;
+    const url = pageUrl(path);
     const previousTitle = document.title;
     document.title = title;
 
