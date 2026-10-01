@@ -6,17 +6,11 @@ import { useDocumentMeta } from "@/hooks/use-document-meta";
 import { reveal } from "@/lib/reveal";
 
 const SERVICES = ["Website", "Web Apps", "SEO", "AI Automations"];
-const BUDGETS = [
-  { value: "<$2k", label: "Under $2k" },
-  { value: "$2k–$5k", label: "$2k to $5k" },
-  { value: "$5k–$10k", label: "$5k to $10k" },
-  { value: "$10k+", label: "$10k or more" },
-];
 
 export default function WorkWithUs() {
   useDocumentMeta({
     title: "Start a Project | Runway 14",
-    description: "Send Runway 14 a short brief. You get a written plan and a fixed price in USD, free, before you commit to anything.",
+    description: "Send Runway 14 a short brief. You get a written plan and a fixed price, free, before you commit to anything.",
     path: "work-with-us",
   });
   const [hasExistingProduct, setHasExistingProduct] = useState("no");
@@ -47,7 +41,7 @@ export default function WorkWithUs() {
     if (!formData.get("project")?.toString().trim()) nextErrors.project = "Tell us what you're building.";
     if (!formData.get("goal")?.toString().trim()) nextErrors.goal = "Tell us your goal.";
     if (hasExistingProduct === "yes" && !formData.get("url")?.toString().trim()) nextErrors.url = "Add the URL.";
-    if (!formData.get("budget")) nextErrors.budget = "Pick a budget range.";
+    if (!formData.get("budget")?.toString().trim()) nextErrors.budget = "Tell us a rough budget, in any currency.";
 
     if (Object.values(nextErrors).some(Boolean)) {
       setErrors(nextErrors);
@@ -95,7 +89,7 @@ export default function WorkWithUs() {
           <span className="loc" {...reveal(0)}><b>14</b>Project brief</span>
           <h1 {...reveal(80)}>Start a project</h1>
           <p {...reveal(160)}>
-            A few lines on what you need, about ten minutes. You get a written plan and a fixed price in USD, <span className="hl">free</span>, before you commit to anything.
+            A few lines on what you need, about ten minutes. You get a written plan and a fixed price, <span className="hl">free</span>, before you commit to anything.
           </p>
         </div>
 
@@ -232,24 +226,20 @@ export default function WorkWithUs() {
 
           <div className="group" {...reveal()}>
             <p className="group-label">Budget</p>
-            <fieldset className="field" id="field-budget" aria-describedby={describedBy("budget")}>
-              <legend className="field-label mb-2">Roughly what have you set aside, in USD?</legend>
-              <div className="choices">
-                {BUDGETS.map((budget) => (
-                  <label key={budget.value} className="choice">
-                    <input
-                      type="radio"
-                      name="budget"
-                      value={budget.value}
-                      onChange={() => clearError("budget")}
-                      className="sr-only"
-                    />
-                    {budget.label}
-                  </label>
-                ))}
-              </div>
+            <label className="field" id="field-budget">
+              <span className="field-label">Roughly what have you set aside? <span className="opt">(any currency)</span></span>
+              <input
+                className="input"
+                name="budget"
+                type="text"
+                required
+                placeholder="For example $5,000 or LKR 1,500,000"
+                onChange={() => clearError("budget")}
+                aria-invalid={!!errors.budget}
+                aria-describedby={describedBy("budget")}
+              />
               {error("budget")}
-            </fieldset>
+            </label>
           </div>
 
           <div className="submit-row">

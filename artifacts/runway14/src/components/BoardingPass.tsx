@@ -36,7 +36,7 @@ export function BoardingPass() {
           <small>Price</small>
           <span className="redact" role="img" aria-label="Shown on your real quote" />
         </div>
-        <div className="pass-fixed">USD, fixed</div>
+        <div className="pass-fixed">Fixed price</div>
         <div className="barcode" aria-hidden="true" />
       </div>
     </article>

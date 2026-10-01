@@ -1,8 +1,8 @@
 # Runway 14
 
-> A remote software studio building websites, web apps, SEO and AI automation. Every project is quoted in writing, with a fixed price in USD, before any work starts.
+> A remote software studio building websites, web apps, SEO and AI automation. Every project is quoted in writing, with a fixed price, before any work starts.
 
-Runway 14 works remotely with clients worldwide, in writing, and invoices in USD. Its four services: marketing websites the client can edit themselves; web apps such as portals, internal tools and SaaS products; technical SEO; and AI automation of repetitive work.
+Runway 14 works remotely and in writing with clients in Sri Lanka and abroad. Its four services: marketing websites the client can edit themselves; web apps such as portals, internal tools and SaaS products; technical SEO; and AI automation of repetitive work.
 
 How an engagement works: the client sends a short brief (about ten minutes). Runway 14 replies with a written quote covering scope, milestones and a fixed price, at no cost. Nothing is owed until the client approves the quote. After approval, work proceeds with weekly updates until launch, and the client owns the code from day one.
 

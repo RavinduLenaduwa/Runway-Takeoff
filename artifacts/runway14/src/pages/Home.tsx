@@ -52,14 +52,14 @@ const steps: { icon: PixelIconName; title: string; body: ReactNode }[] = [
 const faqs: GenerativeAnswer[] = [
   { value: "price-list", question: "Why no price list?", answer: "Every project is different, so we quote each one in writing after reading your brief." },
   { value: "free-quote", question: "Is the quote really free?", answer: "Yes. You only pay once you approve it and work starts." },
-  { value: "abroad", question: "Do you work with clients abroad?", answer: "Yes. We work remotely, in writing, and invoice in USD." },
+  { value: "where", question: "Do you work with clients in Sri Lanka and abroad?", answer: "Yes, both. We work remotely and in writing, and your quote states the price and the currency." },
   { value: "code", question: "Who owns the code?", answer: "You do, from day one." },
 ];
 
 export default function Home() {
   useDocumentMeta({
     title: "Runway 14 | Websites, Web Apps, SEO & AI Automation",
-    description: "Websites, web apps, SEO and AI automation for clients worldwide. Send a short brief and get a written plan and a fixed USD price, free, before you commit.",
+    description: "Websites, web apps, SEO and AI automation for clients worldwide. Send a short brief and get a written plan and a fixed price, free, before you commit.",
     path: "",
   });
   const [activeService, setActiveService] = useState<number | null>(null);
@@ -87,7 +87,7 @@ export default function Home() {
               <span className="loc" {...reveal(0)}><b>14</b>Software studio</span>
               <h1 {...reveal(90)}>Quoted before we start.</h1>
               <p className="sub" {...reveal(180)}>
-                Websites, web apps, SEO and AI automation. Send a short brief and get a written plan and a fixed USD price, <span className="hl">free</span>, before you commit to anything.
+                Websites, web apps, SEO and AI automation. Send a short brief and get a written plan and a fixed price, <span className="hl">free</span>, before you commit to anything.
               </p>
               <div className="ctas" {...reveal(270)}>
                 <Link href="/work-with-us" className="btn">Start a project <span className="arrow">&rarr;</span></Link>

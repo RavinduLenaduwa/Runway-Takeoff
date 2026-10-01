@@ -15,7 +15,7 @@ const routes = [
   {
     path: "work-with-us",
     title: "Start a Project | Runway 14",
-    description: "Send Runway 14 a short brief. You get a written plan and a fixed price in USD, free, before you commit to anything.",
+    description: "Send Runway 14 a short brief. You get a written plan and a fixed price, free, before you commit to anything.",
   },
   {
     path: "privacy",
