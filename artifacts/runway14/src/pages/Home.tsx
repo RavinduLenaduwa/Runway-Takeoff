@@ -85,9 +85,9 @@ export default function Home() {
           <div className="wrap hero">
             <div className="copy">
               <span className="loc" {...reveal(0)}><b>14</b>Software studio</span>
-              <h1 {...reveal(90)}>Websites, web apps, SEO and AI automation, quoted before we start.</h1>
+              <h1 {...reveal(90)}>Quoted before we start.</h1>
               <p className="sub" {...reveal(180)}>
-                Send a short brief. You get a written plan and a fixed price in USD, <span className="hl">free</span>, before you commit to anything.
+                Websites, web apps, SEO and AI automation. Send a short brief and get a written plan and a fixed USD price, <span className="hl">free</span>, before you commit to anything.
               </p>
               <div className="ctas" {...reveal(270)}>
                 <Link href="/work-with-us" className="btn">Start a project <span className="arrow">&rarr;</span></Link>
