@@ -1,93 +1,59 @@
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import { Menu, X } from "lucide-react";
+import { useSectionHref } from "@/hooks/use-section-href";
 
-// Must carry the deploy base path. A bare "/#about" is an absolute URL, so on
-// GitHub Pages it resolves to the domain root and leaves the site entirely.
-const mobileLinks = [
-  { href: `${import.meta.env.BASE_URL}#about`, label: "About" },
-  { href: `${import.meta.env.BASE_URL}#services`, label: "Services" },
-  { href: `${import.meta.env.BASE_URL}#process`, label: "Process" },
-  { href: `${import.meta.env.BASE_URL}#faq`, label: "FAQ" },
+const sections = [
+  { id: "services", label: "Services" },
+  { id: "process", label: "How it works" },
+  { id: "faq", label: "FAQ" },
 ];
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const sectionHref = useSectionHref();
+  const sectionLinks = sections.map((s) => ({ href: sectionHref(s.id), label: s.label }));
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
   return (
-    <>
-      <motion.nav
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between md:grid md:grid-cols-[1fr_auto_1fr] px-6 py-6 mix-blend-difference text-white"
-      >
-        <Link href="/" className="col-start-1 flex items-center gap-2 font-bold tracking-tight text-base md:text-lg leading-none">
-          <span>Runway</span>
-          <span className="inline-flex items-center justify-center border border-current px-1.5 py-1 text-xs leading-none">14</span>
+    <nav className="site-nav" aria-label="Main">
+      <div className="wrap bar">
+        <Link href="/" className="logo" aria-label="Runway 14, home">
+          Runway<i>14</i>
         </Link>
-
-        <div className="col-start-2 hidden md:flex items-center justify-center gap-8 text-sm font-medium">
-          {mobileLinks.map((link) => (
-            <a key={link.href} href={link.href} className="hover:opacity-50 transition-opacity">{link.label}</a>
+        <div className="links">
+          {sectionLinks.map((link) => (
+            <a key={link.href} href={link.href}>{link.label}</a>
           ))}
         </div>
+        <Link href="/work-with-us" className="btn sm nav-cta">Start a project</Link>
+        <button
+          type="button"
+          className="burger"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+          onClick={() => setOpen((value) => !value)}
+        >
+          <span />
+        </button>
+      </div>
 
-        <div className="col-start-3 flex items-center justify-self-end gap-4">
-          <Link href="/work-with-us" className="text-sm font-medium border border-white/20 px-4 py-2 hover:bg-white hover:text-black transition-colors duration-300">
-            Work With Us
+      {open && (
+        <div id="mobile-menu" className="wrap menu-panel">
+          {sectionLinks.map((link) => (
+            <a key={link.href} href={link.href} onClick={() => setOpen(false)}>{link.label}</a>
+          ))}
+          <Link href="/work-with-us" className="btn" onClick={() => setOpen(false)}>
+            Start a project
           </Link>
-          <button
-            type="button"
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isOpen}
-            onClick={() => setIsOpen((v) => !v)}
-            className="md:hidden p-2 -m-2"
-          >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
         </div>
-      </motion.nav>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-10 overflow-y-auto bg-black text-white md:hidden"
-          >
-            {mobileLinks.map((link, i) => (
-              <motion.a
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + i * 0.05, duration: 0.4 }}
-                className="text-3xl font-bold tracking-tight"
-              >
-                {link.label}
-              </motion.a>
-            ))}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 + mobileLinks.length * 0.05, duration: 0.4 }}
-            >
-              <Link
-                href="/work-with-us"
-                onClick={() => setIsOpen(false)}
-                className="inline-flex text-sm font-medium border border-white/20 px-6 py-3 hover:bg-white hover:text-black transition-colors duration-300"
-              >
-                Work With Us
-              </Link>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+      )}
+    </nav>
   );
 }
