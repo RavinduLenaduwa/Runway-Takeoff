@@ -5,9 +5,11 @@ import WorkWithUs from "@/pages/WorkWithUs";
 import Privacy from "@/pages/Privacy";
 import Terms from "@/pages/Terms";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 function Router() {
   useScrollReveal();
+  useScrollToTop();
   return (
     <Switch>
       <Route path="/" component={Home} />
