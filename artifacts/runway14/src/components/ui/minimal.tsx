@@ -42,7 +42,9 @@ export function AsciiArt({ className }: { className?: string }) {
       loop
       muted
       playsInline
-      preload="auto"
+      // Visitors on reduced motion are shown the poster and never the video, so
+      // don't make them download it.
+      preload={reduced ? "none" : "auto"}
       aria-hidden="true"
       tabIndex={-1}
       style={{ display: "block", width: "100%", height: "100%", objectFit: "cover" }}
