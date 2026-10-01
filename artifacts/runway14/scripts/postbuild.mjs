@@ -20,7 +20,7 @@ const routes = [
   {
     path: "privacy",
     title: "Privacy Policy | Runway 14",
-    description: "How Runway 14 handles the information you share in a project brief. No tracking, no cookies, no data stored on our servers.",
+    description: "How Runway 14 handles the information you share in a project brief. No tracking, no cookies, and the site itself stores nothing.",
   },
   {
     path: "terms",
